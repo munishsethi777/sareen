@@ -181,12 +181,13 @@
 						</h5>
 					</div>
 					<div class="ibox-content mainDiv">
-						<form method="post" action="Actions/MailMessageAction.php"
-							id="createMessageForm" class="form-horizontal">
+						<form method="post" action="Actions/InventoryAction.php" id="inventoryForm" class="form-horizontal">
+							<input type="hidden" name="call" value="saveInventory">
+							<input type="hidden" name="seq" value="0">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Type</label>
 								<div class="col-sm-5">
-									<select class="form-control">
+									<select name="plottype" class="form-control">
 										<option>Plot</option>
 										<option>House</option>
 										<option>Building</option>
@@ -195,7 +196,7 @@
 								</div>
 								<label class="col-sm-1 control-label">Medium</label>
 								<div class="col-sm-5">
-									<select class="form-control">
+									<select name="medium" class="form-control">
 										<option>Direct</option>
 										<option>Broker</option>
 										<option>Relative</option>
@@ -206,7 +207,15 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Plot Number</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="plotNumber" name="plotNumber">
+									<input class="form-control" type="text" id="plotnumber" name="plotnumber">
+								</div>
+								<label class="col-sm-1 control-label">Purpose</label>
+								<div class="col-sm-5">
+									<select name="purpose" class="form-control">
+										<option>Residential</option>
+										<option>Commercial</option>
+										<option>Industrial</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -232,19 +241,19 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Area</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="propertyArea" name="propertyArea">
+									<input class="form-control" type="text" id="propertyArea" name="propertyarea">
 								</div>
 								<label class="col-sm-1 control-label">Dimensions</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" name="landmark" placeholder="Length">
+									<input class="form-control" type="text" id="landmark" name="dimensionlength" placeholder="Length">
 								</div>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" name="landmark"  placeholder="Breadth">
+									<input class="form-control" type="text" id="landmark" name="dimensionbreadth"  placeholder="Breadth">
 								</div>
 								
 								<label class="col-sm-2 control-label">Facing</label>
 								<div class="col-sm-2">
-									<select class="form-control">
+									<select name="facing"  class="form-control">
 										<option>North</option>
 										<option>East</option>
 										<option>West</option>
@@ -253,22 +262,22 @@
 								</div>
 								<label class="col-sm-1 control-label">Referred</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="referred" name="referred">
+									<input class="form-control" type="text" id="referred" name="referredby">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Name</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="contactPerson" name="contactPerson">
+									<input class="form-control" type="text" id="contactPerson" name="contactperson">
 								</div>
 								<label class="col-sm-1 control-label">Mobile</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="contactMobile" name="contactMobile">
+									<input class="form-control" type="text" id="contactMobile" name="contactmobile">
 								</div>
 								
 								<label class="col-sm-1 control-label">Address</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="contactAddress"></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="contactaddress"></textarea>
 								</div>
 							</div>
 							
@@ -279,12 +288,12 @@
 								</div>
 								<label class="col-sm-1 control-label">Amount</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="contactMobile" name="contactMobile">
+									<input class="form-control" type="text" id="expectedAmount" name="expectedamount">
 								</div>
 								
 								<label class="col-sm-1 control-label">Documents</label>
 								<div class="col-sm-2">
-									<select class="form-control">
+									<select name="documentation" class="form-control">
 										<option>Registry</option>
 										<option>Agreement</option>
 										<option>Attorney</option>
@@ -355,7 +364,20 @@
                     checkboxClass: 'icheckbox_square-green',
                     radioClass: 'iradio_square-green',
                 });
+                $("#saveBtn").click(function(e){
+            	    var btn = this;
+            	    submit(e,btn);           
+            	});
             });
+            function submit(e,btn){
+        	    e.preventDefault();
+        	    var l = Ladda.create(btn);
+        	    l.start();    
+        	    $('#inventoryForm').ajaxSubmit(function( data ){
+        	        l.stop();
+        	        showResponseToastr(data,null,"supportForm","mainDiv");
+        	    })
+        	}
         </script>
 </body>
 
