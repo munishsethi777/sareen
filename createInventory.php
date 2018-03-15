@@ -12,6 +12,13 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 	<?include "ScriptsInclude.php";?>
+	<style type="text/css">
+	.control-label{
+		font-weight:normal;
+		padding-top:0px !important;
+	}
+	
+	</style>
 </head>
 
 <body>
@@ -188,10 +195,16 @@
 								<label class="col-sm-1 control-label">Type</label>
 								<div class="col-sm-5">
 									<select name="plottype" class="form-control">
-										<option>Plot</option>
-										<option>House</option>
 										<option>Building</option>
-										<option>Rental</option>
+										<option>House</option>
+										<option>Plot</option>
+										<option>Bank</option>
+										<option>Floor</option>
+										<option>SCO</option>
+										<option>Mall Shop</option>
+										<option>Godown</option>
+										<option>Parking</option>
+										<option>Food Lounge</option>
 									</select>
 								</div>
 								<label class="col-sm-1 control-label">Medium</label>
@@ -320,6 +333,74 @@
 										Available
 									</label>
 							</div>
+							
+							<hr>
+							House Fields
+							<hr>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Furnishing</label>
+								<div class="col-sm-5">
+									<select name="furnishing" class="form-control">
+										<option>Finished</option>
+										<option>Finish Furnished</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">Details</label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" name="furnishingdetails"></textarea>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Stories</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text" id="stories" name="stories">
+								</div>
+								<label class="col-sm-1 control-label">Years of Construction</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text" id="constructionyears" name="constructionyears">
+								</div>
+							</div>
+							
+							<hr>
+							Agricultural Land
+							<hr>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Sellers</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text" id="totalsellers" name="totalsellers">
+								</div>
+								<label class="col-sm-1 control-label">Property Numbers</label>
+								<div class="col-sm-3">
+									<select name="propertynumbers" class="form-control">
+										<option>Pure Numbers</option>
+										<option>Fragmented Numbers</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">Acquired</label>
+								<div class="col-sm-3">
+									<select name="acquired" class="form-control">
+										<option>Self Purchased</option>
+										<option>Ancestral</option>
+									</select>
+								</div>
+							</div>
+							
+							
+							<hr>
+							Other for Building/Mall/Floor/Bank etc
+							<hr>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Floor Number</label>
+								<div class="col-sm-5">
+									<input class="form-control" type="text" id="flootnumber" name="flootnumber">
+								</div>
+								<label class="col-sm-1 control-label">Specifications</label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" name="specifications"></textarea>
+								</div>
+							</div>
+							
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-offset-9">
 									<button class="btn btn-primary ladda-button"
