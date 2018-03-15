@@ -1,8 +1,6 @@
 <?php
-require_once ("MainDB.php.php5");
+require_once ("MainDB.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "log4php/Logger.php");
-require_once ($ConstantsArray ['dbServerUrl'] . "Managers/AdminMgr.php");
-require_once ($ConstantsArray ['dbServerUrl'] . "Utils/FilterUtil.php");
 Logger::configure ( $ConstantsArray ['dbServerUrl'] . "log4php/log4php.xml" );
 class BeanDataStore {
 	private $className;
@@ -14,11 +12,11 @@ class BeanDataStore {
 	public function __construct($className_, $tableName) {
 		$this->className = $className_;
 		$this->tableName = $tableName;
-		$sessionUtil = SessionUtil::getInstance ();
-		$this->companySeq = $sessionUtil->getAdminLoggedInCompanySeq ();
-		$this->loggedInAdminSeq = $sessionUtil->getAdminLoggedInSeq();
-		$this->logger = Logger::getLogger ( "logger" );
-		$this->isManager = $sessionUtil->getLoggedInRole() == "manager";
+// 		$sessionUtil = SessionUtil::getInstance ();
+// 		$this->companySeq = $sessionUtil->getAdminLoggedInCompanySeq ();
+// 		$this->loggedInAdminSeq = $sessionUtil->getAdminLoggedInSeq();
+// 		$this->logger = Logger::getLogger ( "logger" );
+// 		$this->isManager = $sessionUtil->getLoggedInRole() == "manager";
 	}
 	private function key_implode($array) {
 		$fields = array ();
@@ -48,7 +46,7 @@ class BeanDataStore {
 			}
 			foreach ( $methods as $method ) {
 				$methodName = $method->name;
-				if (! $this->startsWith ( $methodName, "set" )) {
+				if (! $this->startsWith ( $methodName, "set" ) && $methodName != "from_array" && $methodName != "__construct") {
 					if ($count > 0) {
 						$reflect = new ReflectionMethod ( $object, $methodName );
 						if ($reflect->isPublic ()) {
@@ -80,7 +78,7 @@ class BeanDataStore {
 			unset ( $columnValueArry [0] );
 			unset ( $columns [0] );
 			$SQL = "";
-			$db_New = MainDB.php::getInstance ();
+			$db_New = MainDB::getInstance ();
 			$conn = $db_New->getConnection ();
 			
 			if ($id > 0) { // update query

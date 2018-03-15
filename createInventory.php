@@ -1,17 +1,56 @@
-<?php ?>
+<?php
+require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSPINIA | Basic Form</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-	<?include "ScriptsInclude.php";?>
+   <script src="scripts/jquery-3.1.1.min.js"></script>
+	<!-- Toastr -->
+	<link href="styles/plugins/toastr/toastr.min.css" rel="stylesheet">
+	<script src="scripts/plugins/toastr/toastr.min.js"></script>
+	<!-- Custom and plugin javascript -->
+	<script src="scripts/inspinia.js"></script>
+	<link href="styles/bootstrap.min.css" rel="stylesheet">
+	<link href="styles/animate.css" rel="stylesheet">
+	<link href="styles/style.css" rel="stylesheet">
+	<link href="styles/custom.css" rel="stylesheet">
+	
+	<!-- button ladda -->
+	<link rel="stylesheet" href="styles/ladda-themeless.min.css">
+	<script src="scripts/jquery.form.min.js"></script>
+	<script src="scripts/spin.min.js"></script>
+	<script src="scripts/ladda.min.js"></script>
+	
+	
+	<!-- Jquery Validate -->
+	<script src="scripts/plugins/validate/jquery.validate.min.js"></script>
+	
+	
+	
+	<!--Bootstrap-->
+	<script src="scripts/bootstrap.min.js"></script>
+	<link href="styles/bootstrap.min.css" rel="stylesheet">
+	<link href="styles/animate.css" rel="stylesheet">
+	<link href="styles/style.css" rel="stylesheet">
+	<!-- BootBOX-->
+	<script src="scripts/bootbox.js"></script>
+	
+	<!-- iCheck -->
+	<link href="styles/plugins/iCheck/custom.css" rel="stylesheet">
+	<script src="scripts/plugins/iCheck/icheck.min.js"></script>
+	<!-- Font Awesome -->
+	<link href="styles/font-awesome.min.css" rel="stylesheet">
+	<!-- JQX Widgets -->
+	<link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
+	<script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
+	<script type="text/javascript" src="jqwidgets/jqxvalidator.js"></script>
+	<!-- Mainly scripts -->
+	<script src="scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="scripts/example.js"></script>
 	<style type="text/css">
 	.control-label{
 		font-weight:normal;
@@ -194,27 +233,13 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Type</label>
 								<div class="col-sm-5">
-									<select name="plottype" class="form-control">
-										<option>Building</option>
-										<option>House</option>
-										<option>Plot</option>
-										<option>Bank</option>
-										<option>Floor</option>
-										<option>SCO</option>
-										<option>Mall Shop</option>
-										<option>Godown</option>
-										<option>Parking</option>
-										<option>Food Lounge</option>
-									</select>
+									<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", "")?>
 								</div>
 								<label class="col-sm-1 control-label">Medium</label>
 								<div class="col-sm-5">
-									<select name="medium" class="form-control">
-										<option>Direct</option>
-										<option>Broker</option>
-										<option>Relative</option>
-										<option>Relative incharge</option>
-									</select>
+									<div class="col-sm-5">
+										<?php echo DropDownUtils::getMediumTypeDD("medium", "", "")?>
+									</div>
 								</div>
 							</div>
 							<div class="form-group">
@@ -224,17 +249,13 @@
 								</div>
 								<label class="col-sm-1 control-label">Purpose</label>
 								<div class="col-sm-5">
-									<select name="purpose" class="form-control">
-										<option>Residential</option>
-										<option>Commercial</option>
-										<option>Industrial</option>
-									</select>
+									<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", "")?>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Address1</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="address1"></textarea>
+									<textarea rows="3" cols="4" class="form-control" id="address1" name="address1"></textarea>
 								</div>
 								<label class="col-sm-1 control-label">Address2</label>
 								<div class="col-sm-5">
@@ -266,12 +287,7 @@
 								
 								<label class="col-sm-2 control-label">Facing</label>
 								<div class="col-sm-2">
-									<select name="facing"  class="form-control">
-										<option>North</option>
-										<option>East</option>
-										<option>West</option>
-										<option>South</option>
-									</select>
+									<?php echo DropDownUtils::getFacingTypeDD("facing", "", "")?>
 								</div>
 								<label class="col-sm-1 control-label">Referred</label>
 								<div class="col-sm-2">
@@ -306,12 +322,7 @@
 								
 								<label class="col-sm-1 control-label">Documents</label>
 								<div class="col-sm-2">
-									<select name="documentation" class="form-control">
-										<option>Registry</option>
-										<option>Agreement</option>
-										<option>Attorney</option>
-										<option>Full Final</option>
-									</select>
+									<?php echo DropDownUtils::getDocumentTypeDD("documentation", "", "")?>
 								</div>
 								<label class="col-sm-1 control-label">Time</label>
 								<div class="col-sm-2">
@@ -325,11 +336,11 @@
 							<div class="form-group i-checks"">
 								<label class="col-sm-1 control-label"></label> 
 									<label class="col-sm-2 control-label" style="text-align: left">
-										<input type="checkbox" name="isEmail" id="isEmail">
+										<input type="checkbox" name="isrental" id="isrental">
 										Rental
 									</label> 
 									<label class="col-sm-2 control-label">
-										<input type="checkbox"	name="isMobileNotification" id="isMobileNotification"> 
+										<input type="checkbox"	name="isavailable" id="isavailable"> 
 										Available
 									</label>
 							</div>
@@ -340,10 +351,7 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Furnishing</label>
 								<div class="col-sm-5">
-									<select name="furnishing" class="form-control">
-										<option>Finished</option>
-										<option>Finish Furnished</option>
-									</select>
+									<?php echo DropDownUtils::getFurnishingDD("furnishing", "", "")?>
 								</div>
 								<label class="col-sm-1 control-label">Details</label>
 								<div class="col-sm-5">
@@ -372,10 +380,7 @@
 								</div>
 								<label class="col-sm-1 control-label">Property Numbers</label>
 								<div class="col-sm-3">
-									<select name="propertynumbers" class="form-control">
-										<option>Pure Numbers</option>
-										<option>Fragmented Numbers</option>
-									</select>
+									<?php echo DropDownUtils::getPropertyTypeDD("propertynumbers", "", "")?>
 								</div>
 								<label class="col-sm-1 control-label">Acquired</label>
 								<div class="col-sm-3">
@@ -393,7 +398,7 @@
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Floor Number</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="flootnumber" name="flootnumber">
+									<input class="form-control" type="text" id="floornumber" name="floornumber">
 								</div>
 								<label class="col-sm-1 control-label">Specifications</label>
 								<div class="col-sm-5">
@@ -427,19 +432,9 @@
         </div>
 
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
-
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
-        <script>
+ 
+        <script type="text/javascript">
+       
             $(document).ready(function () {
                 $('.i-checks').iCheck({
                     checkboxClass: 'icheckbox_square-green',
@@ -447,8 +442,17 @@
                 });
                 $("#saveBtn").click(function(e){
             	    var btn = this;
-            	    submit(e,btn);           
+            	    ValidateAndSave(e,btn);           
             	});
+            });
+            $('#inventoryForm').jqxValidator({
+            	hintType: 'label',
+            	animationDuration: 0,
+            	rules: [
+            	{ input: '#address1', message: 'Address1 is required!', action: 'keyup, blur', rule: 'required' },
+            	{ input: '#contactPerson', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
+            	{ input: '#contactMobile', message: 'Mobile is required!', action: 'keyup, blur', rule: 'required' }
+            	]
             });
             function submit(e,btn){
         	    e.preventDefault();
@@ -456,9 +460,18 @@
         	    l.start();    
         	    $('#inventoryForm').ajaxSubmit(function( data ){
         	        l.stop();
-        	        showResponseToastr(data,null,"supportForm","mainDiv");
+        	        showResponseToastr(data,null,"inventoryForm","mainDiv");
         	    })
         	}
+            function ValidateAndSave(e,btn){
+        	    var validationResult = function (isValid){
+        	       if (isValid) {
+        	    	   submit(e,btn);
+        	        }
+        	    }
+        	   $('#inventoryForm').jqxValidator('validate', validationResult);
+        	}
+            
         </script>
 </body>
 

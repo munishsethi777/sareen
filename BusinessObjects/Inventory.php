@@ -1,6 +1,7 @@
 <?php
 class Inventory {
 	public static $tableName = "inventory";
+	public static $className = "Inventory";
 	private $seq;
 	private $purpose;
 	private $medium;
@@ -35,6 +36,7 @@ class Inventory {
 	private $createdon;
 	private $lastmodifiedon;
 	private $isavailable;
+	private $floornumber;
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
 	}
@@ -233,5 +235,28 @@ class Inventory {
 	public function getIsAvailable() {
 		return $this->isavailable;
 	}
+	
+	public function setFloorNumber($floorNumber_){
+		$this->floornumber = $floorNumber_;
+	}
+	public function getFloorNumber(){
+		return $this->floornumber;
+	}
+	
+	function __construct ($payload)
+	{
+		if (is_array($payload)){
+			$this->from_array($payload);
+		}
+	}
+	
+	public function from_array($array)
+	{
+		foreach(get_object_vars($this) as $attrName => $attrValue)
+			$this->{$attrName} = $array[$attrName];
+	}
+	
 }
+
+
 ?>
