@@ -328,11 +328,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 								<div class="col-sm-2">
 									<input class="form-control" type="text" id="time" name="time">
 								</div>
-								
 							</div>
-							
-							
-							
 							<div class="form-group i-checks"">
 								<label class="col-sm-1 control-label"></label> 
 									<label class="col-sm-2 control-label" style="text-align: left">
@@ -426,13 +422,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 				</div>
 			</div>
 		</div>
-	
-        
         </div>
         </div>
-
-
- 
         <script type="text/javascript">
        
             $(document).ready(function () {
@@ -451,7 +442,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             	rules: [
             	{ input: '#address1', message: 'Address1 is required!', action: 'keyup, blur', rule: 'required' },
             	{ input: '#contactPerson', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-            	{ input: '#contactMobile', message: 'Mobile is required!', action: 'keyup, blur', rule: 'required' }
+            	{ input: '#contactMobile', message: 'Mobile11 is required!', action: 'keyup, blur', rule: 'required' }
             	]
             });
             function submit(e,btn){

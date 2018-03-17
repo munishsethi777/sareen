@@ -46,6 +46,20 @@ class InventoryMgr{
    		return $inventories;
    	}
    	
+   	public function findAllArr(){
+   		$inventoriesArr = self::$inventoryDataStore->findAllArr();
+   		return $inventoriesArr;
+   	}
+   	
+   	public function getInventoryForGrid(){
+   		$inventories = $this->findAllArr();
+   		$mainArr["recordsTotal"] = count($inventories);
+   		$mainArr["recordsFiltered"] = count($inventories);
+   		$mainArr["data"] = $inventories;
+   		return $mainArr;
+   		
+   	}
+   	
    	
 
 }
