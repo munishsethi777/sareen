@@ -1,5 +1,12 @@
 <?php
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Managers/InventoryMgr.php");
+$inventory = new Inventory();
+if(isset($_POST["id"])){
+	$id = $_POST["id"];
+	$inventoryMgr = InventoryMgr::getInstance();
+	$inventory = $inventoryMgr->findBySeq($id);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -7,57 +14,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSPINIA | Basic Form</title>
-   <script src="scripts/jquery-3.1.1.min.js"></script>
-	<!-- Toastr -->
-	<link href="styles/plugins/toastr/toastr.min.css" rel="stylesheet">
-	<script src="scripts/plugins/toastr/toastr.min.js"></script>
-	<!-- Custom and plugin javascript -->
-	<script src="scripts/inspinia.js"></script>
-	<link href="styles/bootstrap.min.css" rel="stylesheet">
-	<link href="styles/animate.css" rel="stylesheet">
-	<link href="styles/style.css" rel="stylesheet">
-	<link href="styles/custom.css" rel="stylesheet">
-	
-	<!-- button ladda -->
-	<link rel="stylesheet" href="styles/ladda-themeless.min.css">
-	<script src="scripts/jquery.form.min.js"></script>
-	<script src="scripts/spin.min.js"></script>
-	<script src="scripts/ladda.min.js"></script>
-	
-	
-	<!-- Jquery Validate -->
-	<script src="scripts/plugins/validate/jquery.validate.min.js"></script>
-	
-	
-	
-	<!--Bootstrap-->
-	<script src="scripts/bootstrap.min.js"></script>
-	<link href="styles/bootstrap.min.css" rel="stylesheet">
-	<link href="styles/animate.css" rel="stylesheet">
-	<link href="styles/style.css" rel="stylesheet">
-	<!-- BootBOX-->
-	<script src="scripts/bootbox.js"></script>
-	
-	<!-- iCheck -->
-	<link href="styles/plugins/iCheck/custom.css" rel="stylesheet">
-	<script src="scripts/plugins/iCheck/icheck.min.js"></script>
-	<!-- Font Awesome -->
-	<link href="styles/font-awesome.min.css" rel="stylesheet">
-	<!-- JQX Widgets -->
-	<link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
-	<script type="text/javascript" src="jqwidgets/jqxcore.js"></script>
-	<script type="text/javascript" src="jqwidgets/jqxvalidator.js"></script>
-	<!-- Mainly scripts -->
-	<script src="scripts/plugins/metisMenu/jquery.metisMenu.js"></script>
-	<script src="scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="scripts/example.js"></script>
-	<style type="text/css">
-	.control-label{
-		font-weight:normal;
-		padding-top:0px !important;
-	}
-	
-	</style>
+	<?include "ScriptsInclude.php"?>
 </head>
 
 <body>
@@ -85,12 +42,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                         IN+
                     </div>
                 </li>
-                <li>
-                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Inventory</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level collapse">
-                        <li><a href="createInventory.php">Create</a></li>
-                    </ul>
-                </li>  
+                <li class=""><a href="showInventory.php">
+                	<i class="fa fa-desktop"></i> <span class="nav-label">Manage Inventory</span></a>
+                </li>
             </ul>
 
         </div>
@@ -233,12 +187,12 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Type</label>
 								<div class="col-sm-5">
-									<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", "")?>
+									<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", $inventory->getPropertyType())?>
 								</div>
 								<label class="col-sm-1 control-label">Medium</label>
 								<div class="col-sm-5">
 									<div class="col-sm-5">
-										<?php echo DropDownUtils::getMediumTypeDD("medium", "", "")?>
+										<?php echo DropDownUtils::getMediumTypeDD("medium", "", $inventory->getMedium())?>
 									</div>
 								</div>
 							</div>
@@ -249,84 +203,84 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 								</div>
 								<label class="col-sm-1 control-label">Purpose</label>
 								<div class="col-sm-5">
-									<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", "")?>
+									<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", $inventory->getPurpose())?>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Address1</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" id="address1" name="address1"></textarea>
+									<textarea rows="3" cols="4" class="form-control" id="address1" name="address1"><?php echo $inventory->getAddress1()?></textarea>
 								</div>
 								<label class="col-sm-1 control-label">Address2</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="address2"></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="address2"><?php echo $inventory->getAddress2()?></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">City</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="city" name="city">
+									<input class="form-control" type="text" value=<?php echo $inventory->getCity()?> id="city" name="city">
 								</div>
 								<label class="col-sm-1 control-label">Landmark</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="landmark" name="landmark">
+									<input class="form-control" type="text" value=<?php echo $inventory->getLandmark()?> id="landmark" name="landmark">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Area</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="propertyArea" name="propertyarea">
+									<input class="form-control" type="text" value=<?php echo $inventory->getPropertyArea()?> id="propertyArea" name="propertyarea">
 								</div>
 								<label class="col-sm-1 control-label">Dimensions</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" name="dimensionlength" placeholder="Length">
+									<input class="form-control" type="text" id="landmark" value=<?php echo $inventory->getDimensionLength()?> name="dimensionlength" placeholder="Length">
 								</div>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" name="dimensionbreadth"  placeholder="Breadth">
+									<input class="form-control" type="text" id="landmark" value=<?php echo $inventory->getDimensionBreadth()?> name="dimensionbreadth"  placeholder="Breadth">
 								</div>
 								
 								<label class="col-sm-2 control-label">Facing</label>
 								<div class="col-sm-2">
-									<?php echo DropDownUtils::getFacingTypeDD("facing", "", "")?>
+									<?php echo DropDownUtils::getFacingTypeDD("facing", "", $inventory->getFacing())?>
 								</div>
 								<label class="col-sm-1 control-label">Referred</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="referred" name="referredby">
+									<input class="form-control" type="text" value=<?php echo $inventory->getReferredby()?> id="referred" name="referredby">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Name</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="contactPerson" name="contactperson">
+									<input class="form-control" type="text" value=<?php echo $inventory->getContactPerson()?> id="contactPerson" name="contactperson">
 								</div>
 								<label class="col-sm-1 control-label">Mobile</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="contactMobile" name="contactmobile">
+									<input class="form-control" type="text" value=<?php echo $inventory->getContactMobile()?> id="contactMobile" name="contactmobile">
 								</div>
 								
 								<label class="col-sm-1 control-label">Address</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="contactaddress"></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="contactaddress">value=<?php echo $inventory->getContactAddress()?></textarea>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Rate</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="rate" name="rate">
+									<input class="form-control" type="text" value=<?php echo $inventory->getRate()?> id="rate" name="rate">
 								</div>
 								<label class="col-sm-1 control-label">Amount</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="expectedAmount" name="expectedamount">
+									<input class="form-control" type="text" value=<?php echo $inventory->getExpectedAmount()?> id="expectedAmount" name="expectedamount">
 								</div>
 								
 								<label class="col-sm-1 control-label">Documents</label>
 								<div class="col-sm-2">
-									<?php echo DropDownUtils::getDocumentTypeDD("documentation", "", "")?>
+									<?php echo DropDownUtils::getDocumentTypeDD("documentation", "", $inventory->getDocumentation())?>
 								</div>
 								<label class="col-sm-1 control-label">Time</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="time" name="time">
+									<input class="form-control" type="text" value=<?php echo $inventory->getTime()?> id="time" name="time">
 								</div>
 							</div>
 							<div class="form-group i-checks"">
@@ -347,22 +301,22 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Furnishing</label>
 								<div class="col-sm-5">
-									<?php echo DropDownUtils::getFurnishingDD("furnishing", "", "")?>
+									<?php echo DropDownUtils::getFurnishingDD("furnishing", "", $inventory->getFurnishing())?>
 								</div>
 								<label class="col-sm-1 control-label">Details</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="furnishingdetails"></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="furnishingdetails"><?php echo $inventory->getFurnishingDetails()?></textarea>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Stories</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="stories" name="stories">
+									<input class="form-control" type="text" value="<?php echo $inventory->getStories()?>" id="stories" name="stories">
 								</div>
 								<label class="col-sm-1 control-label">Years of Construction</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="constructionyears" name="constructionyears">
+									<input class="form-control" type="text" value="<?php echo $inventory->getConstructionYears()?>" id="constructionyears" name="constructionyears">
 								</div>
 							</div>
 							
@@ -372,18 +326,15 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Sellers</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" id="totalsellers" name="totalsellers">
+									<input class="form-control" type="text" value="<?php echo $inventory->getTotalSellers()?>" id="totalsellers" name="totalsellers">
 								</div>
 								<label class="col-sm-1 control-label">Property Numbers</label>
 								<div class="col-sm-3">
-									<?php echo DropDownUtils::getPropertyTypeDD("propertynumbers", "", "")?>
+									<?php echo DropDownUtils::getPropertyTypeDD("propertynumbers", "", $inventory->getPropertyType())?>
 								</div>
 								<label class="col-sm-1 control-label">Acquired</label>
 								<div class="col-sm-3">
-									<select name="acquired" class="form-control">
-										<option>Self Purchased</option>
-										<option>Ancestral</option>
-									</select>
+									<?php echo DropDownUtils::getPropertyTypeDD("acquired", "", $inventory->getAcquired())?>
 								</div>
 							</div>
 							
@@ -394,11 +345,11 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Floor Number</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="floornumber" name="floornumber">
+									<input class="form-control" type="text" value="<?php echo $inventory->getFloorNumber()?>" id="floornumber" name="floornumber">
 								</div>
 								<label class="col-sm-1 control-label">Specifications</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="specifications"></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="specifications"><?php echo $inventory->getSpecification()?></textarea>
 								</div>
 							</div>
 							
@@ -434,6 +385,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                 $("#saveBtn").click(function(e){
             	    var btn = this;
             	    ValidateAndSave(e,btn);           
+            	});
+                $("#cancelBtn").click(function(e){
+                	location.href = ("showInventory.php");          
             	});
             });
             $('#inventoryForm').jqxValidator({
