@@ -2,10 +2,19 @@
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/InventoryMgr.php");
 $inventory = new Inventory();
+$isAvailable = "";
+$isRental = "";
+$id = null;
 if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
+	if(!empty($inventory->getIsAvailable())){
+		$isAvailable = "checked"; 
+	}
+	if(!empty($inventory->getIsRental())){
+		$isRental = "checked";
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -35,7 +44,7 @@ if(isset($_POST["id"])){
 					<div class="ibox-content mainDiv">
 						<form method="post" action="Actions/InventoryAction.php" id="inventoryForm" class="form-horizontal">
 							<input type="hidden" name="call" value="saveInventory">
-							<input type="hidden" name="seq" value="0">
+							<input type="hidden" name="seq" value="<?php echo $inventory->getSeq()?>" >
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Type</label>
 								<div class="col-sm-5">
@@ -51,7 +60,7 @@ if(isset($_POST["id"])){
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Plot Number</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" id="plotnumber" name="plotnumber">
+									<input class="form-control" type="text" id="plotnumber" value="<?php echo $inventory->getPlotNumber()?>" name="plotnumber">
 								</div>
 								<label class="col-sm-1 control-label">Purpose</label>
 								<div class="col-sm-5">
@@ -71,24 +80,24 @@ if(isset($_POST["id"])){
 							<div class="form-group">
 								<label class="col-sm-1 control-label">City</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" value=<?php echo $inventory->getCity()?> id="city" name="city">
+									<input class="form-control" type="text" value="<?php echo $inventory->getCity()?>" id="city" name="city">
 								</div>
 								<label class="col-sm-1 control-label">Landmark</label>
 								<div class="col-sm-5">
-									<input class="form-control" type="text" value=<?php echo $inventory->getLandmark()?> id="landmark" name="landmark">
+									<input class="form-control" type="text" value="<?php echo $inventory->getLandmark()?>" id="landmark" name="landmark">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Area</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" value=<?php echo $inventory->getPropertyArea()?> id="propertyArea" name="propertyarea">
+									<input class="form-control" type="text" value="<?php echo $inventory->getPropertyArea()?>" id="propertyArea" name="propertyarea">
 								</div>
 								<label class="col-sm-1 control-label">Dimensions</label>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" value=<?php echo $inventory->getDimensionLength()?> name="dimensionlength" placeholder="Length">
+									<input class="form-control" type="text" id="landmark" value="<?php echo $inventory->getDimensionLength()?>" name="dimensionlength" placeholder="Length">
 								</div>
 								<div class="col-sm-1">
-									<input class="form-control" type="text" id="landmark" value=<?php echo $inventory->getDimensionBreadth()?> name="dimensionbreadth"  placeholder="Breadth">
+									<input class="form-control" type="text" id="landmark" value="<?php echo $inventory->getDimensionBreadth()?>" name="dimensionbreadth"  placeholder="Breadth">
 								</div>
 								
 								<label class="col-sm-2 control-label">Facing</label>
@@ -97,33 +106,33 @@ if(isset($_POST["id"])){
 								</div>
 								<label class="col-sm-1 control-label">Referred</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getReferredby()?> id="referred" name="referredby">
+									<input class="form-control" type="text" value="<?php echo $inventory->getReferredby()?>" id="referred" name="referredby">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Name</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getContactPerson()?> id="contactPerson" name="contactperson">
+									<input class="form-control" type="text" value="<?php echo $inventory->getContactPerson()?>" id="contactPerson" name="contactperson">
 								</div>
 								<label class="col-sm-1 control-label">Mobile</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getContactMobile()?> id="contactMobile" name="contactmobile">
+									<input class="form-control" type="text" value="<?php echo $inventory->getContactMobile()?>" id="contactMobile" name="contactmobile">
 								</div>
 								
 								<label class="col-sm-1 control-label">Address</label>
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="contactaddress">value=<?php echo $inventory->getContactAddress()?></textarea>
+									<textarea rows="3" cols="4" class="form-control" name="contactaddress"><?php echo $inventory->getContactAddress()?></textarea>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Rate</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getRate()?> id="rate" name="rate">
+									<input class="form-control" type="text" value="<?php echo $inventory->getRate()?>" id="rate" name="rate">
 								</div>
 								<label class="col-sm-1 control-label">Amount</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getExpectedAmount()?> id="expectedAmount" name="expectedamount">
+									<input class="form-control" type="text" value="<?php echo $inventory->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
 								</div>
 								
 								<label class="col-sm-1 control-label">Documents</label>
@@ -132,19 +141,19 @@ if(isset($_POST["id"])){
 								</div>
 								<label class="col-sm-1 control-label">Time</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value=<?php echo $inventory->getTime()?> id="time" name="time">
+									<input class="form-control" type="text" value="<?php echo $inventory->getTime()?>" id="time" name="time">
 								</div>
 							</div>
-							<div class="form-group i-checks"">
+							<div class="form-group i-checks">
 								<label class="col-sm-1 control-label"></label> 
 									<label class="col-sm-2 control-label" style="text-align: left">
-										<input type="checkbox" name="isrental" id="isrental">
+										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
 										Rental
 									</label> 
 									<label class="col-sm-2 control-label">
-										<input type="checkbox"	name="isavailable" id="isavailable"> 
+										<input type="checkbox"	name="isavailable" <?php echo $isAvailable?> id="isavailable"> 
 										Available
-									</label>
+								</label>
 							</div>
 							
 							<div class="form-group furnishing" style="display:none">
@@ -194,10 +203,10 @@ if(isset($_POST["id"])){
 							</div>
 							
 							<div class="form-group specifications" style="display:none">
-								<label class="col-sm-1 control-label">Specifications</label>
+								<label class="col-sm-2 control-label">Specifications</label>
 
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" style="height:50px !important"> name="specifications"><?php echo $inventory->getSpecification()?></textarea>
+									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
 
 								</div>
 							</div>
@@ -208,11 +217,13 @@ if(isset($_POST["id"])){
 										data-style="expand-right" id="saveBtn" type="button">
 										<span class="ladda-label">Save</span>
 									</button>
-									<span id="saveNewBtnDiv"><button
-											class="btn btn-primary ladda-button"
-											data-style="expand-right" id="saveNewBtn" type="button">
-											<span class="ladda-label">Save & New</span>
-										</button></span>
+									<?php if($id == 0){?>
+										<span id="saveNewBtnDiv"><button
+												class="btn btn-primary ladda-button"
+												data-style="expand-right" id="saveNewBtn" type="button">
+												<span class="ladda-label">Save & New</span>
+											</button></span>
+									<?php }?>
 									<button type="button" class="btn btn-white" id="cancelBtn"
 										data-dismiss="modal">Cancel</button>
 								</div>
@@ -224,96 +235,108 @@ if(isset($_POST["id"])){
 		</div>
         </div>
         </div>
-        <script type="text/javascript">
-       
-            $(document).ready(function () {
-                $('.i-checks').iCheck({
-                    checkboxClass: 'icheckbox_square-green',
-                    radioClass: 'iradio_square-green',
-                });
-                $("#saveBtn").click(function(e){
-	            	    var btn = this;
-	            	    ValidateAndSave(e,btn);
-	                $("#cancelBtn").click(function(e){
-	                	location.href = ("showInventory.php");          
-            		});
-                $( "#propertytype" ).change(function() {
-                		$(".furnishing").hide();
-						$(".stories").hide();
-						$(".agriculturalLand").hide();
-						$(".floorNumber").hide();
-						$(".specifications").hide();
-						
-						if(this.value == "building"){
-							$(".furnishing").show();
-							$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-                   		}else if(this.value == "house"){
-                   			$(".furnishing").show();
-							$(".stories").show();
-							$(".specifications").show();
-                       	}else if(this.value == "plot"){
-                       		$(".agriculturalLand").show();
-							$(".specifications").show();
-                       	}else if(this.value == "bank"){
-                       		$(".furnishing").show();
-							$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-                        }else if(this.value == "floor"){
-                        	$(".floorNumber").show();
-							$(".specifications").show();
-                        }else if(this.value == "sco"){
-                        	$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-                        }else if(this.value == "mallShop"){
-                        	$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-                        }else if(this.value == "godown"){
-                        	$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-                        }else if(this.value == "parkingArea"){
-                        	$(".specifications").show();
-                        }else if(this.value == "foodLounge"){
-                        	$(".stories").show();
-							$(".floorNumber").show();
-							$(".specifications").show();
-
-                        }
-                })
-            });
-            $('#inventoryForm').jqxValidator({
-            	hintType: 'label',
-            	animationDuration: 0,
-            	rules: [
-            	{ input: '#address1', message: 'Address1 is required!', action: 'keyup, blur', rule: 'required' },
-            	{ input: '#contactPerson', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-            	{ input: '#contactMobile', message: 'Mobile is required!', action: 'keyup, blur', rule: 'required' }
-            	]
-            });
-            function submit(e,btn){
-        	    e.preventDefault();
-        	    var l = Ladda.create(btn);
-        	    l.start();    
-        	    $('#inventoryForm').ajaxSubmit(function( data ){
-        	        l.stop();
-        	        showResponseToastr(data,null,"inventoryForm","mainDiv");
-        	    })
-        	}
-            function ValidateAndSave(e,btn){
-        	    var validationResult = function (isValid){
-        	       if (isValid) {
-        	    	   submit(e,btn);
-        	        }
-        	    }
-        	   $('#inventoryForm').jqxValidator('validate', validationResult);
-        	}
-            
-        </script>
+        
 </body>
 
 </html>
+<script type="text/javascript">
+$(document).ready(function () {
+	    $('.i-checks').iCheck({
+	        checkboxClass: 'icheckbox_square-green',
+	        radioClass: 'iradio_square-green',
+	    });
+    	$("#saveBtn").click(function(e){
+    	    var btn = this;
+    	    ValidateAndSave(e,btn);
+    	});
+    	<?php if($id == 0){?>
+	    	$("#saveNewBtn").click(function(e){
+	    	    var btn = this;
+	    	    ValidateAndSave(e,btn);
+	    	});
+    	<?php }?>
+        $("#cancelBtn").click(function(e){
+        	location.href = ("showInventory.php");          
+		});
+	    $( "#propertytype" ).change(function() {
+	    		$(".furnishing").hide();
+				$(".stories").hide();
+				$(".agriculturalLand").hide();
+				$(".floorNumber").hide();
+				$(".specifications").hide();
+				
+				if(this.value == "building"){
+					$(".furnishing").show();
+					$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	       		}else if(this.value == "house"){
+	       			$(".furnishing").show();
+					$(".stories").show();
+					$(".specifications").show();
+	           	}else if(this.value == "plot"){
+	           		$(".agriculturalLand").show();
+					$(".specifications").show();
+	           	}else if(this.value == "bank"){
+	           		$(".furnishing").show();
+					$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	            }else if(this.value == "floor"){
+	            	$(".floorNumber").show();
+					$(".specifications").show();
+	            }else if(this.value == "sco"){
+	            	$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	            }else if(this.value == "mallShop"){
+	            	$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	            }else if(this.value == "godown"){
+	            	$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	            }else if(this.value == "parkingArea"){
+	            	$(".specifications").show();
+	            }else if(this.value == "foodLounge"){
+	            	$(".stories").show();
+					$(".floorNumber").show();
+					$(".specifications").show();
+	
+	            }
+	    })
+	    $( "#propertytype" ).change();
+});
+$('#inventoryForm').jqxValidator({
+	hintType: 'label',
+	animationDuration: 0,
+	rules: [
+	{ input: '#address1', message: 'Address1 is required!', action: 'keyup, blur', rule: 'required' },
+	{ input: '#contactPerson', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
+	{ input: '#contactMobile', message: 'Mobile is required!', action: 'keyup, blur', rule: 'required' }
+	]
+});
+function submit(e,btn){
+    e.preventDefault();
+    var l = Ladda.create(btn);
+    l.start();    
+    $('#inventoryForm').ajaxSubmit(function( data ){
+        l.stop();
+        showResponseToastr(data,null,"inventoryForm","mainDiv");
+    })
+}
+function ValidateAndSave(e,btn){
+    var validationResult = function (isValid){
+       if (isValid) {
+    	   submit(e,btn);
+    	   btnId = btn.id
+    	   if(btnId == "saveBtn"){
+    		   location.href = "showInventory.php";
+    	   }
+        	   
+        }
+    }
+   $('#inventoryForm').jqxValidator('validate', validationResult);
+}       
+</script>

@@ -37,6 +37,7 @@ class Inventory {
 	private $lastmodifiedon;
 	private $isavailable;
 	private $floornumber;
+	private $specifications;
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
 	}
@@ -243,11 +244,18 @@ class Inventory {
 		return $this->floornumber;
 	}
 	
-	function __construct ($payload)
-	{
-		if (is_array($payload)){
-			$this->from_array($payload);
-		}
+	public function setSpecifications($sepcifications_){
+		$this->specifications = $sepcifications_;
+	}
+	public function getSpecifications(){
+		return $this->specifications;
+	}
+	
+	function createFromRequest($request){
+		if (is_array($request)){
+			$this->from_array($request);
+		}	
+		return $this;
 	}
 	
 	public function from_array($array)

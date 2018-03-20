@@ -1,6 +1,7 @@
 <?php
 require_once ("MainDB.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "log4php/Logger.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Utils/FilterUtil.php");
 Logger::configure ( $ConstantsArray ['dbServerUrl'] . "log4php/log4php.xml" );
 class BeanDataStore {
 	private $className;
@@ -46,7 +47,7 @@ class BeanDataStore {
 			}
 			foreach ( $methods as $method ) {
 				$methodName = $method->name;
-				if (! $this->startsWith ( $methodName, "set" ) && $methodName != "from_array" && $methodName != "__construct") {
+				if (! $this->startsWith ( $methodName, "set" ) && $methodName != "from_array" && $methodName != "createFromRequest") {
 					if ($count > 0) {
 						$reflect = new ReflectionMethod ( $object, $methodName );
 						if ($reflect->isPublic ()) {
@@ -183,6 +184,24 @@ class BeanDataStore {
 			throw $e;
 		}
 	}
+	function findAllArr($isApplyFilter = false) {
+		try {
+			$db = MainDB::getInstance ();
+			$conn = $db->getConnection ();
+			$sql = "select * from " . $this->tableName;
+			if ($isApplyFilter) {
+				$sql = FilterUtil::applyFilter ( $sql );
+			}
+			$STH = $conn->prepare ( $sql );
+			$STH->execute ();
+			$objList = $STH->fetchAll (PDO::FETCH_ASSOC);
+			$this->throwException ( $STH->errorInfo () );
+			return $objList;
+		} catch ( Exception $e ) {
+			$this->logger->error ( "Error occured :" . $e );
+			throw $e;
+		}
+	}
 	function findAllByCompany($isApplyFilter = false) {
 		try {
 			$sql = "select ". $this->tableName.".* from " . $this->tableName . " where companyseq =" . $this->companySeq;
@@ -193,7 +212,7 @@ class BeanDataStore {
 				$sql = FilterUtil::applyFilter ( $sql );
 			}
 			
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $sql );
 			$STH->execute ();
@@ -207,7 +226,7 @@ class BeanDataStore {
 	}
 	function findBySeq($seq) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "select * from " . $this->tableName . " where seq = " . $seq );
 			$STH->execute ();
@@ -221,7 +240,7 @@ class BeanDataStore {
 	}
 	function findArrayBySeq($seq) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "select * from " . $this->tableName . " where seq = " . $seq );
 			$STH->execute ();
@@ -235,7 +254,7 @@ class BeanDataStore {
 	}
 	public function deleteBySeq($seq) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "delete from " . $this->tableName . " where seq = " . $seq );
 			$STH->execute ();
@@ -247,7 +266,7 @@ class BeanDataStore {
 	}
 	public function deleteInList($ids) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "delete from " . $this->tableName . " where seq in(" . $ids . ")" );
 			$flag = $STH->execute ();
@@ -267,7 +286,7 @@ class BeanDataStore {
 			if ($colValuePair != null) {
 				$query .= " WHERE " . implode ( " AND ", $query_array );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -279,7 +298,7 @@ class BeanDataStore {
 	}
 	public function deleteAll() {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "delete from " . $this->tableName );
 			$STH->execute ();
@@ -291,7 +310,7 @@ class BeanDataStore {
 	}
 	public function deleteAllByCompany() {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( "delete from " . $this->tableName . " where companyseq = " . $this->companySeq );
 			$STH->execute ();
@@ -320,7 +339,7 @@ class BeanDataStore {
 			if ($isApplyFilter) {
 				$query = FilterUtil::applyFilter ( $query );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -345,7 +364,7 @@ class BeanDataStore {
 			if ($isApplyFilter) {
 				$query = FilterUtil::applyFilter ( $query );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -367,7 +386,7 @@ class BeanDataStore {
 			if ($isApplyFilter) {
 				$query = FilterUtil::applyFilter ( $query );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -394,7 +413,7 @@ class BeanDataStore {
 			if ($condiationPair != null) {
 				$query .= " WHERE " . implode ( " AND ", $query_array );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -424,7 +443,7 @@ class BeanDataStore {
 				$query .= " WHERE " . implode ( " AND ", $query_array );
 			}
 			
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ( $paramValueArr );
@@ -450,7 +469,7 @@ class BeanDataStore {
 			if ($isApplyFilter) {
 				$query = FilterUtil::applyFilter ( $query, false );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$STH = $conn->prepare ( $query );
 			$STH->execute ();
@@ -640,7 +659,7 @@ left join learningplanprofiles m_lpp on m_lpm.learningplanseq = m_lpp.learningpl
 	
 	public function executeCountQueryWithSql($query, $isApplyFilter = false) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			if($this->isManager){
 				$query = $this->appendManagerCriteria($query,true);
@@ -661,7 +680,7 @@ left join learningplanprofiles m_lpp on m_lpm.learningplanseq = m_lpp.learningpl
 	}
 	public function executeQuery($query, $isApplyFilter = false, $ommitIntegerArrayElements =false) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			if($this->isManager){
 				$query = $this->appendManagerCriteria($query);
@@ -687,7 +706,7 @@ left join learningplanprofiles m_lpp on m_lpm.learningplanseq = m_lpp.learningpl
 	public function executeObjectQuery($query, $isApplyFilter = false) {
 		$objList = null;
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$sth = $conn->prepare ( $query );
             if($this->isManager){
@@ -719,7 +738,7 @@ left join learningplanprofiles m_lpp on m_lpm.learningplanseq = m_lpp.learningpl
 			if ($isApplyFilter) {
 				$query = FilterUtil::applyFilter ( $query, false );
 			}
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$sth = $conn->prepare ( $query );
 			$sth->execute ($paramValueArr);

@@ -318,7 +318,7 @@ $(document).ready(function() {
                             $.each(selectedRowIndexes, function(index , value){
                                 if(value != -1){
                                     var dataRow = $("#" + gridId).jqxGrid('getrowdata', value);
-                                    ids.push(dataRow.id);
+                                    ids.push(dataRow.seq);
                                 }
 
                             });

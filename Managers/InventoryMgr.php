@@ -1,6 +1,8 @@
 <?php
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Inventory.php");
 require_once($ConstantsArray['dbServerUrl'] ."DataStores/BeanDataStore.php");
+require_once($ConstantsArray['dbServerUrl'] ."Enums/FacingType.php");
+require_once($ConstantsArray['dbServerUrl'] ."Enums/PropertyType.php");
 class InventoryMgr{
 
     private static $inventoryMgr;
@@ -46,19 +48,31 @@ class InventoryMgr{
    		return $inventories;
    	}
    	
-   	public function findAllArr(){
-   		$inventoriesArr = self::$inventoryDataStore->findAllArr();
+   	public function findAllArr($isApplyFilter = false){
+   		$inventoriesArr = self::$inventoryDataStore->findAllArr($isApplyFilter);
    		return $inventoriesArr;
    	}
    	
-   	public function getInventoryForGrid(){
-   		$inventories = $this->findAllArr();
-   		$mainArr["recordsTotal"] = count($inventories);
-   		$mainArr["recordsFiltered"] = count($inventories);
-   		$mainArr["data"] = $inventories;
+   	public function getInventoryForGrid($isApplyFilter = false){
+   		$inventories = $this->findAllArr($isApplyFilter);
+   		$InArr = array();
+   		foreach ($inventories as $inventory){
+   			$arr = $inventory;
+   			$arr["facing"]  = FacingType::getValue($inventory["facing"]);
+   			$arr["propertytype"]  = PropertyType::getValue($inventory["propertytype"]);
+   			array_push($InArr, $arr);
+   		}
+   		$mainArr["Rows"] = $InArr;
+   		$mainArr["TotalRows"] = $this->getAllInventoryCount($isApplyFilter);
    		return $mainArr;
-   		
    	}
+   	
+   	public function getAllInventoryCount($isApplyFilter){
+   		$count = self::$inventoryDataStore->executeCountQuery(null,$isApplyFilter);
+   		return $count;
+   	}
+   	
+   	
    	
    	
 
