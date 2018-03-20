@@ -16,7 +16,7 @@
                     </a>
                 </li>
                  <li>
-                    <a href="createInventory.php"><i class="fa fa-th-large"></i> 
+                    <a href="showInventory.php"><i class="fa fa-th-large"></i> 
                     	<span class="nav-label">Show Properties</span>  
                     </a>
                 </li>
