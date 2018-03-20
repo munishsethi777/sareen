@@ -42,12 +42,12 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
         function loadGrid(){
             var columns = [
               { text: 'id', datafield: 'seq' , hidden:true},
-              { text: 'Property Type', datafield: 'propertytype'},
-              { text: 'PlotNumber' , datafield: 'plotnumber' },  
-              { text: 'Address', datafield: 'address1'},            
-              { text: 'Area', datafield: 'propertyarea'},
-              { text: 'Name', datafield: 'contactperson'},
-              { text: 'Contact', datafield: 'contactmobile'}
+              { text: 'Property Type', datafield: 'propertytype', width:"10%"},
+              { text: 'Area', datafield: 'propertyarea',width:"10%"},
+              { text: 'PlotNumber' , datafield: 'plotnumber',width:"10%" },  
+              { text: 'Address', datafield: 'address1',width:"37%"},            
+              { text: 'Name', datafield: 'contactperson',width:"15%"},
+              { text: 'Contact', datafield: 'contactmobile',width:"15%"}
               
             ]
            
