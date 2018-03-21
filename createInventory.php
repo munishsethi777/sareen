@@ -22,7 +22,7 @@ if(isset($_POST["id"])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Basic Form</title>
+    <title>Create New Property</title>
 	<?include "ScriptsInclude.php"?>
 </head>
 
@@ -203,7 +203,7 @@ if(isset($_POST["id"])){
 							</div>
 							
 							<div class="form-group specifications" style="display:none">
-								<label class="col-sm-2 control-label">Specifications</label>
+								<label class="col-sm-1 control-label">Specifications</label>
 
 								<div class="col-sm-5">
 									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
