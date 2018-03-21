@@ -4,11 +4,16 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Managers/InventoryMgr.php");
 $inventory = new Inventory();
 $isAvailable = "";
 $isRental = "";
+$imagePath = "images/dummy.jpg";
 $id = null;
 if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
+	$path = "images/propertyImages/".$id ."_thumb."."JPG";
+	if (file_exists($path)){
+		$imagePath = $path;
+	}
 	if(!empty($inventory->getIsAvailable())){
 		$isAvailable = "checked"; 
 	}
@@ -176,6 +181,15 @@ if(isset($_POST["id"])){
 								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getConstructionYears()?>" id="constructionyears" name="constructionyears">
 								</div>
+								
+								<label class="col-sm-1 control-label">Image</label>
+								<div class="col-sm-4">
+									<input type="file" id="inventoryImage" name="inventoryImage"
+										class="form-control hidden" /> <label for="inventoryImage"><a><img
+											alt="image" id="inventoryImg" class="img" width="100px;"
+											src="<?echo $imagePath."?".time() ?>"></a></label> <label
+										class="jqx-validator-error-label" id="imageError"></label>
+								</div>
 							</div>
 							
 							<div class="form-group agriculturalLand" style="display:none">
@@ -203,7 +217,7 @@ if(isset($_POST["id"])){
 							</div>
 							
 							<div class="form-group specifications" style="display:none">
-								<label class="col-sm-2 control-label">Specifications</label>
+								<label class="col-sm-1 control-label">Specifications</label>
 
 								<div class="col-sm-5">
 									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
@@ -258,6 +272,9 @@ $(document).ready(function () {
         $("#cancelBtn").click(function(e){
         	location.href = ("showInventory.php");          
 		});
+        $("#inventoryImage").change(function(){
+            readInventoryIMG(this);
+         });
 	    $( "#propertytype" ).change(function() {
 	    		$(".furnishing").hide();
 				$(".stories").hide();
@@ -317,6 +334,15 @@ $('#inventoryForm').jqxValidator({
 	{ input: '#contactMobile', message: 'Mobile is required!', action: 'keyup, blur', rule: 'required' }
 	]
 });
+function readInventoryIMG(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#inventoryImg').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 function submit(e,btn){
     e.preventDefault();
     var l = Ladda.create(btn);
@@ -324,17 +350,16 @@ function submit(e,btn){
     $('#inventoryForm').ajaxSubmit(function( data ){
         l.stop();
         showResponseToastr(data,null,"inventoryForm","mainDiv");
+        btnId = btn.id
+        if(btnId == "saveBtn"){
+ 		   location.href = "showInventory.php";
+ 	   }
     })
 }
 function ValidateAndSave(e,btn){
     var validationResult = function (isValid){
        if (isValid) {
-    	   submit(e,btn);
-    	   btnId = btn.id
-    	   if(btnId == "saveBtn"){
-    		   location.href = "showInventory.php";
-    	   }
-        	   
+    	   submit(e,btn);   
         }
     }
    $('#inventoryForm').jqxValidator('validate', validationResult);
