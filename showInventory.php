@@ -32,6 +32,27 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
     <form id="form1" name="form1" method="post" action="createInventory.php">
      	<input type="hidden" id="id" name="id"/>
    	</form>
+   	<form id="form2" name="form2" method="post" action="viewInventoryDetail.php">
+     	<input type="hidden" id="seq" name="seq"/>
+   	</form>
+   	<div id="createNewModalForm" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+            	<div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Property</h4>
+                </div>
+                <div class="modal-body mainDiv">
+                    <div class="row" >
+                    	<div class="col-sm-12">
+                    			
+                    	</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 	</body>
 </html>
 
@@ -40,14 +61,22 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
            loadGrid()
         });
         function loadGrid(){
+        	var actions = function (row, columnfield, value, defaulthtml, columnproperties) {
+                data = $('#inventoryGrid').jqxGrid('getrowdata', row);
+                var html = "<div style='text-align: center; margin-top:1px;font-size:18px'><a href='javascript:viewDetail("+ data['seq'] + ")' ><i class='fa fa-server' title='View Detail'></i></a>";
+                    html += "</div>";
+                
+                return html;
+            }
             var columns = [
               { text: 'id', datafield: 'seq' , hidden:true},
               { text: 'Property Type', datafield: 'propertytype', width:"10%"},
               { text: 'Area', datafield: 'propertyarea',width:"10%"},
               { text: 'PlotNumber' , datafield: 'plotnumber',width:"10%" },  
-              { text: 'Address', datafield: 'address1',width:"37%"},            
-              { text: 'Name', datafield: 'contactperson',width:"15%"},
-              { text: 'Contact', datafield: 'contactmobile',width:"15%"}
+              { text: 'Address', datafield: 'address1',width:"30%"},            
+              { text: 'Name', datafield: 'contactperson',width:"14%"},
+              { text: 'Contact', datafield: 'contactmobile',width:"14%"},
+              { text: 'View Detail', datafield: 'action',cellsrenderer:actions,width:'9%'},
               
             ]
            
@@ -62,7 +91,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'propertytype', type: 'string'},
                             { name: 'address1', type: 'string'},
                             { name: 'contactperson', type: 'string'},
-                            { name: 'contactmobile', type: 'string'}
+                            { name: 'contactmobile', type: 'string'},
+                            { name: 'action', type: 'string' } 
                             ],                          
                 url: 'Actions/InventoryAction.php?call=getInventories',
                 root: 'Rows',
@@ -155,5 +185,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                     });
                 }
             });
+        }
+        function viewDetail(seq){
+             $("#seq").val(seq);                        
+             $("#form2").submit();  
         }
 </script>
