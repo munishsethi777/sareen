@@ -6,7 +6,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Basic Form</title>
+    <title>Manage Properties</title>
     <?include "ScriptsInclude.php"?>
 </head>
 <body>
@@ -22,7 +22,48 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 	                        <h5>Inventories</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <div id="inventoryGrid"></div>
+	                    	<form name="searchInventory" type="GET" action="#">
+		                    	<div class="row">
+		                    		<div class="form-group">
+										<label class="col-sm-1 control-label">Type</label>
+										<div class="col-sm-2">
+											<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", "")?>
+										</div>
+										<label class="col-sm-1 control-label">Purpose</label>
+										<div class="col-sm-2">
+											<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", "")?>
+										</div>
+										<label class="col-sm-1 control-label">Medium</label>
+										<div class="col-sm-2">
+												<?php echo DropDownUtils::getMediumTypeDD("medium", "", "")?>
+										</div>
+										<label class="col-sm-1 control-label">Facing</label>
+										<div class="col-sm-2">
+											<?php echo DropDownUtils::getFacingTypeDD("facing", "", "")?>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">Stories</label>
+										<div class="col-sm-2">
+											<input class="form-control" type="text" id="stories"  name="stories">
+										</div>
+										
+										<label class="col-sm-1 control-label">Amount</label>
+										<div class="col-sm-2">
+											<input class="form-control" type="text"  id="amount" name="amount">
+										</div>
+										
+										<label class="col-sm-1 control-label">Rental</label>
+										<label class="col-sm-2 control-label i-checks" style="text-align: left;padding-left:15px">
+											<input type="checkbox" name="isrental" id="isrental">
+											
+										</label> 
+									</div>
+		                    	</div>
+	                    	</form>
+	                        <div id="inventoryGrid" style="margin-top:8px"></div>
 	                    </div>
 	                </div>
 	            </div>
@@ -59,6 +100,10 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 	<script type="text/javascript">
         $(document).ready(function(){
            loadGrid()
+           $('.i-checks').iCheck({
+	        	checkboxClass: 'icheckbox_square-green',
+	        	radioClass: 'iradio_square-green',
+	    	});
         });
         function loadGrid(){
         	var actions = function (row, columnfield, value, defaulthtml, columnproperties) {

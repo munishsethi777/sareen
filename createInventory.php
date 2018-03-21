@@ -27,7 +27,7 @@ if(isset($_POST["id"])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Basic Form</title>
+    <title>Create New Property</title>
 	<?include "ScriptsInclude.php"?>
 </head>
 
