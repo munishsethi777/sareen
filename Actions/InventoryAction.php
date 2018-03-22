@@ -2,6 +2,8 @@
 require_once('../IConstants.inc');
 require_once($ConstantsArray['dbServerUrl'] ."Managers/InventoryMgr.php");
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Inventory.php");
+require_once($ConstantsArray['dbServerUrl'] ."Utils/FileUtil.php");
+require_once($ConstantsArray['dbServerUrl'] ."StringConstants.php");
 $call = "";
 if(isset($_POST["call"])){
 	$call = $_POST["call"];
@@ -29,8 +31,25 @@ if($call == "saveInventory"){
 		if(empty($inventory->getSeq())){
 			$inventory->setCreatedOn(new DateTime());
 		}
+		
 		$inventory->setLastmodifiedon(new DateTime());
-		$inventoryMgr->saveInventory($inventory);
+		$id = $inventoryMgr->saveInventory($inventory);
+		if(isset($_FILES["inventoryImage"])){
+			$file = $_FILES["inventoryImage"];
+			$filename = $file["name"];
+			$imageType = pathinfo($filename, PATHINFO_EXTENSION);
+			$uploaddir = StringConstants::PROPERTY_IMAGE_PATH;
+			$filename = $id .".". $imageType;
+			$imageName = FileUtil::uploadImageFiles($file,$uploaddir,$filename);
+			$imagePath = "images//propertyImages//".$imageName;
+			$filename = $id ."_otp.". $imageType;
+			$fileContent = file_get_contents($uploaddir . $imageName);
+			$imagePath = "images//propertyImages//".$filename;
+			$destination = $uploaddir.$filename;
+			$thumbnailDestination = $uploaddir .$id ."_thumb.". $imageType;
+			FileUtil::compress($uploaddir . $imageName,$destination,$thumbnailDestination,80);
+		}
+		
 		$message = "Inventory Saved Successfully";
 	}catch(Exception $e){
 		$success = 0;

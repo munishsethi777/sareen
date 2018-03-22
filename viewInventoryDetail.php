@@ -5,10 +5,15 @@ $inventory = new Inventory();
 $isAvailable = "No";
 $isRental = "No";
 $id = null;
+$imagePath = "images/dummy.jpg";
 if(isset($_POST["seq"])){
 	$id = $_POST["seq"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
+	$path = "images/propertyImages/".$id ."_thumb."."JPG";
+	if (file_exists($path)){
+		$imagePath = $path;
+	}
 	if(!empty($inventory->getIsAvailable())){
 		$isAvailable = "Yes"; 
 	}
@@ -207,6 +212,14 @@ if(isset($_POST["seq"])){
 								<label class="col-sm-2">Specifications</label>
 								<div class="col-sm-2">
 									<?php echo $inventory->getSpecifications()?>
+								</div>
+								<label class="col-sm-1 control-label">Image</label>
+								<div class="col-sm-4">
+									<input type="file" id="inventoryImage" name="inventoryImage"
+										class="form-control hidden" /> <label for="inventoryImage"><a><img
+											alt="image" id="inventoryImg" class="img" width="100px;"
+											src="<?echo $imagePath."?".time() ?>"></a></label> <label
+										class="jqx-validator-error-label" id="imageError"></label>
 								</div>
 							</div>
 						</form>
