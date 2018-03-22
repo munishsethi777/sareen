@@ -22,24 +22,24 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 	                        <h5>Inventories</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                    	<form name="searchInventory" type="GET" action="#">
+	                    	<form name="searchInventory" method="GET" action="#">
 		                    	<div class="row">
 		                    		<div class="form-group">
 										<label class="col-sm-1 control-label">Type</label>
 										<div class="col-sm-2">
-											<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", "")?>
+											<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", "",true)?>
 										</div>
 										<label class="col-sm-1 control-label">Purpose</label>
 										<div class="col-sm-2">
-											<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", "")?>
+											<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", "",true)?>
 										</div>
 										<label class="col-sm-1 control-label">Medium</label>
 										<div class="col-sm-2">
-												<?php echo DropDownUtils::getMediumTypeDD("medium", "", "")?>
+												<?php echo DropDownUtils::getMediumTypeDD("medium", "", "",true)?>
 										</div>
 										<label class="col-sm-1 control-label">Facing</label>
 										<div class="col-sm-2">
-											<?php echo DropDownUtils::getFacingTypeDD("facing", "", "")?>
+											<?php echo DropDownUtils::getFacingTypeDD("facing", "", "",true)?>
 										</div>
 									</div>
 								</div>
@@ -52,14 +52,19 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 										
 										<label class="col-sm-1 control-label">Amount</label>
 										<div class="col-sm-2">
-											<input class="form-control" type="text"  id="amount" name="amount">
+											<input class="form-control" type="text"  id="expectedamount" name="expectedamount">
 										</div>
+											<label class="col-sm-1 control-label">Rental</label>
+											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
+												<input type="checkbox" name="isrental" id="isrental">
+												
+											</label> 
+											<label class="col-sm-1 control-label">Available</label>
+											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
+												<input type="checkbox" name="isavailable" id="isavailable">
+												
+											</label> 
 										
-										<label class="col-sm-1 control-label">Rental</label>
-										<label class="col-sm-2 control-label i-checks" style="text-align: left;padding-left:15px">
-											<input type="checkbox" name="isrental" id="isrental">
-											
-										</label> 
 									</div>
 		                    	</div>
 	                    	</form>
@@ -98,14 +103,96 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 </html>
 
 	<script type="text/javascript">
+	   
         $(document).ready(function(){
            loadGrid()
            $('.i-checks').iCheck({
 	        	checkboxClass: 'icheckbox_square-green',
 	        	radioClass: 'iradio_square-green',
 	    	});
+           var applyFilter = function (datafield) {
+        	   $("#inventoryGrid").jqxGrid('clearfilters');
+        	   $("#inventoryGrid").jqxGrid('clear');
+        	   var filtertype = 'stringfilter';
+               if (datafield == 'date') filtertype = 'datefilter';
+               if (datafield == 'price' || datafield == 'quantity') filtertype = 'numericfilter';
+               var filtergroup = new $.jqx.filter();
+               var filterData = getFilterQueryData();
+               $.each(filterData, function( key, value ) {
+                   if(value != null && value != "" && value != "all"){
+	            	   var filter_or_operator = 1;
+	                   var filtervalue = value;
+	                   var filtercondition = 'contains';
+	                   var filter = filtergroup.createfilter(filtertype, filtervalue, filtercondition);
+	                   filtergroup.addfilter(filter_or_operator, filter);
+	                   $("#inventoryGrid").jqxGrid('addfilter', key, filtergroup);
+                   }
+               });
+               // add the filters.
+               
+               // apply the filters.
+               $("#inventoryGrid").jqxGrid('applyfilters');
+           }
+           // clears the filter.
+           $("#clearfilter").click(function () {
+               $("#inventoryGrid").jqxGrid('clearfilters');
+           });
+           // applies the filter.
+           $("#propertytype").change(function () {
+        	   applyFilter("propertytype")
+           });
+           $("#purpose").change(function () {
+        	   applyFilter("purpose")
+           });
+           $("#medium").change(function () {
+        	   applyFilter("medium")
+           });
+           $("#facing").change(function () {
+        	   applyFilter("facing")
+           });
+           $("#stories").change(function () {
+        	   applyFilter("stories")
+           });
+           $("#expectedamount").change(function () {
+        	   applyFilter("expectedamount")
+           });
+           $('#isrental').on('ifChanged', function(event){
+        	   applyFilter("isrental")
+     		});
+           $('#isavailable').on('ifChanged', function(event){
+        	   applyFilter("isavailable")
+     		});
         });
+        
+        function filterCall(dataField){
+            applyFilter(dataField);
+        }
+
+		function getFilterQueryData(){
+			var propertyType = $("#propertytype").val();
+			var purpose = $("#purpose").val();
+			var medium = $("#medium").val();
+			var facing = $("#facing").val();
+			var stories = $("#stories").val();
+			var expectedAmount = $("#expectedamount").val();
+			var isRentalChecked =$("input[type='checkbox'][name='isrental']:checked").val()
+			var isrental = "";
+			if(isRentalChecked == "on"){
+				isrental = "1"
+			} 
+			var isAvailableChecked =$("input[type='checkbox'][name='isavailable']:checked").val()
+			var isAvailable = "";
+			if(isAvailableChecked == "on"){
+				isAvailable = "1"
+			} 
+			var data = {propertytype: propertyType, purpose: purpose,medium: medium,facing: facing,stories: stories,expectedamount:expectedAmount,isrental:isrental,isavailable:isAvailable};
+			return data
+		}
+        
         function loadGrid(){
+        	$("#inventoryGrid").bind('bindingcomplete', function (event) {
+        		
+        	});
         	var actions = function (row, columnfield, value, defaulthtml, columnproperties) {
                 data = $('#inventoryGrid').jqxGrid('getrowdata', row);
                 var html = "<div style='text-align: center; margin-top:1px;font-size:18px'><a href='javascript:viewDetail("+ data['seq'] + ")' ><i class='fa fa-server' title='View Detail'></i></a>";
@@ -116,6 +203,13 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             var columns = [
               { text: 'id', datafield: 'seq' , hidden:true},
               { text: 'Property Type', datafield: 'propertytype', width:"10%"},
+              { text: 'Purpose', datafield: 'purpose', hidden:true,width:"10%"},
+              { text: 'Medium', datafield: 'medium', hidden:true,width:"10%"},
+              { text: 'Facing', datafield: 'facing', hidden:true,width:"10%"},
+              { text: 'Stories', datafield: 'stories', hidden:true,width:"10%"},
+              { text: 'Amount', datafield: 'expectedamount', hidden:true,width:"10%"},
+              { text: 'Rental', datafield: 'isrental', hidden:true,width:"10%"},
+              { text: 'Available', datafield: 'isavailable', hidden:true,width:"10%"},
               { text: 'Area', datafield: 'propertyarea',width:"10%"},
               { text: 'PlotNumber' , datafield: 'plotnumber',width:"10%" },  
               { text: 'Address', datafield: 'address1',width:"30%"},            
@@ -133,6 +227,13 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                 datafields: [{ name: 'seq', type: 'integer' }, 
                             { name: 'plotnumber', type: 'string' }, 
                             { name: 'propertyarea', type: 'string' },
+                            { name: 'purpose', type: 'string' },
+                            { name: 'medium', type: 'string' },
+                            { name: 'facing', type: 'string' },
+                            { name: 'stories', type: 'string' },
+                            { name: 'expectedamount', type: 'integer' },
+                            { name: 'isrental', type: 'integer' },
+                            { name: 'isavailable', type: 'integer' },
                             { name: 'propertytype', type: 'string'},
                             { name: 'address1', type: 'string'},
                             { name: 'contactperson', type: 'string'},
@@ -172,7 +273,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             $("#inventoryGrid").jqxGrid(
             {
             width: '100%',
-            height: '75%',
+            height: '90%',
             source: dataAdapter,
             sortable: true,            
             filterable: true,
@@ -235,4 +336,6 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
              $("#seq").val(seq);                        
              $("#form2").submit();  
         }
+
+        
 </script>
