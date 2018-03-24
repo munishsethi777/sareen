@@ -217,7 +217,7 @@ if(isset($_POST["seq"])){
 								<div class="col-sm-4">
 									<input type="file" id="inventoryImage" name="inventoryImage"
 										class="form-control hidden" /> <label for="inventoryImage"><a><img
-											alt="image" id="inventoryImg" class="img" width="100px;"
+											alt="image" id="inventoryImg" class="img" width="300px;"
 											src="<?echo $imagePath."?".time() ?>"></a></label> <label
 										class="jqx-validator-error-label" id="imageError"></label>
 								</div>
