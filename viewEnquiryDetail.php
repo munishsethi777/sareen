@@ -110,14 +110,11 @@ if(isset($_POST["seq"])){
 									<?php echo $enquiry->getContactAddress()?>
 								</div>
 							</div>
-							
 							<div class="form-group">
 								<label class="col-sm-2">Amount : </label>
-								<div class="col-sm-2">
-									<?php echo $enquiry->getExpectedAmount()?>
-								</div>
-							</div>
-							<div class="form-group">
+									<div class="col-sm-2">
+										<?php echo $enquiry->getExpectedAmount()?>
+									</div>
 								<label class="col-sm-2">Rental : </label>
 								<div class="col-sm-2">
 									<?php echo $isRental?>
@@ -127,30 +124,11 @@ if(isset($_POST["seq"])){
 									<?php echo $isFullfilled?>
 								</div>
 							</div>
-							<div class="form-group furnishing" style="display:none">
-								<label class="col-sm-2">Furnishing : </label>
-								<div class="col-sm-2">
-									<?php $furnishing = FurnishingType::getValue($enquiry->getFurnishing()) ;
-									echo $furnishing?>
-								</div>
-								<label class="col-sm-2">Details : </label>
-								<div class="col-sm-5">
-									<?php echo $enquiry->getFurnishingDetails()?>
-								</div>
-							</div>
 							
 							<div class="form-group specifications">
 								<label class="col-sm-2">Specifications</label>
 								<div class="col-sm-2">
 									<?php echo $enquiry->getSpecifications()?>
-								</div>
-								<label class="col-sm-1 control-label">Image</label>
-								<div class="col-sm-4">
-									<input type="file" id="inventoryImage" name="inventoryImage"
-										class="form-control hidden" /> <label for="inventoryImage"><a><img
-											alt="image" id="inventoryImg" class="img" width="300px;"
-											src="<?echo $imagePath."?".time() ?>"></a></label> <label
-										class="jqx-validator-error-label" id="imageError"></label>
 								</div>
 							</div>
 						</form>
