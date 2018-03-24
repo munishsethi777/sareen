@@ -21,6 +21,16 @@
                     </a>
                 </li>
                  <li>
+                    <a href="createEnquiry.php"><i class="fa fa-th-large"></i> 
+                    	<span class="nav-label">Create Enquery</span>  
+                    </a>
+                </li>
+                <li>
+                    <a href="showEnquiries.php"><i class="fa fa-th-large"></i> 
+                    	<span class="nav-label">Show Enquiries</span>  
+                    </a>
+                </li>
+                 <li>
                     <a href="createInventory.php"><i class="fa fa-th-large"></i> 
                     	<span class="nav-label">Change Password</span>  
                     </a>
