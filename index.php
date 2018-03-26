@@ -11,7 +11,7 @@ if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
-	$path = "images/propertyImages/".$id ."_thumb."."JPG";
+	$path = "images/propertyImages/".$id ."_thumb."."jpg";
 	if (file_exists($path)){
 		$imagePath = $path;
 	}
