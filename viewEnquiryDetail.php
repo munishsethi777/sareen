@@ -131,6 +131,11 @@ if(isset($_POST["seq"])){
 									<?php echo $enquiry->getSpecifications()?>
 								</div>
 							</div>
+							
+							<a href="showEnquiries.php" class="btn btn-primary">
+								<span class="ladda-label">Back to Enquiries</span>
+							</a>
+							
 						</form>
 					</div>
 				</div>

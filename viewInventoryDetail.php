@@ -27,7 +27,7 @@ if(isset($_POST["seq"])){
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Basic Form</title>
+    <title>View Property</title>
 	<?include "ScriptsInclude.php"?>
 </head>
 
@@ -215,13 +215,15 @@ if(isset($_POST["seq"])){
 								</div>
 								<label class="col-sm-1 control-label">Image</label>
 								<div class="col-sm-4">
-									<input type="file" id="inventoryImage" name="inventoryImage"
-										class="form-control hidden" /> <label for="inventoryImage"><a><img
-											alt="image" id="inventoryImg" class="img" width="300px;"
-											src="<?echo $imagePath."?".time() ?>"></a></label> <label
-										class="jqx-validator-error-label" id="imageError"></label>
+									<a>
+										<img alt="image" id="inventoryImg" class="img" width="150px;"
+											src="<?echo $imagePath."?".time() ?>"></a>
 								</div>
 							</div>
+							
+							<a href="showInventory.php" class="btn btn-primary">
+								<span class="ladda-label">Back to Properties</span>
+							</a>
 						</form>
 					</div>
 				</div>

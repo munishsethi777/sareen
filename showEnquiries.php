@@ -165,7 +165,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             }
             var columns = [
               { text: 'id', datafield: 'seq' , hidden:true},
-              { text: 'Property Type', datafield: 'propertytype', width:"10%"},
+              { text: 'Type', datafield: 'propertytype', width:"7%"},
               { text: 'Purpose', datafield: 'purpose', hidden:true,width:"10%"},
               { text: 'Facing', datafield: 'facing', hidden:true,width:"10%"},
               { text: 'Amount', datafield: 'expectedamount', hidden:true,width:"10%"},
@@ -173,9 +173,10 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
               { text: 'Fullfilled', datafield: 'isfullfilled', hidden:true,width:"10%"},
               { text: 'Area', datafield: 'propertyarea',width:"10%"},
               { text: 'Address', datafield: 'address',width:"35%"},            
-              { text: 'Name', datafield: 'contactperson',width:"19%"},
-              { text: 'Contact', datafield: 'contactmobile',width:"14%"},
-              { text: 'View Detail', datafield: 'action',cellsrenderer:actions,width:'9%'},
+              { text: 'Name', datafield: 'contactperson',width:"12%"},
+              { text: 'Contact', datafield: 'contactmobile',width:"10%"},
+              { text: 'Modified', datafield: 'lastmodifiedon',cellsformat: 'd-M-yyyy hh:mm tt',width:"15%"},
+              { text: 'Detail', datafield: 'action',cellsrenderer:actions,width:'7%'},
               
             ]
            
@@ -184,6 +185,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                 datatype: "json",
                 id: 'id',
                 pagesize: 20,
+                sortcolumn: 'lastmodifiedon',
+                sortdirection: 'desc',
                 datafields: [{ name: 'seq', type: 'integer' }, 
                             { name: 'plotnumber', type: 'string' }, 
                             { name: 'propertyarea', type: 'string' },
@@ -196,6 +199,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'address', type: 'string'},
                             { name: 'contactperson', type: 'string'},
                             { name: 'contactmobile', type: 'string'},
+                            { name: 'lastmodifiedon', type: 'date'},
                             { name: 'action', type: 'string' } 
                             ],                          
                 url: 'Actions/EnquiryAction.php?call=getEnquiries',

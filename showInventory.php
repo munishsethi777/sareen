@@ -13,8 +13,11 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
     <div id="wrapper">
     <?php include("menuInclude.php")?>  
         <div id="page-wrapper" class="gray-bg">
-	        <div class="row border-bottom">
-	        </div>
+	        <div class="navbar-header">
+				<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+					href="#"><i class="fa fa-bars"></i> </a>
+
+			</div>
         	<div class="row">
 	            <div class="col-lg-12">
 	                <div class="ibox">
@@ -75,7 +78,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
         	</div>
        </div>
     </div>
-    <form id="form1" name="form1" method="post" action="createInventory.php">
+    <form id="form1" name="form1" method="post" action="index.php">
      	<input type="hidden" id="id" name="id"/>
    	</form>
    	<form id="form2" name="form2" method="post" action="viewInventoryDetail.php">
@@ -202,20 +205,21 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             }
             var columns = [
               { text: 'id', datafield: 'seq' , hidden:true},
-              { text: 'Property Type', datafield: 'propertytype', width:"10%"},
-              { text: 'Purpose', datafield: 'purpose', hidden:true,width:"10%"},
-              { text: 'Medium', datafield: 'medium', hidden:true,width:"10%"},
-              { text: 'Facing', datafield: 'facing', hidden:true,width:"10%"},
-              { text: 'Stories', datafield: 'stories', hidden:true,width:"10%"},
-              { text: 'Amount', datafield: 'expectedamount', hidden:true,width:"10%"},
-              { text: 'Rental', datafield: 'isrental', hidden:true,width:"10%"},
-              { text: 'Available', datafield: 'isavailable', hidden:true,width:"10%"},
-              { text: 'Area', datafield: 'propertyarea',width:"10%"},
-              { text: 'PlotNumber' , datafield: 'plotnumber',width:"10%" },  
+              { text: 'Type', datafield: 'propertytype', width:"10%"},
+              { text: 'Purpose', datafield: 'purpose', hidden:true},
+              { text: 'Medium', datafield: 'medium', hidden:true},
+              { text: 'Facing', datafield: 'facing', hidden:true},
+              { text: 'Stories', datafield: 'stories', hidden:true},
+              { text: 'Amount', datafield: 'expectedamount', hidden:true},
+              { text: 'Rental', datafield: 'isrental', hidden:true},
+              { text: 'Available', datafield: 'isavailable', hidden:true},
+              { text: 'Area', datafield: 'propertyarea',width:"6%"},
+              { text: 'Plot#' , datafield: 'plotnumber',width:"6%" },  
               { text: 'Address', datafield: 'address1',width:"30%"},            
               { text: 'Name', datafield: 'contactperson',width:"14%"},
-              { text: 'Contact', datafield: 'contactmobile',width:"14%"},
-              { text: 'View Detail', datafield: 'action',cellsrenderer:actions,width:'9%'},
+              { text: 'Contact', datafield: 'contactmobile',width:"10%"},
+              { text: 'Modified', datafield: 'lastmodifiedon',cellsformat: 'd-M-yyyy hh:mm tt',width:"15%"},
+              { text: 'Details', datafield: 'action',cellsrenderer:actions,width:'5%'},
               
             ]
            
@@ -224,6 +228,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                 datatype: "json",
                 id: 'id',
                 pagesize: 20,
+                sortcolumn: 'lastmodifiedon',
+                sortdirection: 'desc',
                 datafields: [{ name: 'seq', type: 'integer' }, 
                             { name: 'plotnumber', type: 'string' }, 
                             { name: 'propertyarea', type: 'string' },
@@ -238,6 +244,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'address1', type: 'string'},
                             { name: 'contactperson', type: 'string'},
                             { name: 'contactmobile', type: 'string'},
+                            { name: 'lastmodifiedon', type: 'date'},
                             { name: 'action', type: 'string' } 
                             ],                          
                 url: 'Actions/InventoryAction.php?call=getInventories',
@@ -286,7 +293,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             columnsreorder: true,
             selectionmode: 'checkbox',
             showstatusbar: true,   
-            virtualmode: true,   
+            virtualmode: true,
+               
             rendergridrows: function()
             {
                   return dataAdapter.records;     
@@ -310,7 +318,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                     reloadButton.jqxButton({  width: 70, height: 18 });
                     // create new row.
                     addButton.click(function (event) {
-                        location.href = ("createInventory.php");
+                        location.href = ("index.php");
                     });
                     editButton.click(function (event){
                         var selectedrowindex = $("#inventoryGrid").jqxGrid('selectedrowindexes');

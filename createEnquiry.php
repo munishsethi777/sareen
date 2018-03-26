@@ -128,12 +128,12 @@ if(isset($_POST["id"])){
 									</label> 
 									<label class="col-sm-2 control-label">
 										<input type="checkbox"	name="isfullfilled" <?php echo $isFullfilled?> id="isfullfilled"> 
-										Fullfill
+										Fulfilled
 									</label>
 									
 							</div>
 							<div class="form-group specifications">
-								<label class="col-sm-2 control-label">Specifications</label>
+								<label class="col-sm-1 control-label">Specification</label>
 
 								<div class="col-sm-5">
 									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $enquery->getSpecifications()?></textarea>

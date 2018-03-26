@@ -11,7 +11,7 @@
 
                 </li>
                 <li>
-                    <a href="createInventory.php"><i class="fa fa-th-large"></i> 
+                    <a href="index.php"><i class="fa fa-th-large"></i> 
                     	<span class="nav-label">Create Property</span>  
                     </a>
                 </li>
@@ -22,7 +22,7 @@
                 </li>
                  <li>
                     <a href="createEnquiry.php"><i class="fa fa-th-large"></i> 
-                    	<span class="nav-label">Create Enquery</span>  
+                    	<span class="nav-label">Create Enquiry</span>  
                     </a>
                 </li>
                 <li>
@@ -30,16 +30,7 @@
                     	<span class="nav-label">Show Enquiries</span>  
                     </a>
                 </li>
-                 <li>
-                    <a href="createInventory.php"><i class="fa fa-th-large"></i> 
-                    	<span class="nav-label">Change Password</span>  
-                    </a>
-                </li>
-                 <li>
-                    <a href="createInventory.php"><i class="fa fa-th-large"></i> 
-                    	<span class="nav-label">Logout</span>  
-                    </a>
-                </li>
+                
                 
             </ul>
 
