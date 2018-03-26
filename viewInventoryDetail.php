@@ -10,7 +10,7 @@ if(isset($_POST["seq"])){
 	$id = $_POST["seq"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
-	$path = "images/propertyImages/".$id ."_thumb."."JPG";
+	$path = "images/propertyImages/".$id ."_thumb."."jpg";
 	if (file_exists($path)){
 		$imagePath = $path;
 	}
