@@ -9,7 +9,7 @@ if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$enqueryMgr = EnquiryMgr::getInstance();
 	$enquery = $enqueryMgr->findBySeq($id);
-	$path = "images/propertyImages/".$id ."_thumb."."JPG";
+	$path = "images/propertyImages/".$id ."_thumb."."jpg";
 	if (file_exists($path)){
 		$imagePath = $path;
 	}
