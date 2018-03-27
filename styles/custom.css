@@ -119,3 +119,17 @@ ul.nav-second-level{
 	border-left:1px silver solid;
 	height:100%;
 }
+
+
+.navbar-static-top{
+	background:none !important;
+	display:inline-block;
+	min-height:20px !important;
+}
+
+.ibox-title h5{
+	float:none !important;
+}
+.navbar .minimalize-styl-2{
+	margin:5px !important;
+}

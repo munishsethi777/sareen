@@ -12,17 +12,19 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 <body>
     <div id="wrapper">
     <?php include("menuInclude.php")?>  
-        <div id="page-wrapper" class="gray-bg">
-	        <div class="navbar-header">
-				<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
-					href="#"><i class="fa fa-bars"></i> </a>
-
-			</div>
-        	<div class="row">
+       <div id="page-wrapper" class="gray-bg">
+       
+		     	<div class="row">
 	            <div class="col-lg-12">
 	                <div class="ibox">
 	                    <div class="ibox-title">
-	                        <h5>Inventories</h5>
+	                    
+	                    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+								href="#"><i class="fa fa-bars"></i> </a>
+						</nav>
+	                    
+	                    <h5>Inventories</h5>
 	                    </div>
 	                    <div class="ibox-content">
 	                    	<form name="searchInventory" method="GET" action="#">

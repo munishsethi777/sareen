@@ -41,6 +41,10 @@ if(isset($_POST["id"])){
 			<div class="col-lg-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
+						 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+							<a class="navbar-minimalize minimalize-styl-2 btn btn-primary "
+								href="#"><i class="fa fa-bars"></i> </a>
+						</nav>
 						<h5>
 							Create New Enquiry
 						</h5>
