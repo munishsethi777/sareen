@@ -38,7 +38,7 @@
     	}
     }
     
-    public function compress($source, $destination,$thumbnailDestination, $quality) {
+    public static function compress($source, $destination,$thumbnailDestination, $quality) {
     
     	$info = getimagesize($source);
     
