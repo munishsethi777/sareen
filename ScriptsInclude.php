@@ -332,7 +332,7 @@ $(document).ready(function() {
                                        //$.each(selectedRowIndexes, function(index , value){
                                           //  var id = $("#"  + gridId).jqxGrid('getrowid', value);
                                             var commit = $("#"  + gridId).jqxGrid('deleterow', ids);
-                                            //$("#"+gridId).jqxGrid('clearselection');
+                                            $("#"+gridId).jqxGrid('clearselection');
                                             $("#"+gridId).jqxGrid('updatebounddata');
                                         //});
                                     }else{
