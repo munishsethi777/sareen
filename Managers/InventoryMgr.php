@@ -34,7 +34,23 @@ class InventoryMgr{
     
     public function deleteBySeq($seqs){
     	$flag = self::$inventoryDataStore->deleteInList($seqs);
+    	if($flag){
+    		$this->deleteImages($seqs);
+    	}
     	return $flag;
+    }
+    
+    public function deleteImages($seqs){
+    	$seqs = explode(",", $seqs);
+    	foreach ($seqs as $seq){
+    		$imagePath = StringConstants::PROPERTY_IMAGE_PATH;
+    		$orgImagePath = $imagePath . $seq.".jpg";
+    		FileUtil::deletefile($orgImagePath);
+    		$optImagePath = $imagePath . $seq."_opt.jpg";
+    		FileUtil::deletefile($optImagePath);
+    		$thumbImagePath = $imagePath . $seq."_thumb.jpg";
+    		FileUtil::deletefile($thumbImagePath);
+    	}	
     }
     
    	public function changeAvailableStatus($isAvailabletatus,$seq){

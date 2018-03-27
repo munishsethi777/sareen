@@ -42,7 +42,7 @@ if($call == "saveInventory"){
 			$filename = $id .".". $imageType;
 			$imageName = FileUtil::uploadImageFiles($file,$uploaddir,$filename);
 			$imagePath = "images//propertyImages//".$imageName;
-			$filename = $id ."_otp.". $imageType;
+			$filename = $id ."_opt.". $imageType;
 			$fileContent = file_get_contents($uploaddir . $imageName);
 			$imagePath = "images//propertyImages//".$filename;
 			$destination = $uploaddir.$filename;
