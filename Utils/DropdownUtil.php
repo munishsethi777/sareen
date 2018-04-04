@@ -7,6 +7,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Enums/DocumentType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyNumberType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/FurnishingType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/AcquiredType.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyUnit.php");
+
 class DropDownUtils {
 	
    public static function getDropDown($values, $selectName, $onChangeMethod, $selectedValue,$isAll = false) {
@@ -60,6 +62,11 @@ class DropDownUtils {
 	
 	public static function getAcquiredTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
 		$types = AcquiredType::getAll();
+		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,$isAll);
+	}
+	
+	public static function getPropertyUnitsDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
+		$types = PropertyUnit::getAll();
 		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,$isAll);
 	}
 	

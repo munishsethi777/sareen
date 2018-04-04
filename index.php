@@ -32,6 +32,14 @@ if(isset($_POST["id"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Property</title>
 	<?include "ScriptsInclude.php"?>
+	<style type="text/css">
+		h4{
+			padding-bottom:20px;
+		}
+		.hr-line-dashed{
+			border-top:1px dashed #b4b6b7;
+		}
+	</style>
 </head>
 
 <body>
@@ -57,114 +65,129 @@ if(isset($_POST["id"])){
 						<form method="post" action="Actions/InventoryAction.php" id="inventoryForm" class="form-horizontal">
 							<input type="hidden" name="call" value="saveInventory">
 							<input type="hidden" name="seq" value="<?php echo $inventory->getSeq()?>" >
+							<h4>USER INFO</h4>
 							<div class="form-group">
-								<label class="col-sm-1 control-label">Type</label>
-								<div class="col-sm-5">
-									<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", $inventory->getPropertyType())?>
+								<label class="col-sm-1 control-label">Name</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="text" value="<?php echo $inventory->getContactPerson()?>" id="contactPerson" name="contactperson">
 								</div>
-								<label class="col-sm-1 control-label">Medium</label>
-								<div class="col-sm-5">
-										<?php echo DropDownUtils::getMediumTypeDD("medium", "", $inventory->getMedium())?>
+								<label class="col-sm-1 control-label col-sm-offset-1">Mobile</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="text" value="<?php echo $inventory->getContactMobile()?>" id="contactMobile" name="contactmobile">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label">Plot Number</label>
-								<div class="col-sm-5">
+								<label class="col-sm-1 control-label">Address</label>
+								<div class="col-sm-4">
+									<textarea rows="2" cols="4" class="form-control" name="contactaddress"><?php echo $inventory->getContactAddress()?></textarea>
+								</div>
+								
+								<label class="col-sm-2 control-label">Referred by</label>
+								<div class="col-sm-4">
+									<input class="form-control" type="text" value="<?php echo $inventory->getReferredby()?>" id="referred" name="referredby">
+								</div>
+							</div>
+							
+							<div class="hr-line-dashed"></div>
+							<h4>PROPERTY INFO</h4>
+							<div class="form-group">
+									<label class="col-sm-1 control-label">Type</label>
+									<div class="col-sm-4">
+										<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", $inventory->getPropertyType())?>
+									</div>
+									<label class="col-sm-1 control-label col-sm-offset-1">Purpose</label>
+									<div class="col-sm-4">
+										<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", $inventory->getPurpose())?>
+									</div>
+							</div>
+							<div class="form-group i-checks">
+									<label class="col-sm-1 control-label">Medium</label>
+									<div class="col-sm-4">
+										<?php echo DropDownUtils::getMediumTypeDD("medium", "", $inventory->getMedium())?>
+									</div>
+									<label class="col-sm-2 col-sm-offset-2 control-label" style="text-align: left">
+										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
+										Rental
+									</label> 
+							</div>
+							
+							<div class="hr-line-dashed"></div>
+							<h4>LOCATION</h4>
+							<div class="form-group">
+								
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Plot #</label>
+								<div class="col-sm-4">
 									<input class="form-control" type="text" id="plotnumber" value="<?php echo $inventory->getPlotNumber()?>" name="plotnumber">
 								</div>
-								<label class="col-sm-1 control-label">Purpose</label>
-								<div class="col-sm-5">
-									<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", $inventory->getPurpose())?>
-								</div>
+								
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Address1</label>
-								<div class="col-sm-5">
+								<div class="col-sm-4">
 									<textarea rows="3" cols="4" class="form-control" id="address1" name="address1"><?php echo $inventory->getAddress1()?></textarea>
 								</div>
-								<label class="col-sm-1 control-label">Address2</label>
-								<div class="col-sm-5">
+								<label class="col-sm-2 control-label">Address2</label>
+								<div class="col-sm-4">
 									<textarea rows="3" cols="4" class="form-control" name="address2"><?php echo $inventory->getAddress2()?></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">City</label>
-								<div class="col-sm-5">
+								<div class="col-sm-4">
 									<input class="form-control" type="text" value="<?php echo $inventory->getCity()?>" id="city" name="city">
 								</div>
-								<label class="col-sm-1 control-label">Landmark</label>
-								<div class="col-sm-5">
+								<label class="col-sm-2 control-label">Landmark</label>
+								<div class="col-sm-4">
 									<input class="form-control" type="text" value="<?php echo $inventory->getLandmark()?>" id="landmark" name="landmark">
 								</div>
 							</div>
+							
+							<div class="hr-line-dashed"></div>
+							<h4>PROPERTY AREA</h4>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Area</label>
 								<div class="col-sm-1">
 									<input class="form-control" type="text" value="<?php echo $inventory->getPropertyArea()?>" id="propertyArea" name="propertyarea">
 								</div>
-								<label class="col-sm-1 control-label">Dimensions</label>
-								<div class="col-sm-1">
+								<label class="col-sm-1 control-label">Unit</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getPropertyUnitsDD("propertyunit", "", $inventory->getPropertyUnit())?>
+								</div>
+								
+								
+								
+								<label class="col-sm-2 control-label">Dimensions</label>
+								<div class="col-sm-2">
 									<input class="form-control" type="text" id="landmark" value="<?php echo $inventory->getDimensionLength()?>" name="dimensionlength" placeholder="Length">
 								</div>
-								<div class="col-sm-1">
+								<div class="col-sm-2">
 									<input class="form-control" type="text" id="landmark" value="<?php echo $inventory->getDimensionBreadth()?>" name="dimensionbreadth"  placeholder="Breadth">
-								</div>
-								
-								<label class="col-sm-2 control-label">Facing</label>
-								<div class="col-sm-2">
-									<?php echo DropDownUtils::getFacingTypeDD("facing", "", $inventory->getFacing())?>
-								</div>
-								<label class="col-sm-1 control-label">Referred</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getReferredby()?>" id="referred" name="referredby">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-1 control-label">Name</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getContactPerson()?>" id="contactPerson" name="contactperson">
-								</div>
-								<label class="col-sm-1 control-label">Mobile</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getContactMobile()?>" id="contactMobile" name="contactmobile">
-								</div>
-								
-								<label class="col-sm-1 control-label">Address</label>
-								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" name="contactaddress"><?php echo $inventory->getContactAddress()?></textarea>
 								</div>
 							</div>
 							
-							<div class="form-group">
-								<label class="col-sm-1 control-label">Rate</label>
+							<div class="hr-line-dashed"></div>
+							<h4>PROPERTY FEATURES</h4>
+							<div class="form-group">	
+								<label class="col-sm-1 control-label">Facing</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getRate()?>" id="rate" name="rate">
+									<?php echo DropDownUtils::getFacingTypeDD("facing", "", $inventory->getFacing())?>
 								</div>
-								<label class="col-sm-1 control-label">Amount</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
+								<label class="col-sm-1 control-label">Time</label>
+								<div class="col-sm-1">
+									<input class="form-control" type="text" value="<?php echo $inventory->getTime()?>" id="time" name="time">
 								</div>
 								
-								<label class="col-sm-1 control-label">Documents</label>
+								
+								<label class="col-sm-2 control-label">Documents</label>
 								<div class="col-sm-2">
 									<?php echo DropDownUtils::getDocumentTypeDD("documentation", "", $inventory->getDocumentation())?>
 								</div>
-								<label class="col-sm-1 control-label">Time</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getTime()?>" id="time" name="time">
-								</div>
+								
 							</div>
-							<div class="form-group i-checks">
-								<label class="col-sm-1 control-label"></label> 
-									<label class="col-sm-2 control-label" style="text-align: left">
-										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
-										Rental
-									</label> 
-									<label class="col-sm-2 control-label">
-										<input type="checkbox"	name="isavailable" <?php echo $isAvailable?> id="isavailable"> 
-										Available
-								</label>
-							</div>
+							
+							
 							
 							<div class="form-group furnishing" style="display:none">
 								<label class="col-sm-1 control-label">Furnishing</label>
@@ -198,17 +221,19 @@ if(isset($_POST["id"])){
 							</div>
 							
 							<div class="form-group agriculturalLand" style="display:none">
-								<label class="col-sm-1 control-label">Sellers</label>
+								<label class="col-sm-1 control-label">Property Numbers</label>
 								<div class="col-sm-2">
+									<?php echo DropDownUtils::getPropertyNumberTypeDD("propertynumbers", "", $inventory->getPropertyNumbers())?>
+								</div>
+							
+								<label class="col-sm-1 control-label">Sellers</label>
+								<div class="col-sm-1">
 									<input class="form-control" type="text" value="<?php echo $inventory->getTotalSellers()?>" id="totalsellers" name="totalsellers">
 								</div>
-								<label class="col-sm-1 control-label">Property Numbers</label>
+								
+								<label class="col-sm-2 control-label">Acquired</label>
 								<div class="col-sm-3">
-									<?php echo DropDownUtils::getPropertyTypeDD("propertynumbers", "", $inventory->getPropertyType())?>
-								</div>
-								<label class="col-sm-1 control-label">Acquired</label>
-								<div class="col-sm-3">
-									<?php echo DropDownUtils::getPropertyTypeDD("acquired", "", $inventory->getAcquired())?>
+									<?php echo DropDownUtils::getAcquiredTypeDD("acquired", "", $inventory->getAcquired())?>
 								</div>
 							</div>
 							
@@ -221,14 +246,33 @@ if(isset($_POST["id"])){
 								</div>
 							</div>
 							
-							<div class="form-group specifications" style="display:none">
+							
+							
+							<div class="hr-line-dashed"></div>
+							<h4>PRICING</h4>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Rate</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text" value="<?php echo $inventory->getRate()?>" id="rate" name="rate">
+								</div>
+								<label class="col-sm-1 control-label">Amount</label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text" value="<?php echo $inventory->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
+								</div>
+								
 								<label class="col-sm-1 control-label">Specifications</label>
-
 								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
-
+									<textarea rows="4" cols="4" class="form-control" style="height:70px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
 								</div>
 							</div>
+							<div class="form-group i-checks">
+									<label class="col-sm-1 control-label">Availability</label> 
+									<label class="col-sm-1 control-label">
+										<input type="checkbox"	name="isavailable" <?php echo $isAvailable?> id="isavailable"> 
+										
+								</label>
+							</div>
+							
 							
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-offset-9">
@@ -285,7 +329,7 @@ $(document).ready(function () {
 				$(".stories").hide();
 				$(".agriculturalLand").hide();
 				$(".floorNumber").hide();
-				$(".specifications").hide();
+				$(".specifications").show();
 				
 				if(this.value == "building"){
 					$(".furnishing").show();

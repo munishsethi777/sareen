@@ -92,6 +92,12 @@ class Inventory {
 	public function getPropertyArea() {
 		return $this->propertyarea;
 	}
+	public function setPropertyUnit($val) {
+		$this->propertyunit = $val;
+	}
+	public function getPropertyUnit() {
+		return $this->propertyunit;
+	}
 	public function setDimensionLength($val) {
 		$this->dimensionlength = $val;
 	}

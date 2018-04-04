@@ -4,4 +4,5 @@ class PurposeType extends BasicEnum{
 	const residential = "Residential";
 	const commercial = "Commercial";
 	const industrial = "Industrial";
+	const agricultural = "Agricultural";
 }
