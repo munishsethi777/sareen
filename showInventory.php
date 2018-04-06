@@ -221,6 +221,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
               { text: 'Name', datafield: 'contactperson',width:"14%"},
               { text: 'Contact', datafield: 'contactmobile',width:"10%"},
               { text: 'Modified', datafield: 'lastmodifiedon',cellsformat: 'd-M-yyyy hh:mm tt',width:"15%"},
+              { text: 'Created', datafield: 'createdon',cellsformat: 'd-M-yyyy hh:mm tt',width:"15%"},
               { text: 'Details', datafield: 'action',cellsrenderer:actions,width:'5%'},
               
             ]
@@ -247,6 +248,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'contactperson', type: 'string'},
                             { name: 'contactmobile', type: 'string'},
                             { name: 'lastmodifiedon', type: 'date'},
+                            { name: 'createdon', type: 'date'},
                             { name: 'action', type: 'string' } 
                             ],                          
                 url: 'Actions/InventoryAction.php?call=getInventories',

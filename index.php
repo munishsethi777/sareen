@@ -494,9 +494,17 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function( event ){
     	$("#longitude").val(event.latLng.lng());
       	$("#latitude").val(event.latLng.lat());
+      	placeMarker(event.latLng);
     });
     
   }
+
+	function placeMarker(location) {
+	    var marker = new google.maps.Marker({
+	        position: location, 
+	        map: map
+	    });
+	}
 	
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
