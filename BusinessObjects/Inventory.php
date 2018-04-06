@@ -42,6 +42,9 @@ class Inventory {
 	private $propertysides;
 	private $longitude;
 	private $latitude;
+	private $mediumname;
+	private $mediumphone;
+	private $mediumaddress;
 	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
@@ -287,6 +290,27 @@ class Inventory {
 	}
 	public function getLatitude(){
 		return $this->latitude;
+	}
+	
+	public function getMediumName(){
+		return $this->mediumname;
+	}
+	public function setMediumName($mediumName){
+		$this->mediumname = $mediumName;
+	}
+	
+	public function getMediumPhone(){
+		return $this->mediumphone;
+	}
+	public function setMediumPhone($mediumPhone_){
+		$this->mediumphone = $mediumPhone_;
+	}
+	
+	public function getMediumAddress(){
+		return $this->mediumaddress;
+	}
+	public function setMediumAddress($address_){
+		$this->mediumaddress = $address_;
 	}
 	
 	function createFromRequest($request){

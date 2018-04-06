@@ -115,8 +115,8 @@ class Enquiry {
 	public function getIsRental() {
 		return $this->isrental;
 	}
-	public function setCreatedOn($val) {
-		$this->createdon = $val;
+	public function setCreatedOn($createdOn_) {
+		$this->createdon = $createdOn_;
 	}
 	public function getCreatedOn() {
 		return $this->createdon;
