@@ -45,4 +45,17 @@ if($call == "saveEnquiry"){
 	$enquiries = $enquiryMgr->getEnqueryForGrid(true);
 	$json = json_encode($enquiries);
 	echo $json;
-}
+}else if($call == "deleteEnquiry"){
+         $ids = $_GET["ids"];
+         try{
+            $enquiryMgr->deleteBySeq($ids);
+            $message = "Record Deleted successfully";
+        }catch(Exception $e){
+            $success = 0;
+            $message  = $e->getMessage();
+        }
+        $response = new ArrayObject();
+        $response["success"]  = $success;
+        $response["message"]  = $message;
+        echo json_encode($response);
+ }

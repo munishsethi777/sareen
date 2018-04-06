@@ -291,7 +291,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                         $("#form1").submit();                   
                         });
                      deleteButton.click(function (event) {
-                    	 deleteRows("enqueryGrid","Actions/InventoryAction.php?call=deleteInventory");
+                    	 deleteRows("enqueryGrid","Actions/EnquiryAction.php?call=deleteEnquiry");
                      });
                     // reload grid data.
                     reloadButton.click(function (event) {

@@ -119,12 +119,11 @@ if(isset($_POST["id"])){
 									<div class="col-sm-4">
 										<input class="form-control" type="text" value="<?php echo $inventory->getMediumPhone()?>" id="mediumphone" name="mediumphone">
 									</div>
-									
 								</div>
 								<div class="form-group">
 									<label class="col-sm-1 control-label">Address</label>
 									<div class="col-sm-4">
-										<input class="form-control" type="text" value="<?php echo $inventory->getMediumAddress()?>" id="mediumaddress" name="mediumaddress">
+										<textarea rows="2" cols="4" class="form-control" id="mediumaddress" name="mediumaddress"><?php echo $inventory->getContactAddress()?></textarea>
 									</div>
 								</div>
 							</div>
