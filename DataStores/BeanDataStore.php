@@ -61,10 +61,10 @@ class BeanDataStore {
 									$object,
 									$methodName 
 							) );
+							if($column == "createdon" && $id > 0){
+								continue;
+							}
 							if ($value instanceof DateTime) {
-								if($column == "createdon" && $id > 0){
-									continue;
-								}
 								$value = $value->format ( 'Y-m-d H:i:s' );
 							}
 							// if($id > 0){

@@ -43,7 +43,6 @@ if(isset($_POST["id"])){
 </head>
 
 <body>
-
     <div id="wrapper">
         <?php include("menuInclude.php")?>     
         <div id="page-wrapper" class="gray-bg">
@@ -91,26 +90,44 @@ if(isset($_POST["id"])){
 							<div class="hr-line-dashed"></div>
 							<h4>PROPERTY INFO</h4>
 							<div class="form-group">
-									<label class="col-sm-1 control-label">Type</label>
-									<div class="col-sm-4">
-										<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", $inventory->getPropertyType())?>
-									</div>
-									<label class="col-sm-1 control-label col-sm-offset-1">Purpose</label>
-									<div class="col-sm-4">
-										<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", $inventory->getPurpose())?>
-									</div>
+								<label class="col-sm-1 control-label">Type</label>
+								<div class="col-sm-4">
+									<?php echo DropDownUtils::getPropertyTypeDD("propertytype", "", $inventory->getPropertyType())?>
+								</div>
+								<label class="col-sm-1 control-label col-sm-offset-1">Purpose</label>
+								<div class="col-sm-4">
+									<?php echo DropDownUtils::getPurposeTypeDD("purpose", "", $inventory->getPurpose())?>
+								</div>
 							</div>
 							<div class="form-group i-checks">
-									<label class="col-sm-1 control-label">Medium</label>
-									<div class="col-sm-4">
-										<?php echo DropDownUtils::getMediumTypeDD("medium", "", $inventory->getMedium())?>
-									</div>
-									<label class="col-sm-2 col-sm-offset-2 control-label" style="text-align: left">
-										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
-										Rental
-									</label> 
+								<label class="col-sm-1 control-label">Medium</label>
+								<div class="col-sm-4">
+									<?php echo DropDownUtils::getMediumTypeDD("medium", "showDetail(this.value)", $inventory->getMedium())?>
+								</div>
+								<label class="col-sm-2 col-sm-offset-2 control-label" style="text-align: left">
+									<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
+									Rental
+								</label> 
 							</div>
-							
+							<div id="mediumDetail" style="display: none">
+								<div class="form-group">
+									<label class="col-sm-1 control-label">Name</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" value="<?php echo $inventory->getMediumName()?>" id="mediumname" name="mediumname">
+									</div>
+									<label class="col-sm-1 control-label col-sm-offset-1">Phone</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" value="<?php echo $inventory->getMediumPhone()?>" id="mediumphone" name="mediumphone">
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<label class="col-sm-1 control-label">Address</label>
+									<div class="col-sm-4">
+										<input class="form-control" type="text" value="<?php echo $inventory->getMediumAddress()?>" id="mediumaddress" name="mediumaddress">
+									</div>
+								</div>
+							</div>
 							<div class="hr-line-dashed"></div>
 							<h4>LOCATION</h4>
 							<div class="form-group">
@@ -417,6 +434,7 @@ $(document).ready(function () {
 	            }
 	    })
 	    $( "#propertytype" ).change();
+	    showDetail("<?php echo $inventory->getMedium()?>");
 });
 $('#inventoryForm').jqxValidator({
 	hintType: 'label',
@@ -436,6 +454,15 @@ function readInventoryIMG(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+function showDetail(value){
+	if(value != 'direct' && value != undefined && value != ""){
+		$("#mediumDetail").show();
+	}else{
+		$("#mediumDetail").hide();
+	}
+}
+
 function submit(e,btn){
     e.preventDefault();
     var l = Ladda.create(btn);

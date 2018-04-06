@@ -32,6 +32,12 @@ if($call == "saveInventory"){
 			$inventory->setCreatedOn(new DateTime());
 		}
 		
+		if($inventory->getMedium() == "direct"){
+			$inventory->setMediumName("");
+			$inventory->setMediumAddress("");
+			$inventory->setMediumPhone("");
+		}
+		
 		$inventory->setLastmodifiedon(new DateTime());
 		$id = $inventoryMgr->saveInventory($inventory);
 		if(isset($_FILES["inventoryImage"])){
