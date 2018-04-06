@@ -456,7 +456,7 @@ function readInventoryIMG(input) {
 }
 
 function showDetail(value){
-	if(value != 'direct' && value != undefined && value != ""){
+	if(value != 'direct' && value != undefined && value != "" && value != "all"){
 		$("#mediumDetail").show();
 	}else{
 		$("#mediumDetail").hide();
