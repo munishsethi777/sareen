@@ -28,6 +28,9 @@ if(isset($_POST["id"])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Enquiry</title>
 	<?include "ScriptsInclude.php"?>
+	<style>
+		.chosen-single{padding:4px !important;}
+	</style>
 </head>
 
 <body>
@@ -120,12 +123,45 @@ if(isset($_POST["id"])){
 									</div>
 								
 							</div>
-							<div class="form-group i-checks">
+							<div class="form-group">
 								<label class="col-sm-1 control-label">Amount</label>
-									<div class="col-sm-2">
-										<input class="form-control" type="text" value="<?php echo $enquery->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
-									</div>
-								<label class="col-sm-1 control-label"></label> 
+								<div class="col-sm-1">
+									Crores<br>
+									<select class="form-control" id="crores">
+									<?php 
+										for($i=0;$i<100;$i++){
+											echo("<option value='".$i."'>".$i."</option>"); 	
+										}
+									?>
+									</select>
+								</div>
+								<div class="col-sm-1">
+									Lakhs<br>
+									<select class="form-control" id="lakhs">
+									<?php 
+										for($i=0;$i<100;$i++){
+											echo("<option value='".$i."'>".$i."</option>"); 	
+										}
+									?>
+									</select>
+								</div>
+								<div class="col-sm-1">
+									Thousands<br>
+									<select class="form-control" id="thousands">
+									<?php 
+										for($i=0;$i<100;$i++){
+											echo("<option value='".$i."'>".$i."</option>"); 	
+										}
+									?>
+									</select>
+								</div>
+								<div class="col-sm-2">
+									Total<br>
+									<input class="form-control" type="text" value="<?php echo $enquery->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
+								</div>
+							</div>
+							<div class="form-group i-checks">
+									<label class="col-sm-1 control-label"></label> 
 									<label class="col-sm-2 control-label" style="text-align: left">
 										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
 										Rental
@@ -134,13 +170,12 @@ if(isset($_POST["id"])){
 										<input type="checkbox"	name="isfullfilled" <?php echo $isFullfilled?> id="isfullfilled"> 
 										Fulfilled
 									</label>
-									
 							</div>
 							<div class="form-group specifications">
 								<label class="col-sm-1 control-label">Specification</label>
 
-								<div class="col-sm-5">
-									<textarea rows="3" cols="4" class="form-control" style="height:50px !important" name="specifications" ><?php echo $enquery->getSpecifications()?></textarea>
+								<div class="col-sm-11">
+									<textarea rows="4" cols="4" class="form-control" style="height:80px !important" name="specifications" ><?php echo $enquery->getSpecifications()?></textarea>
 
 								</div>
 							</div>
@@ -192,6 +227,28 @@ $(document).ready(function () {
         $("#cancelBtn").click(function(e){
         	location.href = ("showEnquiries.php");          
 		});
+		$("#crores").chosen();
+		$("#lakhs").chosen();
+		$("#thousands").chosen();
+		$("#crores").chosen().change(function() {
+			var lakh = $("#lakhs").val() * 100000;
+			var thousand = $("#thousands").val() * 1000;
+			var crore = $(this).val() * 10000000;
+		    $("#expectedAmount").val(crore + lakh + thousand);
+		});
+		$("#lakhs").chosen().change(function() {
+			var crore = $("#crores").val() * 10000000;
+			var thousand = $("#thousands").val() * 1000;
+			var lakh = $(this).val() * 100000;
+		    $("#expectedAmount").val(crore + lakh + thousand);
+		});
+		$("#thousands").chosen().change(function() {
+			var crore = $("#crores").val() * 10000000;
+			var lakh = $("#lakhs").val() * 100000;
+			var thousand = $(this).val() * 1000;
+		    $("#expectedAmount").val(crore + lakh + thousand);
+		});
+		
 });
 $('#enquiryForm').jqxValidator({
 	hintType: 'label',

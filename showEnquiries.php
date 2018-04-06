@@ -175,12 +175,13 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
               { text: 'Amount', datafield: 'expectedamount', hidden:true,width:"10%"},
               { text: 'Rental', datafield: 'isrental', hidden:true,width:"10%"},
               { text: 'Fullfilled', datafield: 'isfullfilled', hidden:true,width:"10%"},
-              { text: 'Area', datafield: 'propertyarea',width:"10%"},
-              { text: 'Address', datafield: 'address',width:"35%"},            
+              { text: 'Area', datafield: 'propertyarea',width:"5%"},
+              { text: 'Address', datafield: 'address',width:"28%"},            
               { text: 'Name', datafield: 'contactperson',width:"12%"},
               { text: 'Contact', datafield: 'contactmobile',width:"10%"},
-              { text: 'Modified', datafield: 'lastmodifiedon',cellsformat: 'd-M-yyyy hh:mm tt',width:"15%"},
-              { text: 'Detail', datafield: 'action',cellsrenderer:actions,width:'7%'},
+              { text: 'Modified', datafield: 'lastmodifiedon',cellsformat: 'd-M-yyyy hh:mm tt',width:"13%"},
+              { text: 'Created', datafield: 'createdon',cellsformat: 'd-M-yyyy hh:mm tt',width:"13%"},
+              { text: 'Detail', datafield: 'action',cellsrenderer:actions,width:'5%'},
               
             ]
            
@@ -204,6 +205,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'contactperson', type: 'string'},
                             { name: 'contactmobile', type: 'string'},
                             { name: 'lastmodifiedon', type: 'date'},
+                            { name: 'createdon', type: 'date'},
                             { name: 'action', type: 'string' } 
                             ],                          
                 url: 'Actions/EnquiryAction.php?call=getEnquiries',
