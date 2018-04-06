@@ -359,6 +359,7 @@ if(isset($_POST["id"])){
 </html>
 <script type="text/javascript">
 var map, infoWindow;
+var markersArray = [];
 $(document).ready(function () {
 	$(".furnishing").show();
 	$(".stories").show();
@@ -484,6 +485,7 @@ function ValidateAndSave(e,btn){
     }
    $('#inventoryForm').jqxValidator('validate', validationResult);
 }
+
 function initMap() {
 	var lat = 50.897660000000002;
 	var lng = 75.8631612;
@@ -518,11 +520,19 @@ function initMap() {
       // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
+    google.maps.Map.prototype.clearOverlays = function() {
+  	  for (var i = 0; i < markersArray.length; i++ ) {
+  	    markersArray[i].setMap(null);
+  	  }
+  	  markersArray.length = 0;
+  	}
     google.maps.event.addListener(map, 'click', function( event ){
+    	map.clearOverlays();
     	$("#longitude").val(event.latLng.lng());
       	$("#latitude").val(event.latLng.lat());
       	placeMarker(event.latLng);
     });
+    
     
   }
 
@@ -531,6 +541,7 @@ function initMap() {
 	        position: location, 
 	        map: map
 	    });
+	    markersArray.push(marker);
 	}
 	
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
