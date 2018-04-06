@@ -1,0 +1,93 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Apr 06, 2018 at 09:29 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `realestate`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `seq` bigint(20) NOT NULL,
+  `purpose` varchar(100) NOT NULL,
+  `medium` varchar(100) NOT NULL,
+  `plotnumber` varchar(25) DEFAULT NULL,
+  `address1` varchar(500) NOT NULL,
+  `address2` varchar(500) DEFAULT NULL,
+  `landmark` varchar(500) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `propertyarea` int(11) DEFAULT NULL,
+  `propertyunit` varchar(25) DEFAULT NULL,
+  `dimensionlength` int(11) DEFAULT NULL,
+  `dimensionbreadth` int(11) DEFAULT NULL,
+  `facing` varchar(50) DEFAULT NULL,
+  `referredby` varchar(100) DEFAULT NULL,
+  `contactperson` varchar(100) NOT NULL,
+  `contactmobile` varchar(50) NOT NULL,
+  `contactaddress` varchar(500) DEFAULT NULL,
+  `rate` int(11) DEFAULT NULL,
+  `expectedamount` bigint(20) DEFAULT NULL,
+  `documentation` varchar(100) DEFAULT NULL,
+  `time` int(11) DEFAULT NULL,
+  `furnishing` varchar(50) DEFAULT NULL,
+  `furnishingdetails` varchar(500) DEFAULT NULL,
+  `stories` int(11) DEFAULT NULL,
+  `constructionyears` int(11) DEFAULT NULL,
+  `totalsellers` int(11) DEFAULT NULL,
+  `propertynumbers` varchar(100) DEFAULT NULL,
+  `acquired` varchar(100) DEFAULT NULL,
+  `propertytype` varchar(100) NOT NULL,
+  `totalrooms` int(11) DEFAULT NULL,
+  `isrental` tinyint(4) DEFAULT NULL,
+  `createdon` datetime NOT NULL,
+  `lastmodifiedon` datetime NOT NULL,
+  `isavailable` tinyint(4) NOT NULL,
+  `floornumber` int(11) DEFAULT NULL,
+  `specifications` varchar(1000) DEFAULT NULL,
+  `approvaltype` varchar(20) NOT NULL,
+  `propertysides` varchar(20) NOT NULL,
+  `longitude` double NOT NULL,
+  `latitude` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`seq`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `seq` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
