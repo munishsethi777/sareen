@@ -174,21 +174,28 @@ if(isset($_POST["id"])){
 								<div class="col-sm-2">
 									<?php echo DropDownUtils::getFacingTypeDD("facing", "", $inventory->getFacing())?>
 								</div>
-								<label class="col-sm-1 control-label">Time</label>
-								<div class="col-sm-1">
-									<input class="form-control" type="text" value="<?php echo $inventory->getTime()?>" id="time" name="time">
-								</div>
-								
 								
 								<label class="col-sm-2 control-label">Documents</label>
 								<div class="col-sm-2">
 									<?php echo DropDownUtils::getDocumentTypeDD("documentation", "", $inventory->getDocumentation())?>
 								</div>
 								
+								<label class="col-sm-1 control-label">Time</label>
+								<div class="col-sm-1">
+									<input class="form-control" type="text" value="<?php echo $inventory->getTime()?>" id="time" name="time">
+								</div>
 							</div>
 							
-							
-							
+							<div class="form-group">	
+								<label class="col-sm-1 control-label">Approval Type</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getApprovalTypeDD("approvaltype", "", $inventory->getApprovalType())?>
+								</div>
+								<label class="col-sm-2 control-label">PropertySide</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getPropertySideTypeDD("propertysides", "", $inventory->getPropertySides())?>
+								</div>
+							</div>
 							<div class="form-group furnishing" style="display:none">
 								<label class="col-sm-1 control-label">Furnishing</label>
 								<div class="col-sm-5">
@@ -245,6 +252,36 @@ if(isset($_POST["id"])){
 
 								</div>
 							</div>
+							<div class="hr-line-dashed"></div>
+							<h4>LOCATION</h4>
+							<div class="form-group">
+								<div class="col-sm-4">
+										<div class="row">
+											<label class="col-sm-4 control-label">Longitude</label>
+											<div class="col-sm-8">
+												<input class="form-control" type="text" id="longitude" name="longitude" value="<?php echo $inventory->getLongitude()?>">
+											</div>
+										</div>
+										<div class="row" style="margin-top:30px;">
+											<label class="col-sm-4 control-label">Latitude</label>
+											<div class="col-sm-8">
+												<input class="form-control" type="text" id="latitude" name="latitude" value="<?php echo $inventory->getLatitude()?>">
+											</div>
+										</div>
+										<div class="row" style="margin-top:30px;">
+											<label class="col-sm-4 control-label" id="markerStatus"></label>
+											<label class="col-sm-4 control-label" id="info"></label>
+											<label class="col-sm-4 control-label" id="address"></label>
+											
+										</div>
+								</div>	
+							
+								<div class="col-sm-8">
+									<div style="width:100%;height:300px;" id="map"></div>
+								</div>
+							</div>
+							
+							
 							
 							
 							
@@ -291,6 +328,7 @@ if(isset($_POST["id"])){
 										data-dismiss="modal">Cancel</button>
 								</div>
 							</div>
+							
 						</form>
 					</div>
 				</div>
@@ -303,7 +341,13 @@ if(isset($_POST["id"])){
 
 </html>
 <script type="text/javascript">
+var map, infoWindow;
 $(document).ready(function () {
+	$(".furnishing").show();
+	$(".stories").show();
+	$(".agriculturalLand").show();
+	$(".floorNumber").show();
+	$(".specifications").show();
 	    $('.i-checks').iCheck({
 	        checkboxClass: 'icheckbox_square-green',
 	        radioClass: 'iradio_square-green',
@@ -325,7 +369,7 @@ $(document).ready(function () {
             readInventoryIMG(this);
          });
 	    $( "#propertytype" ).change(function() {
-	    		$(".furnishing").hide();
+				$(".furnishing").hide();
 				$(".stories").hide();
 				$(".agriculturalLand").hide();
 				$(".floorNumber").hide();
@@ -412,5 +456,55 @@ function ValidateAndSave(e,btn){
         }
     }
    $('#inventoryForm').jqxValidator('validate', validationResult);
-}       
+}
+function initMap() {
+	var lat = 50.897660000000002;
+	var lng = 75.8631612;
+	<?php if(!empty($inventory->getLongitude())){
+			echo ("lng = ".$inventory->getLongitude().";");
+			echo ("lat = ".$inventory->getLatitude().";");
+		}
+	?>
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: lat, lng: lng},
+      zoom: 15
+    });
+    infoWindow = new google.maps.InfoWindow;
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      	navigator.geolocation.getCurrentPosition(function(position) {
+        $("#longitude").val(position.coords.longitude);
+        $("#latitude").val(position.coords.latitude);
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      		
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Location found.');
+        infoWindow.open(map);
+        map.setCenter(pos);
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    }else {
+      // Browser doesn't support Geolocation
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+    google.maps.event.addListener(map, 'click', function( event ){
+    	$("#longitude").val(event.latLng.lng());
+      	$("#latitude").val(event.latLng.lat());
+    });
+    
+  }
+	
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+                          'Error: The Geolocation service failed.' :
+                          'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+  }
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC9V55rJSrsXjDc2VgJtFtH4qCw2dS2G74&callback=initMap"
+	  type="text/javascript"></script>

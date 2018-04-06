@@ -8,6 +8,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyNumberType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/FurnishingType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/AcquiredType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyUnit.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/ApprovalType.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertySideType.php");
+
 
 class DropDownUtils {
 	
@@ -17,8 +20,12 @@ class DropDownUtils {
 			$str .= "<option value='all'>All</option>";
 		}
 		foreach ( $values as $key => $value ) {
-			$select = $selectedValue == $key ? 'selected' : null;
-			$str .= "<option value='" . $key . "' " . $select . ">" . $value . "</option>";
+			if( strpos( $key, "group_" ) !== false ) {
+				$str .= "<optgroup label='$value'>";
+			}else{
+				$select = $selectedValue == $key ? 'selected' : null;
+				$str .= "<option value='" . $key . "' " . $select . ">" . $value . "</option>";
+			}
 		}
 		
 		$str .= "</select>";
@@ -67,6 +74,15 @@ class DropDownUtils {
 	
 	public static function getPropertyUnitsDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
 		$types = PropertyUnit::getAll();
+		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,$isAll);
+	}
+	
+	public static function getApprovalTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
+		$types = ApprovalType::getAll();
+		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,$isAll);
+	}
+	public static function getPropertySideTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
+		$types = PropertySideType::getAll();
 		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,$isAll);
 	}
 	

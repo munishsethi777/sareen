@@ -64,7 +64,7 @@ if(isset($_POST["id"])){
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label">Address</label>
+								<label class="col-sm-1 control-label">Enquiry</label>
 								<div class="col-sm-5">
 									<textarea rows="3" cols="4" class="form-control" id="address" name="address"><?php echo $enquery->getAddress()?></textarea>
 								</div>
@@ -81,7 +81,7 @@ if(isset($_POST["id"])){
 								</div>
 								<label class="col-sm-1 control-label">Unit</label>
 								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $enquery->getPropertyUnit()?>" id="propertyUnit" name="propertyunit">
+									<?php echo DropDownUtils::getPropertyUnitsDD("propertyunit", "", $enquery->getPropertyUnit())?>
 								</div>
 								<label class="col-sm-1 control-label">Dimensions</label>
 								<div class="col-sm-1">

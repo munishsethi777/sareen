@@ -38,6 +38,11 @@ class Inventory {
 	private $isavailable;
 	private $floornumber;
 	private $specifications;
+	private $approvaltype;
+	private $propertysides;
+	private $longitude;
+	private $latitude;
+	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
 	}
@@ -255,6 +260,33 @@ class Inventory {
 	}
 	public function getSpecifications(){
 		return $this->specifications;
+	}
+	
+	public function setApprovalType($val){
+		$this->approvaltype = $val;
+	}
+	public function getApprovalType(){
+		return $this->approvaltype;
+	}
+	
+	public function setPropertySides($val){
+		$this->propertysides = $val;
+	}
+	public function getPropertySides(){
+		return $this->propertysides;
+	}
+	
+	public function setLongitude($val){
+		$this->longitude= $val;
+	}
+	public function getLongitude(){
+		return $this->longitude;
+	}
+	public function setLatitude($val){
+		$this->latitude= $val;
+	}
+	public function getLatitude(){
+		return $this->latitude;
 	}
 	
 	function createFromRequest($request){
