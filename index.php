@@ -269,31 +269,23 @@ if(isset($_POST["id"])){
 								</div>
 							</div>
 							<div class="hr-line-dashed"></div>
-							<h4>LOCATION</h4>
+							<h4>GEOLOCATION</h4>
 							<div class="form-group">
-								<div class="col-sm-4">
+								<div class="col-sm-12">
 										<div class="row">
-											<label class="col-sm-4 control-label">Longitude</label>
-											<div class="col-sm-8">
+											<label class="col-sm-2 control-label">Longitude</label>
+											<div class="col-sm-4">
 												<input class="form-control" type="text" id="longitude" name="longitude" value="<?php echo $inventory->getLongitude()?>">
 											</div>
-										</div>
-										<div class="row" style="margin-top:30px;">
-											<label class="col-sm-4 control-label">Latitude</label>
-											<div class="col-sm-8">
+											<label class="col-sm-2 control-label">Latitude</label>
+											<div class="col-sm-4">
 												<input class="form-control" type="text" id="latitude" name="latitude" value="<?php echo $inventory->getLatitude()?>">
 											</div>
 										</div>
-										<div class="row" style="margin-top:30px;">
-											<label class="col-sm-4 control-label" id="markerStatus"></label>
-											<label class="col-sm-4 control-label" id="info"></label>
-											<label class="col-sm-4 control-label" id="address"></label>
-											
-										</div>
 								</div>	
 							
-								<div class="col-sm-8">
-									<div style="width:100%;height:300px;" id="map"></div>
+								<div class="col-sm-12">
+									<div style="width:100%;height:400px;" id="map"></div>
 								</div>
 							</div>
 							
@@ -304,17 +296,50 @@ if(isset($_POST["id"])){
 							<div class="hr-line-dashed"></div>
 							<h4>PRICING</h4>
 							<div class="form-group">
+									<label class="col-sm-1 control-label">Amount</label>
+									<div class="col-sm-2">
+										Crores<br>
+										<select class="form-control" id="crores">
+										<?php 
+											for($i=0;$i<100;$i++){
+												echo("<option value='".$i."'>".$i."</option>"); 	
+											}
+										?>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										Lakhs<br>
+										<select class="form-control" id="lakhs">
+										<?php 
+											for($i=0;$i<100;$i++){
+												echo("<option value='".$i."'>".$i."</option>"); 	
+											}
+										?>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										Thousands<br>
+										<select class="form-control" id="thousands">
+										<?php 
+											for($i=0;$i<100;$i++){
+												echo("<option value='".$i."'>".$i."</option>"); 	
+											}
+										?>
+										</select>
+									</div>
+									<div class="col-sm-2">
+										Total<br>
+										<input class="form-control" type="text" value="<?php echo $inventory->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
+									</div>
+							</div>
+							<div class="form-group">
+							
 								<label class="col-sm-1 control-label">Rate</label>
 								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getRate()?>" id="rate" name="rate">
 								</div>
-								<label class="col-sm-1 control-label">Amount</label>
-								<div class="col-sm-2">
-									<input class="form-control" type="text" value="<?php echo $inventory->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
-								</div>
-								
-								<label class="col-sm-1 control-label">Specifications</label>
-								<div class="col-sm-5">
+								<label class="col-sm-2 control-label">Specifications</label>
+								<div class="col-sm-7">
 									<textarea rows="4" cols="4" class="form-control" style="height:70px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
 								</div>
 							</div>
@@ -329,17 +354,21 @@ if(isset($_POST["id"])){
 							
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-offset-9">
-									<button class="btn btn-primary ladda-button"
-										data-style="expand-right" id="saveBtn" type="button">
-										<span class="ladda-label">Save</span>
-									</button>
-									<?php if($id == 0){?>
-										<span id="saveNewBtnDiv"><button
-												class="btn btn-primary ladda-button"
-												data-style="expand-right" id="saveNewBtn" type="button">
-												<span class="ladda-label">Save & New</span>
-											</button></span>
-									<?php }?>
+										<?php if($_POST["detailMode"] != "true"){?>
+												<button class="btn btn-primary ladda-button"
+													data-style="expand-right" id="saveBtn" type="button">
+													<span class="ladda-label">Save</span>
+												</button>
+										<?php }?>
+										<?php if($id == 0){?>
+											<span id="saveNewBtnDiv">
+												<button
+													class="btn btn-primary ladda-button"
+													data-style="expand-right" id="saveNewBtn" type="button">
+													<span class="ladda-label">Save & New</span>
+												</button>
+											</span>
+										<?php }?>
 									<button type="button" class="btn btn-white" id="cancelBtn"
 										data-dismiss="modal">Cancel</button>
 								</div>
@@ -360,11 +389,34 @@ if(isset($_POST["id"])){
 var map, infoWindow;
 var markersArray = [];
 $(document).ready(function () {
-	$(".furnishing").show();
-	$(".stories").show();
-	$(".agriculturalLand").show();
-	$(".floorNumber").show();
-	$(".specifications").show();
+	$("#crores").chosen();
+	$("#lakhs").chosen();
+	$("#thousands").chosen();
+	$("#crores").chosen().change(function() {
+		var lakh = $("#lakhs").val() * 100000;
+		var thousand = $("#thousands").val() * 1000;
+		var crore = $(this).val() * 10000000;
+	    $("#expectedAmount").val(crore + lakh + thousand);
+	});
+	$("#lakhs").chosen().change(function() {
+		var crore = $("#crores").val() * 10000000;
+		var thousand = $("#thousands").val() * 1000;
+		var lakh = $(this).val() * 100000;
+	    $("#expectedAmount").val(crore + lakh + thousand);
+	});
+	$("#thousands").chosen().change(function() {
+		var crore = $("#crores").val() * 10000000;
+		var lakh = $("#lakhs").val() * 100000;
+		var thousand = $(this).val() * 1000;
+	    $("#expectedAmount").val(crore + lakh + thousand);
+	});
+
+	
+		$(".furnishing").show();
+		$(".stories").show();
+		$(".agriculturalLand").show();
+		$(".floorNumber").show();
+		$(".specifications").show();
 	    $('.i-checks').iCheck({
 	        checkboxClass: 'icheckbox_square-green',
 	        radioClass: 'iradio_square-green',
@@ -435,6 +487,7 @@ $(document).ready(function () {
 	    })
 	    $( "#propertytype" ).change();
 	    showDetail("<?php echo $inventory->getMedium()?>");
+	    
 });
 $('#inventoryForm').jqxValidator({
 	hintType: 'label',
@@ -486,39 +539,45 @@ function ValidateAndSave(e,btn){
 }
 
 function initMap() {
-	var lat = 50.897660000000002;
-	var lng = 75.8631612;
+	var lat = 30.90531781198044;
+	var lng = 75.85407257080078;
+	var editMode = false;
+	map = new google.maps.Map(document.getElementById('map'), {
+	      center: {lat: lat, lng: lng},
+	      zoom: 13
+	    });
 	<?php if(!empty($inventory->getLongitude())){
 			echo ("lng = ".$inventory->getLongitude().";");
 			echo ("lat = ".$inventory->getLatitude().";");
-		}
+			echo("editMode = true;");
+			echo("var latlng = new google.maps.LatLng(lat,lng);");
+			echo("placeMarker(latlng);");
+		}else{
 	?>
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: lat, lng: lng},
-      zoom: 15
-    });
-    infoWindow = new google.maps.InfoWindow;
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-      	navigator.geolocation.getCurrentPosition(function(position) {
-        $("#longitude").val(position.coords.longitude);
-        $("#latitude").val(position.coords.latitude);
-        var pos = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-      		
-        infoWindow.setPosition(pos);
-        infoWindow.setContent('Location found.');
-        infoWindow.open(map);
-        map.setCenter(pos);
-      }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
-      });
-    }else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
-    }
+    
+		    infoWindow = new google.maps.InfoWindow;
+		    // Try HTML5 geolocation.
+		    if (navigator.geolocation) {
+		      	navigator.geolocation.getCurrentPosition(function(position) {
+		        $("#longitude").val(position.coords.longitude);
+		        $("#latitude").val(position.coords.latitude);
+		        var pos = {
+		          lat: position.coords.latitude,
+		          lng: position.coords.longitude
+		        };
+		      		
+		        infoWindow.setPosition(pos);
+		        infoWindow.setContent('Location found.');
+		        infoWindow.open(map);
+		        map.setCenter(pos);
+		      }, function() {
+		        handleLocationError(true, infoWindow, map.getCenter());
+		      });
+		    }else {
+		      // Browser doesn't support Geolocation
+		      handleLocationError(false, infoWindow, map.getCenter());
+		    }
+		   <?php }?>
     google.maps.Map.prototype.clearOverlays = function() {
   	  for (var i = 0; i < markersArray.length; i++ ) {
   	    markersArray[i].setMap(null);

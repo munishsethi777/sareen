@@ -125,7 +125,7 @@ if(isset($_POST["id"])){
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Amount</label>
-								<div class="col-sm-1">
+								<div class="col-sm-2">
 									Crores<br>
 									<select class="form-control" id="crores">
 									<?php 
@@ -135,7 +135,7 @@ if(isset($_POST["id"])){
 									?>
 									</select>
 								</div>
-								<div class="col-sm-1">
+								<div class="col-sm-2">
 									Lakhs<br>
 									<select class="form-control" id="lakhs">
 									<?php 
@@ -145,7 +145,7 @@ if(isset($_POST["id"])){
 									?>
 									</select>
 								</div>
-								<div class="col-sm-1">
+								<div class="col-sm-2">
 									Thousands<br>
 									<select class="form-control" id="thousands">
 									<?php 
