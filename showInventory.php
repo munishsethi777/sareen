@@ -1,4 +1,4 @@
-<?php
+<?include("sessioncheck.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 ?>
 <!DOCTYPE html>

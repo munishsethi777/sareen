@@ -1,4 +1,4 @@
-<?php
+<?include("SessionCheck.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/InventoryMgr.php");
 $inventory = new Inventory();
@@ -123,7 +123,7 @@ if(isset($_POST["id"])){
 								<div class="form-group">
 									<label class="col-sm-1 control-label">Address</label>
 									<div class="col-sm-4">
-										<textarea rows="2" cols="4" class="form-control" id="mediumaddress" name="mediumaddress"><?php echo $inventory->getContactAddress()?></textarea>
+										<textarea rows="2" cols="4" class="form-control" id="mediumaddress" name="mediumaddress"><?php echo $inventory->getMediumAddress()?></textarea>
 									</div>
 								</div>
 							</div>
@@ -288,12 +288,7 @@ if(isset($_POST["id"])){
 									<div style="width:100%;height:400px;" id="map"></div>
 								</div>
 							</div>
-							
-							
-							
-							
-							
-							<div class="hr-line-dashed"></div>
+						<div class="hr-line-dashed"></div>
 							<h4>PRICING</h4>
 							<div class="form-group">
 									<label class="col-sm-1 control-label">Amount</label>
@@ -349,6 +344,10 @@ if(isset($_POST["id"])){
 										<input type="checkbox"	name="isavailable" <?php echo $isAvailable?> id="isavailable"> 
 										
 								</label>
+								<label class="col-sm-2 control-label">Saved By</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $inventory->getAdminSeq())?>
+								</div>
 							</div>
 							
 							
