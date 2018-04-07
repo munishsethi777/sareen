@@ -23,7 +23,7 @@ class Enquiry {
 	private $specifications;
 	private $isfullfilled;
 	private $expectedamount;
-	
+	private $adminseq;
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
 	}
@@ -158,7 +158,12 @@ class Enquiry {
 		return $this->propertyunit;
 	}
 	
-	
+	public function setAdminSeq($adminSeq_){
+		$this->adminseq = $adminSeq_;
+	}
+	public function getAdminSeq(){
+		return $this->adminseq;
+	}
 	
 	function createFromRequest($request){
 		if (is_array($request)){

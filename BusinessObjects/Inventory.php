@@ -45,6 +45,7 @@ class Inventory {
 	private $mediumname;
 	private $mediumphone;
 	private $mediumaddress;
+	private $adminseq;
 	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
@@ -311,6 +312,13 @@ class Inventory {
 	}
 	public function setMediumAddress($address_){
 		$this->mediumaddress = $address_;
+	}
+	
+	public function setAdminSeq($adminSeq_){
+		$this->adminseq = $adminSeq_;
+	}
+	public function getAdminSeq(){
+		return $this->adminseq;
 	}
 	
 	function createFromRequest($request){
