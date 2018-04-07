@@ -1,0 +1,2 @@
+ALTER TABLE `enquiries` ADD `adminseq` INT NOT NULL AFTER ;
+ALTER TABLE `inventory` ADD `adminseq` INT NOT NULL AFTER ;
