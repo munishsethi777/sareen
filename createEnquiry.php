@@ -5,10 +5,12 @@ $enquery = new Enquiry();
 $isFullfilled = "";
 $isRental = "";
 $id = null;
+$adminSeq = SessionUtil::getInstance()->getAdminLoggedInSeq();
 if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$enqueryMgr = EnquiryMgr::getInstance();
 	$enquery = $enqueryMgr->findBySeq($id);
+	$adminSeq = $enquery->getAdminSeq();
 	$path = "images/propertyImages/".$id ."_thumb."."jpg";
 	if (file_exists($path)){
 		$imagePath = $path;
@@ -182,7 +184,7 @@ if(isset($_POST["id"])){
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Saved By</label>
 								<div class="col-sm-2">
-									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $enquery->getAdminSeq())?>
+									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $adminSeq)?>
 								</div>
 							</div>
 							<div class="form-group">

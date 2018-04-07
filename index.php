@@ -7,10 +7,12 @@ $isRental = "";
 $imagePath = "images/dummy.jpg";
 $id = null;
 $isAvailable = "checked";
+$adminSeq = SessionUtil::getInstance()->getAdminLoggedInSeq();
 if(isset($_POST["id"])){
 	$id = $_POST["id"];
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
+	$adminSeq = $inventory->getAdminSeq();
 	$path = "images/propertyImages/".$id ."_thumb."."jpg";
 	if (file_exists($path)){
 		$imagePath = $path;
@@ -346,7 +348,7 @@ if(isset($_POST["id"])){
 								</label>
 								<label class="col-sm-3 control-label">Saved By</label>
 								<div class="col-sm-2">
-									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $inventory->getAdminSeq())?>
+									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $adminSeq)?>
 								</div>
 							</div>
 							
