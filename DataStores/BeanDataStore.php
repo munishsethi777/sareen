@@ -13,11 +13,6 @@ class BeanDataStore {
 	public function __construct($className_, $tableName) {
 		$this->className = $className_;
 		$this->tableName = $tableName;
-// 		$sessionUtil = SessionUtil::getInstance ();
-// 		$this->companySeq = $sessionUtil->getAdminLoggedInCompanySeq ();
-// 		$this->loggedInAdminSeq = $sessionUtil->getAdminLoggedInSeq();
-// 		$this->logger = Logger::getLogger ( "logger" );
-// 		$this->isManager = $sessionUtil->getLoggedInRole() == "manager";
 	}
 	private function key_implode($array) {
 		$fields = array ();
@@ -168,7 +163,7 @@ class BeanDataStore {
 	}
 	function findAll($isApplyFilter = false) {
 		try {
-			$db = MainDB.php::getInstance ();
+			$db = MainDB::getInstance ();
 			$conn = $db->getConnection ();
 			$sql = "select * from " . $this->tableName;
 			if ($isApplyFilter) {
