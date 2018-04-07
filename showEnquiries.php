@@ -71,6 +71,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
     </div>
     <form id="form1" name="form1" method="post" action="createEnquiry.php">
      	<input type="hidden" id="id" name="id"/>
+     	<input type="hidden" id="detailMode" name="detailMode"/>
    	</form>
    	<form id="form2" name="form2" method="post" action="viewEnquiryDetail.php">
      	<input type="hidden" id="seq" name="seq"/>
@@ -301,8 +302,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             });
         }
         function viewDetail(seq){
-             $("#seq").val(seq);                        
-             $("#form2").submit();  
+             $("#seq").val(seq);  
+             $("#detailMode").val(true);                      
+             $("#form1").submit();  
         }
 
         

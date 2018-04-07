@@ -344,7 +344,7 @@ if(isset($_POST["id"])){
 										<input type="checkbox"	name="isavailable" <?php echo $isAvailable?> id="isavailable"> 
 										
 								</label>
-								<label class="col-sm-2 control-label">Saved By</label>
+								<label class="col-sm-3 control-label">Saved By</label>
 								<div class="col-sm-2">
 									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $inventory->getAdminSeq())?>
 								</div>

@@ -10,11 +10,6 @@
 	                    		</span>
 							</span>
 						</a>
-					<ul class="dropdown-menu animated fadeInRight m-t-xs">
-						<li><a href="ChangePasswordForm.php">Change Password</a></li>
-						<li class="divider"></li>
-						<li><a href="logout.php">Logout</a></li>
-					</ul>
                     </div>
 					
                 </li>
@@ -36,6 +31,11 @@
                 <li>
                     <a href="showEnquiries.php"><i class="fa fa-th-large"></i> 
                     	<span class="nav-label">Show Enquiries</span>  
+                    </a>
+                </li>
+                <li>
+                    <a href="logout.php"><i class="fa fa-th-large"></i> 
+                    	<span class="nav-label">Logout</span>  
                     </a>
                 </li>
             </ul>
