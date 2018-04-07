@@ -34,6 +34,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="changePassword.php"><i class="fa fa-th-large"></i> 
+                    	<span class="nav-label">Change Password</span>  
+                    </a>
+                </li>
+                <li>
                     <a href="logout.php"><i class="fa fa-th-large"></i> 
                     	<span class="nav-label">Logout</span>  
                     </a>
