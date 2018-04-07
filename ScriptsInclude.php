@@ -403,34 +403,7 @@ $(document).ready(function() {
             return vals;
         }
         
-        function loadLearningPlansCombo(divId,survey){           
-            isSurvey = 1
-        	if (typeof survey === 'undefined'){
-        		isSurvey = 0;	
-            }
-            var url = 'Actions/LearningPlanAction.php?call=getLearnerPlansForReporting';
-            $.getJSON(url, function(data){
-            	var options = "";
-            	
-                <?php
-                if (class_exists('SessionUtil')) {
-	                $sessionUtil = SessionUtil::getInstance ();
-	                $role = $sessionUtil->getLoggedInRole();
-	                if($role != RoleType::MANAGER){?>
-	            		options = "<option value='0'>Default Learning Plan</option>";
-	            	<?php }?>
-	                $.each(data.Rows, function(index , value){
-	                    options += "<option value='" + value.id + "'>" + value.title + "</option>";
-	                });
-	                $("#" + divId).html(options);
-	                var selectedLp = $('#'+ divId).val();
-	                loadModulesCombo(selectedLp,isSurvey);
-	           <?php }?>
-            });
-            $('#'+ divId).change(function(){
-                loadModulesCombo(this.value,isSurvey);
-            });
-        }
+       
         
         function loadModulesCombo(learningPlanSeq,isSurvey){
             var url = 'Actions/ModuleAction.php?call=getModulesByLearningPlanForReporting&learningPlanSeq='+learningPlanSeq + '&isSurvey='+isSurvey;

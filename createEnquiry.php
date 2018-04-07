@@ -1,4 +1,4 @@
-<?php
+<?include("sessioncheck.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/EnquiryMgr.php");
 $enquery = new Enquiry();
@@ -179,7 +179,12 @@ if(isset($_POST["id"])){
 
 								</div>
 							</div>
-							
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Saved By</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $enquery->getAdminSeq())?>
+								</div>
+							</div>
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-offset-9">
 									<button class="btn btn-primary ladda-button"

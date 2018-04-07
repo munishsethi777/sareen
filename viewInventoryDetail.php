@@ -1,4 +1,4 @@
-<?php
+<?include("sessioncheck.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/InventoryMgr.php");
 $inventory = new Inventory();
