@@ -3,6 +3,7 @@ require_once('../IConstants.inc');
 require_once($ConstantsArray['dbServerUrl'] ."Managers/AdminMgr.php");
 require_once($ConstantsArray['dbServerUrl'] ."Utils/SessionUtil.php");
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Admin.php");
+$success = 1;
 $call = "";
 if(isset($_GET["call"])){
 	$call = $_GET["call"];
@@ -21,5 +22,30 @@ if($call == "loginAdmin"){
 	}else{
 		echo 0;
 	}
+	return;
+}
+if($call == "changePassword"){
+	$password = $_GET["newPassword"];
+	$earlierPassword = $_GET["earlierPassword"];
+	try{
+
+		$adminMgr = AdminMgr::getInstance();
+		$isPasswordExists = $adminMgr->isPasswordExist($earlierPassword);
+		if($isPasswordExists){
+			$adminMgr->ChangePassword($password);
+			$message = "Password Updated Successfully";
+		}else{
+			$message = "Incorrect Current Password!";
+			$success = 0;
+		}
+
+	}catch(Exception $e){
+		$success = 0;
+		$message  = $e->getMessage();
+	}
+	$response = new ArrayObject();
+	$response["success"]  = $success;
+	$response["message"]  = $message;
+	echo json_encode($response);
 	return;
 }
