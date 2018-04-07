@@ -10,8 +10,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Enums/AcquiredType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyUnit.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/ApprovalType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertySideType.php");
-
-
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertySideType.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Managers/AdminMgr.php");
 class DropDownUtils {
 	
    public static function getDropDown($values, $selectName, $onChangeMethod, $selectedValue,$isAll = false) {
@@ -83,6 +83,19 @@ class DropDownUtils {
 	public static function getPropertySideTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
 		$types = PropertySideType::getAll();
 		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,true);
+	}
+	
+	public static function getAdminsDD($selectName, $onChangeMethod, $selectedValue){
+		$admins = AdminMgr::getInstance()->getAllAdmins();
+		$str = "<select required class='form-control m-b' name='" . $selectName . "' id='" . $selectName . "' onchange='" . $onChangeMethod . "'>";
+		foreach ($admins as $admin){
+			$key = $admin->getSeq();
+			$value = $admin->getName();
+			$select = $selectedValue == $key ? 'selected' : null;
+			$str .= "<option value='" . $key . "' " . $select . ">" . $value . "</option>";		
+		}
+		$str .= "</select>";
+		return $str;
 	}
 	
 	
