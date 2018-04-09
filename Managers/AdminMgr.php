@@ -1,7 +1,6 @@
 <?php
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Admin.php");
 require_once($ConstantsArray['dbServerUrl'] ."DataStores/BeanDataStore.php");
-require_once($ConstantsArray['dbServerUrl'] ."Utils/ArrayUtil.php");
 class AdminMgr{
 	private static $adminMgr;
 	private static $adminDataStore;
