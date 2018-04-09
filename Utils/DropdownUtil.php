@@ -11,6 +11,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyUnit.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/ApprovalType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertySideType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertySideType.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/PropertyOfferType.php");
+require_once ($ConstantsArray ['dbServerUrl'] . "Enums/RateFactorType.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/AdminMgr.php");
 class DropDownUtils {
 	
@@ -30,7 +32,10 @@ class DropDownUtils {
 		$str .= "</select>";
 		return $str;
 	}
-	
+	public static function getPropertyOfferTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
+		$types = PropertyOfferType::getAll();
+		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,true);
+	}
 	public static function getPropertyTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
 		$types = PropertyType::getAll();
 		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,true);
@@ -82,6 +87,10 @@ class DropDownUtils {
 	}
 	public static function getPropertySideTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
 		$types = PropertySideType::getAll();
+		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,true);
+	}
+	public static function getRateFactoryTypeDD($selectName, $onChangeMethod, $selectedValue,$isAll = false) {
+		$types = RateFactorType::getAll();
 		return self::getDropDown ($types, $selectName, $onChangeMethod, $selectedValue,true);
 	}
 	

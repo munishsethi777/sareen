@@ -54,6 +54,17 @@ if(isset($_POST["seq"])){
 						<form method="post" action="Actions/InventoryAction.php" id="inventoryForm" class="form-horizontal">
 							<input type="hidden" name="call" value="saveInventory">
 							<div class="form-group">
+								<label class="col-sm-2">Created : </label>
+								<div class="col-sm-2">
+									<?php echo $inventory->getCreatedOn() ?>
+								</div>
+								<label class="col-sm-2">Last Modified : </label>
+									<div class="col-sm-2">
+										<?php echo $inventory->getLastmodifiedon() ?>
+									</div>
+								
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2">Type : </label>
 								<div class="col-sm-2">
 									<?php $propertyType = PropertyType::getValue($inventory->getPropertyType());
@@ -133,8 +144,13 @@ if(isset($_POST["seq"])){
 								</div>
 								
 								<label class="col-sm-2">Address : </label>
-								<div class="col-sm-5">
+								<div class="col-sm-2">
 									<?php echo $inventory->getContactAddress()?>
+								</div>
+								
+								<label class="col-sm-2">Organisation : </label>
+								<div class="col-sm-2">
+									<?php echo $inventory->getOrganisation()?>
 								</div>
 							</div>
 							
@@ -212,11 +228,12 @@ if(isset($_POST["seq"])){
 								</div>
 							</div>
 							
-							<div class="form-group specifications" style="display:none">
+							<div class="form-group specifications">
 								<label class="col-sm-2">Specifications</label>
-								<div class="col-sm-2">
+								<div class="col-sm-5">
 									<?php echo $inventory->getSpecifications()?>
 								</div>
+								
 								<label class="col-sm-1 control-label">Image</label>
 								<div class="col-sm-4">
 									<a>
@@ -245,7 +262,7 @@ if(isset($_POST["seq"])){
 			$(".stories").hide();
 			$(".agriculturalLand").hide();
 			$(".floorNumber").hide();
-			$(".specifications").hide();
+			//$(".specifications").hide();
 			value = "<?php echo $inventory->getPropertyType()?>"
 			if(value == "building"){
 				$(".furnishing").show();
