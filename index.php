@@ -137,6 +137,16 @@ if(isset($_POST["id"])){
 									</div>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Image</label>
+								<div class="col-sm-4">
+									<input type="file" id="inventoryImage" name="inventoryImage"
+										class="form-control hidden" /> <label for="inventoryImage"><a><img
+											alt="image" id="inventoryImg" class="img" width="100px;"
+											src="<?echo $imagePath."?".time() ?>"></a></label> <label
+										class="jqx-validator-error-label" id="imageError"></label>
+								</div>
+							</div>
 							<div class="hr-line-dashed"></div>
 							<h4>LOCATION</h4>
 							<div class="form-group">
@@ -241,15 +251,6 @@ if(isset($_POST["id"])){
 								<label class="col-sm-1 control-label">Years of Construction</label>
 								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getConstructionYears()?>" id="constructionyears" name="constructionyears">
-								</div>
-								
-								<label class="col-sm-1 control-label">Image</label>
-								<div class="col-sm-4">
-									<input type="file" id="inventoryImage" name="inventoryImage"
-										class="form-control hidden" /> <label for="inventoryImage"><a><img
-											alt="image" id="inventoryImg" class="img" width="100px;"
-											src="<?echo $imagePath."?".time() ?>"></a></label> <label
-										class="jqx-validator-error-label" id="imageError"></label>
 								</div>
 							</div>
 							

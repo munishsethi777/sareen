@@ -237,11 +237,13 @@ if(isset($_POST["seq"])){
 								<label class="col-sm-1 control-label">Image</label>
 								<div class="col-sm-4">
 									<a>
-										<img alt="image" id="inventoryImg" class="img" width="150px;"
+										<img alt="image" id="inventoryImg" class="img" style="width:150px; height:150px"
 											src="<?echo $imagePath."?".time() ?>"></a>
 								</div>
 							</div>
-							
+							<div class="col-sm-12">
+									<div style="width:100%;height:400px;" id="map"></div>
+								</div>
 							<a href="showInventory.php" class="btn btn-primary">
 								<span class="ladda-label">Back to Properties</span>
 							</a>
@@ -256,8 +258,42 @@ if(isset($_POST["seq"])){
 </body>
 
 </html>
+<script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyC9V55rJSrsXjDc2VgJtFtH4qCw2dS2G74&callback=initMap"
+	  type="text/javascript"></script>
 <script type="text/javascript">
+function initMap() {
+	var lat = 30.90531781198044;
+	var lng = 75.85407257080078;
+	var editMode = false;
+	map = new google.maps.Map(document.getElementById('map'), {
+	      center: {lat: lat, lng: lng},
+	      zoom: 13
+	    });
+	<?php if(!empty($inventory->getLongitude())){
+			echo ("lng = ".$inventory->getLongitude().";");
+			echo ("lat = ".$inventory->getLatitude().";");
+			echo("editMode = true;");
+			echo("var latlng = new google.maps.LatLng(lat,lng);");
+			echo("placeMarker(latlng);");
+		}else{
+	?>
+    
+		   
+		   <?php }?>
+    
+    
+    
+  }
+
+	function placeMarker(location) {
+	    var marker = new google.maps.Marker({
+	        position: location, 
+	        map: map
+	    });
+	    markersArray.push(marker);
+	}
 	$(document).ready(function () {
+			initMap();
     		$(".furnishing").hide();
 			$(".stories").hide();
 			$(".agriculturalLand").hide();
