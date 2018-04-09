@@ -241,19 +241,25 @@ $(document).ready(function () {
 			var lakh = $("#lakhs").val() * 100000;
 			var thousand = $("#thousands").val() * 1000;
 			var crore = $(this).val() * 10000000;
-		    $("#expectedAmount").val(crore + lakh + thousand);
+			var num = crore + lakh + thousand;
+			num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+		    $("#expectedAmount").val(num);
 		});
 		$("#lakhs").chosen().change(function() {
 			var crore = $("#crores").val() * 10000000;
 			var thousand = $("#thousands").val() * 1000;
 			var lakh = $(this).val() * 100000;
-		    $("#expectedAmount").val(crore + lakh + thousand);
+			var num = crore + lakh + thousand;
+			num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+		    $("#expectedAmount").val(num);
 		});
 		$("#thousands").chosen().change(function() {
 			var crore = $("#crores").val() * 10000000;
 			var lakh = $("#lakhs").val() * 100000;
 			var thousand = $(this).val() * 1000;
-		    $("#expectedAmount").val(crore + lakh + thousand);
+			var num = crore + lakh + thousand;
+			num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+		    $("#expectedAmount").val(num);
 		});
 		
 });
