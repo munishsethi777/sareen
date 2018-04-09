@@ -67,7 +67,7 @@
 <div class="loginColumns animated fadeInDown">
     <div class="row">
         <div class="col-md-6">
-	        <h1 class="font-bold">Welcome to Sareen Property</h1>
+	        <h1 class="font-bold">Welcome to Sareen Properties</h1>
 	        <p>
 	        	Please login with your credentials sent to you.
 	        </p>

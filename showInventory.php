@@ -50,9 +50,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 								</div>
 								<div class="row">
 									<div class="form-group">
-										<label class="col-sm-1 control-label">Stories</label>
+										<label class="col-sm-1 control-label">Address</label>
 										<div class="col-sm-2">
-											<input class="form-control" type="text" id="stories"  name="stories">
+											<input class="form-control" type="text" id="address"  name="address">
 										</div>
 										
 										<label class="col-sm-1 control-label">Amount</label>
@@ -156,8 +156,8 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
            $("#facing").change(function () {
         	   applyFilter("facing")
            });
-           $("#stories").change(function () {
-        	   applyFilter("stories")
+           $("#address").change(function () {
+        	   applyFilter("address")
            });
            $("#expectedamount").change(function () {
         	   applyFilter("expectedamount")
@@ -179,7 +179,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 			var purpose = $("#purpose").val();
 			var medium = $("#medium").val();
 			var facing = $("#facing").val();
-			var stories = $("#stories").val();
+			var address = $("#address").val();
 			var expectedAmount = $("#expectedamount").val();
 			var isRentalChecked =$("input[type='checkbox'][name='isrental']:checked").val()
 			var isrental = "";
@@ -191,7 +191,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 			if(isAvailableChecked == "on"){
 				isAvailable = "1"
 			} 
-			var data = {propertytype: propertyType, purpose: purpose,medium: medium,facing: facing,stories: stories,expectedamount:expectedAmount,isrental:isrental,isavailable:isAvailable};
+			var data = {propertytype: propertyType, purpose: purpose,medium: medium,facing: facing,address1: address,expectedamount:expectedAmount,isrental:isrental,isavailable:isAvailable};
 			return data
 		}
         
@@ -346,11 +346,11 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             });
         }
         function viewDetail(seq){
-        	$("#id").val(seq);
-        	$("#detailMode").val(true);                      
-            $("#form1").submit();    
-            //$("#seq").val(seq);                        
-             //$("#form2").submit();  
+//         	$("#id").val(seq);
+//         	$("#detailMode").val(true);                      
+//             $("#form1").submit();    
+            $("#seq").val(seq);                        
+            $("#form2").submit();  
         }
 
         

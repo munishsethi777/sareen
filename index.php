@@ -69,23 +69,26 @@ if(isset($_POST["id"])){
 							<h4>USER INFO</h4>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Name</label>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<input class="form-control" type="text" value="<?php echo $inventory->getContactPerson()?>" id="contactPerson" name="contactperson">
 								</div>
-								<label class="col-sm-1 control-label col-sm-offset-1">Mobile</label>
-								<div class="col-sm-4">
+								<label class="col-sm-1 control-label">Mobile</label>
+								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getContactMobile()?>" id="contactMobile" name="contactmobile">
+								</div>
+								<label class="col-sm-1 control-label">Referredby</label>
+								<div class="col-sm-3">
+									<input class="form-control" type="text" value="<?php echo $inventory->getReferredby()?>" id="referred" name="referredby">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-1 control-label">Address</label>
-								<div class="col-sm-4">
+								<div class="col-sm-6">
 									<textarea rows="2" cols="4" class="form-control" name="contactaddress"><?php echo $inventory->getContactAddress()?></textarea>
 								</div>
-								
-								<label class="col-sm-2 control-label">Referred by</label>
-								<div class="col-sm-4">
-									<input class="form-control" type="text" value="<?php echo $inventory->getReferredby()?>" id="referred" name="referredby">
+								<label class="col-sm-1 control-label">Organisation</label>
+								<div class="col-sm-3">
+									<input class="form-control" type="text" value="<?php echo $inventory->getOrganisation()?>" id="organisation" name="organisation">
 								</div>
 							</div>
 							
@@ -106,10 +109,15 @@ if(isset($_POST["id"])){
 								<div class="col-sm-4">
 									<?php echo DropDownUtils::getMediumTypeDD("medium", "showDetail(this.value)", $inventory->getMedium())?>
 								</div>
-								<label class="col-sm-2 col-sm-offset-2 control-label" style="text-align: left">
-									<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
+								
+								<label class="col-sm-1 control-label col-sm-offset-1">For</label>
+								<div class="col-sm-4">
+									<?php echo DropDownUtils::getPropertyOfferTypeDD("propertyoffer", "", $inventory->getPropertyOffer())?>
+								</div>
+								<!-- <label class="col-sm-2 col-sm-offset-2 control-label" style="text-align: left">
+									<input type="checkbox" name="isrental" <?php //echo $isRental?> id="isrental">
 									Rental
-								</label> 
+								</label> --> 
 							</div>
 							<div id="mediumDetail" style="display: none">
 								<div class="form-group">
@@ -127,6 +135,16 @@ if(isset($_POST["id"])){
 									<div class="col-sm-4">
 										<textarea rows="2" cols="4" class="form-control" id="mediumaddress" name="mediumaddress"><?php echo $inventory->getMediumAddress()?></textarea>
 									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">Image</label>
+								<div class="col-sm-4">
+									<input type="file" id="inventoryImage" name="inventoryImage"
+										class="form-control hidden" /> <label for="inventoryImage"><a><img
+											alt="image" id="inventoryImg" class="img" width="100px;"
+											src="<?echo $imagePath."?".time() ?>"></a></label> <label
+										class="jqx-validator-error-label" id="imageError"></label>
 								</div>
 							</div>
 							<div class="hr-line-dashed"></div>
@@ -234,15 +252,6 @@ if(isset($_POST["id"])){
 								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getConstructionYears()?>" id="constructionyears" name="constructionyears">
 								</div>
-								
-								<label class="col-sm-1 control-label">Image</label>
-								<div class="col-sm-4">
-									<input type="file" id="inventoryImage" name="inventoryImage"
-										class="form-control hidden" /> <label for="inventoryImage"><a><img
-											alt="image" id="inventoryImg" class="img" width="100px;"
-											src="<?echo $imagePath."?".time() ?>"></a></label> <label
-										class="jqx-validator-error-label" id="imageError"></label>
-								</div>
 							</div>
 							
 							<div class="form-group agriculturalLand" style="display:none">
@@ -335,8 +344,12 @@ if(isset($_POST["id"])){
 								<div class="col-sm-2">
 									<input class="form-control" type="text" value="<?php echo $inventory->getRate()?>" id="rate" name="rate">
 								</div>
-								<label class="col-sm-2 control-label">Specifications</label>
-								<div class="col-sm-7">
+								<label class="col-sm-1 control-label">RateFactor</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getRateFactoryTypeDD("ratefactor", "", $inventory->getRateFactor())?>
+								</div>
+								<label class="col-sm-1 control-label">Specs.</label>
+								<div class="col-sm-5">
 									<textarea rows="4" cols="4" class="form-control" style="height:70px !important" name="specifications" ><?php echo $inventory->getSpecifications()?></textarea>
 								</div>
 							</div>
@@ -397,19 +410,25 @@ $(document).ready(function () {
 		var lakh = $("#lakhs").val() * 100000;
 		var thousand = $("#thousands").val() * 1000;
 		var crore = $(this).val() * 10000000;
-	    $("#expectedAmount").val(crore + lakh + thousand);
+		var num = crore + lakh + thousand;
+		num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+	    $("#expectedAmount").val(num);
 	});
 	$("#lakhs").chosen().change(function() {
 		var crore = $("#crores").val() * 10000000;
 		var thousand = $("#thousands").val() * 1000;
 		var lakh = $(this).val() * 100000;
-	    $("#expectedAmount").val(crore + lakh + thousand);
+	    var num = crore + lakh + thousand;
+		num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+	    $("#expectedAmount").val(num);
 	});
 	$("#thousands").chosen().change(function() {
 		var crore = $("#crores").val() * 10000000;
 		var lakh = $("#lakhs").val() * 100000;
 		var thousand = $(this).val() * 1000;
-	    $("#expectedAmount").val(crore + lakh + thousand);
+		var num = crore + lakh + thousand;
+		num = 'Rs. ' + num.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+	    $("#expectedAmount").val(num);
 	});
 
 	

@@ -46,6 +46,9 @@ class Inventory {
 	private $mediumphone;
 	private $mediumaddress;
 	private $adminseq;
+	private $propertyoffer;
+	private $organisation;
+	private $ratefactor;
 	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
@@ -319,6 +322,26 @@ class Inventory {
 	}
 	public function getAdminSeq(){
 		return $this->adminseq;
+	}
+	
+	public function setPropertyOffer($val){
+		$this->propertyoffer = $val;
+	}
+	public function getPropertyOffer(){
+		return $this->propertyoffer;
+	}
+	public function setOrganisation($val){
+		$this->organisation = $val;
+	}
+	public function getOrganisation(){
+		return $this->organisation;
+	}
+	
+	public function setRateFactor($val){
+		$this->ratefactor = $val;
+	}
+	public function getRateFactor(){
+		return $this->ratefactor;
 	}
 	
 	function createFromRequest($request){
