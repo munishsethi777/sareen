@@ -28,4 +28,21 @@ class AdminMgr{
 		$admins = self::$adminDataStore->findAll();
 		return $admins;
 	}
+	
+	public function isPasswordExist($password){
+		$sessionUtil = SessionUtil::getInstance();
+		$adminSeq = $sessionUtil->getAdminLoggedInSeq();
+		$params["password"] = $password;
+		$params["seq"] = $adminSeq;
+		$count = self::$adminDataStore->executeCountQuery($params);
+		return $count > 0;
+	}
+	
+	public function ChangePassword($password){
+		$sessionUtil = SessionUtil::getInstance();
+		$adminSeq = $sessionUtil->getAdminLoggedInSeq();
+		$attr["password"] = $password;
+		$condition["seq"] = $adminSeq;
+		self::$adminDataStore->updateByAttributesWithBindParams($attr,$condition);
+	}
 }

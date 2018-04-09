@@ -1,4 +1,4 @@
-<?include("sessioncheck.php");
+<?include("SessionCheck.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 require_once ($ConstantsArray ['dbServerUrl'] . "Managers/EnquiryMgr.php");
 $enquiry = new Enquiry();
