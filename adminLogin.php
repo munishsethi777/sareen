@@ -52,9 +52,9 @@
                 var l = Ladda.create(btn);
                 l.start();
                 $formData = $("#loginForm").serializeArray();
-                $.get( "Actions/AdminAction.php?call=loginAdmin", $formData,function( data ){
+                $.getJSON( "Actions/AdminAction.php?call=loginAdmin", $formData,function( data ){
                     l.stop();
-                    if(data == 0){
+                    if(data.success == 0){
                         toastr.error("Invaid username or Password",'Login Failed');
                     }else{
                         window.location = "index.php";

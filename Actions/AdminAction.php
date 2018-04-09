@@ -5,6 +5,7 @@ require_once($ConstantsArray['dbServerUrl'] ."Utils/SessionUtil.php");
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Admin.php");
 $success = 1;
 $call = "";
+$response = new ArrayObject();
 if(isset($_GET["call"])){
 	$call = $_GET["call"];
 }else{
@@ -18,11 +19,10 @@ if($call == "loginAdmin"){
 	if(!empty($admin) && $admin->getPassword() == $password){
 		$sessionUtil = SessionUtil::getInstance();
 		$sessionUtil->createAdminSession($admin);
-		echo 1;
+		$response["admin"] = $adminMgr->toArray($admin);
 	}else{
-		echo 0;
+		$success = 0;
 	}
-	return;
 }
 if($call == "changePassword"){
 	$password = $_GET["newPassword"];
@@ -43,9 +43,14 @@ if($call == "changePassword"){
 		$success = 0;
 		$message  = $e->getMessage();
 	}
-	$response = new ArrayObject();
-	$response["success"]  = $success;
-	$response["message"]  = $message;
-	echo json_encode($response);
-	return;
 }
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Credentials: true");
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Max-Age: 1000');
+header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+header("Content-type: application/json");
+$response["success"] = $success;
+$response["message"] = $message;
+echo json_encode($response);
+return;

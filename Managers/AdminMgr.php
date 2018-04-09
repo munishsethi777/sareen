@@ -1,6 +1,7 @@
 <?php
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Admin.php");
 require_once($ConstantsArray['dbServerUrl'] ."DataStores/BeanDataStore.php");
+require_once($ConstantsArray['dbServerUrl'] ."Utils/ArrayUtil.php");
 class AdminMgr{
 	private static $adminMgr;
 	private static $adminDataStore;
@@ -44,5 +45,13 @@ class AdminMgr{
 		$attr["password"] = $password;
 		$condition["seq"] = $adminSeq;
 		self::$adminDataStore->updateByAttributesWithBindParams($attr,$condition);
+	}
+	
+	public function toArray($admin){
+		$adminArr = array();
+		$adminArr["seq"] = $admin->getSeq();
+		$adminArr["username"] = $admin->getUserName();
+		$adminArr["name"] = $admin->getName();
+		return $adminArr;
 	}
 }
