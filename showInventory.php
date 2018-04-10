@@ -327,11 +327,15 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                     });
                     editButton.click(function (event){
                         var selectedrowindex = $("#inventoryGrid").jqxGrid('selectedrowindexes');
-                        if(selectedrowindex.length != 1){
+                        var value = -1;
+                        indexes = selectedrowindex.filter(function(item) { 
+                            return item !== value
+                        })
+                        if(indexes.length != 1){
                             bootbox.alert("Please Select single row for edit.", function() {});
                             return;    
                         }
-                        var row = $('#inventoryGrid').jqxGrid('getrowdata', selectedrowindex);
+                        var row = $('#inventoryGrid').jqxGrid('getrowdata', indexes);
                         $("#id").val(row.seq);                        
                         $("#form1").submit();                   
                         });

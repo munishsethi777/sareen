@@ -26,8 +26,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 	                        <h5>Enquiries</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                    	
-		                    	<div class="row">
+	                        	<div class="row">
 		                    		<div class="form-group">
 										<label class="col-sm-1 control-label">Type</label>
 										<div class="col-sm-2">
@@ -106,8 +105,6 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 	                   $("#enqueryGrid").jqxGrid('addfilter', key, filtergroup);
                    }
                });
-              
-               
                // apply the filters.
                $("#enqueryGrid").jqxGrid('applyfilters');
            }
@@ -241,25 +238,24 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
             // initialize jqxGrid
             $("#enqueryGrid").jqxGrid(
             {
-            width: '100%',
-            height: '90%',
-            source: dataAdapter,
-            sortable: true,            
-            filterable: true,
-            autoshowfiltericon: true,
-            columns: columns,
-            pageable: true,
-            altrows: true,
-            enabletooltips: true,
-            columnsresize: true,
-            columnsreorder: true,
-            selectionmode: 'checkbox',
-            showstatusbar: true,   
-            virtualmode: true,   
-            rendergridrows: function()
-            {
+            	width: '100%',
+    			height: '75%',
+    			source: dataAdapter,
+    			filterable: true,
+    			sortable: true,
+    			autoshowfiltericon: true,
+    			columns: columns,
+    			pageable: true,
+    			altrows: true,
+    			enabletooltips: true,
+    			columnsresize: true,
+    			columnsreorder: true,
+    			selectionmode: 'checkbox',
+    			showstatusbar: true,
+    			virtualmode: true,
+    			rendergridrows: function (toolbar) {
                   return dataAdapter.records;     
-            },
+           		 },
                 renderstatusbar: function (statusbar) {
                     // appends buttons to the status bar.
                     var container = $("<div style='overflow: hidden; position: relative; margin: 5px;height:30px'></div>");
@@ -283,11 +279,15 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                     });
                     editButton.click(function (event){
                         var selectedrowindex = $("#enqueryGrid").jqxGrid('selectedrowindexes');
-                        if(selectedrowindex.length != 1){
+                        var value = -1;
+                        indexes = selectedrowindex.filter(function(item) { 
+                            return item !== value
+                        })
+                        if(indexes.length != 1){
                             bootbox.alert("Please Select single row for edit.", function() {});
                             return;    
                         }
-                        var row = $('#enqueryGrid').jqxGrid('getrowdata', selectedrowindex);
+                        var row = $('#enqueryGrid').jqxGrid('getrowdata', indexes);
                         $("#id").val(row.seq);                        
                         $("#form1").submit();                   
                         });
