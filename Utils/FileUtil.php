@@ -1,4 +1,5 @@
 <?php
+  Include("resize-class.php");	
   class FileUtil{
     public static function uploadFiles($file,$path){
         if(move_uploaded_file($file['tmp_name'], $path .basename($file['name'])))
@@ -39,10 +40,8 @@
     }
     
     public static function compress($source, $destination,$thumbnailDestination, $quality) {
-    
-    	$info = getimagesize($source);
-    
-    	if ($info['mime'] == 'image/jpeg')
+    		$info = getimagesize($source);
+    		if ($info['mime'] == 'image/jpeg')
     		$image = imagecreatefromjpeg($source);
     
     		elseif ($info['mime'] == 'image/gif')
@@ -66,6 +65,51 @@
     		imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newImageWidth, $newImageHeight, $widthOrg, $heightOrg);
     		imagejpeg($newImage, $thumbnailDestination, $quality);
     		return $destination;
+    }
+    
+    public static function resizeImageAndUpload($sourcePath,$thumbPath){
+    	$info = getimagesize($sourcePath);
+    	if ($info['mime'] == 'image/jpeg')
+    	$image = imagecreatefromjpeg($sourcePath);
+    	
+    	elseif ($info['mime'] == 'image/gif')
+    	$image = imagecreatefromgif($sourcePath);
+    	
+    	elseif ($info['mime'] == 'image/png')
+    	$image = imagecreatefrompng($sourcePath);
+    	$widthOrg = imagesx($image);
+    	$heightOrg = imagesy($image);
+    	$newWidth = $widthOrg;
+    	$newImageHeight = $heightOrg;
+    	if ($widthOrg > 700){
+    		$newWidth = 700;	
+    	}
+    	$scalingFactor = $newWidth / $widthOrg;
+    	$newImageHeight = $heightOrg * $scalingFactor;
+    	$resizeObj = new resize($sourcePath);
+    	 
+    	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+    	$resizeObj -> resizeImage($newWidth, $newImageHeight, 'auto');
+    	 
+    	// *** 3) Save image
+    	$resizeObj -> saveImage($sourcePath);
+    	
+    	$thumbNewWidth = $newWidth;
+    	$thumbNewHeight = $newImageHeight;
+    	if ($newWidth > 200){
+    		$thumbNewWidth = 200;
+    	}
+    	$scalingFactor = $thumbNewWidth / $newWidth;
+    	$thumbNewHeight = $newImageHeight * $scalingFactor;
+    	
+    	$resizeObj = new resize($sourcePath);
+    	
+    	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+    	$resizeObj -> resizeImage($thumbNewWidth, $thumbNewHeight, 'auto');
+    	
+    	// *** 3) Save image
+    	$resizeObj -> saveImage($thumbPath);
+    	return $fileName;
     }
     
   }

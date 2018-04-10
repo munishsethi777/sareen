@@ -13,24 +13,24 @@
       }
   
   private static function appendLimit($query){
-    if(isset($_GET['start'])){
-        $pagenum = intval($_GET['start']);
-        $pagesize = intval($_GET['length']);
+   if(isset($_GET['pagenum'])){
+        $pagenum = intval($_GET['pagenum']);
+        $pagesize = intval($_GET['pagesize']);
         $start = $pagenum;
         //if($pagenum > 1){
              $start = $pagenum * $pagesize;    
        // }       
         $query = $query . " limit " . $start . "," . $pagesize;
-    }elseif(isset($_POST['start'])){
-	    	$pagenum = intval($_POST['start']);
-	    	$pagesize = intval($_POST['length']);
+    }elseif(isset($_POST['pagenum'])){
+	    	$pagenum = intval($_POST['pagenum']);
+	    	$pagesize = intval($_POST['pagesize']);
 	    	$start = $pagenum;
 	    	//if($pagenum > 1){
 	    	$start = $pagenum * $pagesize;
 	    	// }
 	    	$query = $query . " limit " . $start . "," . $pagesize;
     }
-    return $query;         
+    return $query;        
   }
   
   private static function limit ( $request )
