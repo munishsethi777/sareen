@@ -47,13 +47,9 @@ if($call == "saveInventory"){
 			$uploaddir = StringConstants::PROPERTY_IMAGE_PATH;
 			$filename = $id .".". $imageType;
 			$imageName = FileUtil::uploadImageFiles($file,$uploaddir,$filename);
-			$imagePath = "images//propertyImages//".$imageName;
-			$filename = $id ."_opt.". $imageType;
-			$fileContent = file_get_contents($uploaddir . $imageName);
-			$imagePath = "images//propertyImages//".$filename;
-			$destination = $uploaddir.$filename;
+			$destination = $uploaddir.$imageName;
 			$thumbnailDestination = $uploaddir .$id ."_thumb.". $imageType;
-			FileUtil::compress($uploaddir . $imageName,$destination,$thumbnailDestination,80);
+			FileUtil::resizeImageAndUpload($destination,$thumbnailDestination);
 		}
 		
 		$message = "Inventory Saved Successfully";
