@@ -342,6 +342,24 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                      deleteButton.click(function (event) {
                     	 deleteRows("inventoryGrid","Actions/InventoryAction.php?call=deleteInventory");
                      });
+                     $("#inventoryGrid").bind('rowselect', function (event) {
+                         var selectedRowIndex = event.args.rowindex;
+                          var pageSize = event.args.owner.rows.records.length - 1;                       
+                         if($.isArray(selectedRowIndex)){           
+                             if(isSelectAll){
+                                 isSelectAll = false;    
+                             } else{
+                                 isSelectAll = true;
+                             }                                                                     
+                             $('#inventoryGrid').jqxGrid('clearselection');
+                             if(isSelectAll){
+                                 for (i = 0; i <= pageSize; i++) {
+                                     var index = $('#inventoryGrid').jqxGrid('getrowboundindex', i);
+                                     $('#inventoryGrid').jqxGrid('selectrow', index);
+                                 }    
+                             }
+                         }                        
+                    });
                     // reload grid data.
                     reloadButton.click(function (event) {
                         $("#inventoryGrid").jqxGrid({ source: dataAdapter });
