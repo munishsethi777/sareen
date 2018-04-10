@@ -109,7 +109,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 </html>
 
 	<script type="text/javascript">
-	   
+		isSelectAll = false;
         $(document).ready(function(){
            loadGrid()
            $('.i-checks').iCheck({
