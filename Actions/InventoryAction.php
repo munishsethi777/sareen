@@ -5,10 +5,15 @@ require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Inventory.php");
 require_once($ConstantsArray['dbServerUrl'] ."Utils/FileUtil.php");
 require_once($ConstantsArray['dbServerUrl'] ."StringConstants.php");
 $call = "";
+$isMobile = 0;
 if(isset($_POST["call"])){
 	$call = $_POST["call"];
 }else{
 	$call = $_GET["call"];
+	if(isset($_GET["ismobile"])){
+		$isMobile = $_GET["ismobile"];
+	}
+	
 }
 $success = 1;
 $message = "";
@@ -16,7 +21,7 @@ $inventoryMgr = InventoryMgr::getInstance();
 if($call == "saveInventory"){
 	try{
 		$inventory = new Inventory();
-		$inventory->createFromRequest($_POST);
+		$inventory->createFromRequest($_REQUEST);
 		$isRental = 0;
 		if(isset($_POST["isrental"])){
 			$isRental =  1;
@@ -51,16 +56,12 @@ if($call == "saveInventory"){
 			$thumbnailDestination = $uploaddir .$id ."_thumb.". $imageType;
 			FileUtil::resizeImageAndUpload($destination,$thumbnailDestination);
 		}
-		
 		$message = "Inventory Saved Successfully";
 	}catch(Exception $e){
 		$success = 0;
 		$message  = $e->getMessage();
 	}
 	$response = new ArrayObject();
-	$response["success"]  = $success;
-	$response["message"]  = $message;
-	echo json_encode($response);
 }else if($call == "getInventories"){
 	$inventoryMgr = $inventoryMgr::getInstance();
 	$inventories = $inventoryMgr->getInventoryForGrid(true);
@@ -81,3 +82,15 @@ if($call == "saveInventory"){
         $response["message"]  = $message;
         echo json_encode($response);
  }
+ if(!empty($isMobile)){
+	 header ( 'Access-Control-Allow-Origin: *' );
+	 header ( "Access-Control-Allow-Credentials: true" );
+	 header ( 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS' );
+	 header ( 'Access-Control-Max-Age: 1000' );
+	 header ( 'Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description' );
+	 header ( "Content-type: application/json" );
+ }
+ $response ["success"] = $success;
+ $response ["message"] = $message;
+ echo json_encode ( $response );
+ return;
