@@ -67,6 +67,7 @@ if($call == "saveInventory"){
 	$inventories = $inventoryMgr->getInventoryForGrid(true);
 	$json = json_encode($inventories);
 	echo $json;
+	return;
 }else if($call == "deleteInventory"){
          $ids = $_GET["ids"];
          try{
@@ -81,6 +82,7 @@ if($call == "saveInventory"){
         $response["success"]  = $success;
         $response["message"]  = $message;
         echo json_encode($response);
+        return;
  }
  if(!empty($isMobile)){
 	 header ( 'Access-Control-Allow-Origin: *' );
