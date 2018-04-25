@@ -82,6 +82,18 @@ if($call == "saveInventory"){
 	$json = json_encode($inventories);
 	echo $json;
 	return;
+}else if($call == "getInventoryDetails"){
+	if(isset($_GET["id"])){
+		$id = $_GET["id"];
+		$inventoryMgr = $inventoryMgr::getInstance();
+		$inventory = $inventoryMgr->findArrayBySeq($id);
+		$json = json_encode($inventory);
+		echo $json;
+		return;
+	}else{
+		$success = 1;
+		$message = "Invalid inventory id";
+	}
 }else if($call == "deleteInventory"){
          $ids = $_GET["ids"];
          try{
