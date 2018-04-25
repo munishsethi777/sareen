@@ -17,7 +17,16 @@ if(isset($_POST["call"])){
 }
 $success = 1;
 $message = "";
+$response = new ArrayObject();
 $inventoryMgr = InventoryMgr::getInstance();
+if(!empty($isMobile)){
+	header ( 'Access-Control-Allow-Origin: *' );
+	header ( "Access-Control-Allow-Credentials: true" );
+	header ( 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS' );
+	header ( 'Access-Control-Max-Age: 1000' );
+	header ( 'Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description' );
+	header ( "Content-type: application/json" );
+}
 if($call == "saveInventory"){
 	try{
 		$inventory = new Inventory();
@@ -42,7 +51,6 @@ if($call == "saveInventory"){
 			$inventory->setMediumAddress("");
 			$inventory->setMediumPhone("");
 		}
-		
 		$inventory->setLastmodifiedon(new DateTime());
 		$id = $inventoryMgr->saveInventory($inventory);
 		if(isset($_FILES["inventoryImage"])){
@@ -61,7 +69,7 @@ if($call == "saveInventory"){
 		$success = 0;
 		$message  = $e->getMessage();
 	}
-	$response = new ArrayObject();
+	
 }else if($call == "getInventories"){
 	$inventoryMgr = $inventoryMgr::getInstance();
 	$inventories = $inventoryMgr->getInventoryForGrid(true);
@@ -84,14 +92,7 @@ if($call == "saveInventory"){
         echo json_encode($response);
         return;
  }
- if(!empty($isMobile)){
-	 header ( 'Access-Control-Allow-Origin: *' );
-	 header ( "Access-Control-Allow-Credentials: true" );
-	 header ( 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS' );
-	 header ( 'Access-Control-Max-Age: 1000' );
-	 header ( 'Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description' );
-	 header ( "Content-type: application/json" );
- }
+
  $response ["success"] = $success;
  $response ["message"] = $message;
  echo json_encode ( $response );
