@@ -76,6 +76,12 @@ if($call == "saveInventory"){
 	$json = json_encode($inventories);
 	echo $json;
 	return;
+}else if($call == "getInventoriesLight"){
+	$inventoryMgr = $inventoryMgr::getInstance();
+	$inventories = $inventoryMgr->getInventoryForDroidList(true);
+	$json = json_encode($inventories);
+	echo $json;
+	return;
 }else if($call == "deleteInventory"){
          $ids = $_GET["ids"];
          try{

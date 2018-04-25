@@ -82,7 +82,22 @@ class InventoryMgr{
    		$mainArr["TotalRows"] = $this->getAllInventoryCount($isApplyFilter);
    		return $mainArr;
    	}
-   	
+   	public function getInventoryForDroidList($isApplyFilter = false){
+   		$inventories = $this->findAllArr($isApplyFilter);
+   		$InArr = array();
+   		foreach ($inventories as $inventory){
+   			$arr["propertytype"]  = PropertyType::getValue($inventory["propertytype"]);
+   			$arr["propertyarea"] = $inventory["propertyarea"];
+   			$arr["propertyunit"] = $inventory["propertyunit"];
+   			$arr["address1"] = $inventory["address1"];
+   			$arr["contactperson"] = $inventory["contactperson"];
+   			$arr["contactmobile"] = $inventory["contactmobile"];
+   			array_push($InArr, $arr);
+   		}
+   		$mainArr["Rows"] = $InArr;
+   		$mainArr["TotalRows"] = $this->getAllInventoryCount($isApplyFilter);
+   		return $mainArr;
+   	}
    	public function getAllInventoryCount($isApplyFilter){
    		$count = self::$inventoryDataStore->executeCountQuery(null,$isApplyFilter);
    		return $count;
