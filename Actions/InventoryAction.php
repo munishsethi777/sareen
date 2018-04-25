@@ -87,11 +87,21 @@ if($call == "saveInventory"){
 		$id = $_GET["id"];
 		$inventoryMgr = $inventoryMgr::getInstance();
 		$inventory = $inventoryMgr->findArrayBySeq($id);
-		$json = json_encode($inventory);
-		echo $json;
-		return;
+		if($inventory == false){
+			$response["inventory"] = null;
+			$success = 0;
+			$message = "Invalid Inventory id";
+		}else{
+			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_thumb."."jpg";
+			$imagePath=null;
+			if (file_exists($path)){
+				$imagePath = "images/propertyImages/" .$id ."_thumb."."jpg";
+			}
+			$inventory["imagepath"] = $imagePath;
+			$response["inventory"] = $inventory;
+		}
 	}else{
-		$success = 1;
+		$success = 0;
 		$message = "Invalid inventory id";
 	}
 }else if($call == "deleteInventory"){
