@@ -322,7 +322,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
         function viewDetail(seq){
              $("#seq").val(seq);  
              $("#detailMode").val(true);                      
-             $("#form1").submit();  
+             $("#form2").submit();  
         }
 
         
