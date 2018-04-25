@@ -3,6 +3,7 @@ require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Inventory.php");
 require_once($ConstantsArray['dbServerUrl'] ."DataStores/BeanDataStore.php");
 require_once($ConstantsArray['dbServerUrl'] ."Enums/FacingType.php");
 require_once($ConstantsArray['dbServerUrl'] ."Enums/PropertyType.php");
+require_once($ConstantsArray['dbServerUrl'] ."StringConstants.php");
 class InventoryMgr{
 
     private static $inventoryMgr;
@@ -86,12 +87,19 @@ class InventoryMgr{
    		$inventories = $this->findAllArr($isApplyFilter);
    		$InArr = array();
    		foreach ($inventories as $inventory){
+   			$arr["seq"] = $inventory["seq"];
    			$arr["propertytype"]  = PropertyType::getValue($inventory["propertytype"]);
    			$arr["propertyarea"] = $inventory["propertyarea"];
    			$arr["propertyunit"] = $inventory["propertyunit"];
    			$arr["address1"] = $inventory["address1"];
    			$arr["contactperson"] = $inventory["contactperson"];
    			$arr["contactmobile"] = $inventory["contactmobile"];
+   			$path = StringConstants::PROPERTY_IMAGE_PATH .$arr["seq"] ."_thumb."."jpg";
+   			$imagePath;
+   			if (file_exists($path)){
+   				$imagePath = "images/propertyImages/" .$arr["seq"] ."_thumb."."jpg";
+   			}
+   			$arr["imagepath"] = $imagePath;
    			array_push($InArr, $arr);
    		}
    		$mainArr["Rows"] = $InArr;
