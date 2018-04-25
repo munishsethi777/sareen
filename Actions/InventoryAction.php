@@ -92,10 +92,10 @@ if($call == "saveInventory"){
 			$success = 0;
 			$message = "Invalid Inventory id";
 		}else{
-			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_thumb."."jpg";
+			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_otp."."jpg";
 			$imagePath=null;
 			if (file_exists($path)){
-				$imagePath = "images/propertyImages/" .$id ."_thumb."."jpg";
+				$imagePath = "images/propertyImages/" .$id ."_otp."."jpg";
 			}
 			$inventory["imagepath"] = $imagePath;
 			$response["inventory"] = $inventory;
