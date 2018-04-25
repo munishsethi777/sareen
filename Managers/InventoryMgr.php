@@ -95,7 +95,7 @@ class InventoryMgr{
    			$arr["contactperson"] = $inventory["contactperson"];
    			$arr["contactmobile"] = $inventory["contactmobile"];
    			$path = StringConstants::PROPERTY_IMAGE_PATH .$arr["seq"] ."_thumb."."jpg";
-   			$imagePath;
+   			$imagePath=null;
    			if (file_exists($path)){
    				$imagePath = "images/propertyImages/" .$arr["seq"] ."_thumb."."jpg";
    			}
