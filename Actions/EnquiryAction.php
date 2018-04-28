@@ -4,25 +4,37 @@ require_once($ConstantsArray['dbServerUrl'] ."Managers/EnquiryMgr.php");
 require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Enquiry.php");
 require_once($ConstantsArray['dbServerUrl'] ."StringConstants.php");
 $call = "";
+$isMobile = 0;
 if(isset($_POST["call"])){
 	$call = $_POST["call"];
 }else{
 	$call = $_GET["call"];
+	if(isset($_GET["ismobile"])){
+		$isMobile = $_GET["ismobile"];
+	}
 }
 $success = 1;
 $message = "";
 $enquiryMgr = EnquiryMgr::getInstance();
+if(!empty($isMobile)){
+	header ( 'Access-Control-Allow-Origin: *' );
+	header ( "Access-Control-Allow-Credentials: true" );
+	header ( 'Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS' );
+	header ( 'Access-Control-Max-Age: 1000' );
+	header ( 'Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description' );
+	header ( "Content-type: application/json" );
+}
 if($call == "saveEnquiry"){
 	try{
 		$enquiry = new Enquiry();
-		$enquiry->createFromRequest($_POST);
+		$enquiry->createFromRequest($_REQUEST);
 		$isRental = 0;
-		if(isset($_POST["isrental"])){
+		if(isset($_REQUEST["isrental"])){
 			$isRental =  1;
 		}
 		$enquiry->setIsRental($isRental);
 		$isFullfilled = 0;
-		if(isset($_POST["isfullfilled"])){
+		if(isset($_REQUEST["isfullfilled"])){
 			$isFullfilled =  1;
 		}
 		$enquiry->setIsRental($isRental);
