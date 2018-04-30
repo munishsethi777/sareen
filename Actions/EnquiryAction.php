@@ -70,4 +70,24 @@ if($call == "saveEnquiry"){
         $response["success"]  = $success;
         $response["message"]  = $message;
         echo json_encode($response);
- }
+ }else if($call == "getEnquiryDetails"){
+	if(isset($_GET["id"])){
+		$id = $_GET["id"];
+		$enquiryMgr = EnquiryMgr::getInstance();
+		$enquiry = $enquiryMgr->findArrayBySeq($id);
+		if(empty($enquiry)){
+			$response["enquiry"] = null;
+			$success = 0;
+			$message = "Invalid Enquiry id";
+		}else{
+			$response = new ArrayObject();
+			$response["enquiry"] = $enquiry;
+			$response["success"]  = 1;
+			$response["message"]  = "";
+			echo json_encode($response);
+		}
+	}else{
+		$success = 0;
+		$message = "Invalid enquiry id";
+	}
+}
