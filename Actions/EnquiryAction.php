@@ -29,12 +29,12 @@ if($call == "saveEnquiry"){
 		$enquiry = new Enquiry();
 		$enquiry->createFromRequest($_REQUEST);
 		$isRental = 0;
-		if(isset($_REQUEST["isrental"])){
+		if(isset($_REQUEST["isrental"]) && !empty($_REQUEST["isrental"])){
 			$isRental =  1;
 		}
 		$enquiry->setIsRental($isRental);
 		$isFullfilled = 0;
-		if(isset($_REQUEST["isfullfilled"])){
+		if(isset($_REQUEST["isfullfilled"]) && !empty($_REQUEST["isfullfilled"])){
 			$isFullfilled =  1;
 		}
 		$enquiry->setIsRental($isRental);
