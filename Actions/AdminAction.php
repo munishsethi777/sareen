@@ -22,6 +22,7 @@ if($call == "loginAdmin"){
 		$response["admin"] = $adminMgr->toArray($admin);
 	}else{
 		$success = 0;
+		$message = "Incorrect Username or Password";
 	}
 }
 if($call == "changePassword"){
