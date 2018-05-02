@@ -44,7 +44,7 @@ if($call == "saveEnquiry"){
 		}
 		$enquiry->setLastmodifiedon(new DateTime());
 		$id = $enquiryMgr->saveEnquiry($enquiry);
-		$message = "Enquery Saved Successfully";
+		$message = "Enquiry Saved Successfully";
 	}catch(Exception $e){
 		$success = 0;
 		$message  = $e->getMessage();
@@ -78,7 +78,7 @@ if($call == "saveEnquiry"){
 		if(empty($enquiry)){
 			$response["enquiry"] = null;
 			$success = 0;
-			$message = "Invalid Enquiry id";
+			$message = "Invalid enquiry id";
 		}else{
 			$response = new ArrayObject();
 			$response["enquiry"] = $enquiry;

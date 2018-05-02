@@ -43,7 +43,7 @@ class EnquiryMgr{
 	}
 
 	public function findAllArr($isApplyFilter = false){
-		$inventoriesArr = self::$enquiryDataStore->findAllArr($isApplyFilter);
+	    $inventoriesArr = self::$enquiryDataStore->findAllArr($isApplyFilter);
 		return $inventoriesArr;
 	}
 
