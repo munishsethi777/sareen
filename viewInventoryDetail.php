@@ -56,11 +56,15 @@ if(isset($_POST["seq"])){
 							<div class="form-group">
 								<label class="col-sm-2">Created : </label>
 								<div class="col-sm-2">
-									<?php echo $inventory->getCreatedOn() ?>
+									<?php 
+									$newDate = date("d-M-Y", strtotime($inventory->getCreatedOn()));
+									echo $newDate ?>
 								</div>
 								<label class="col-sm-2">Last Modified : </label>
 									<div class="col-sm-2">
-										<?php echo $inventory->getLastmodifiedon() ?>
+										<?php 
+										$newDate = date("d-M-Y", strtotime($inventory->getLastmodifiedon()));
+										echo $newDate; ?>
 									</div>
 								
 							</div>
