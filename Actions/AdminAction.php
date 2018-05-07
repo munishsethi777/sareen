@@ -6,10 +6,24 @@ require_once($ConstantsArray['dbServerUrl'] ."BusinessObjects/Admin.php");
 $success = 1;
 $call = "";
 $response = new ArrayObject();
+$isMobile = 0;
 if(isset($_GET["call"])){
 	$call = $_GET["call"];
+	if(isset($_GET["ismobile"])){
+		$isMobile = $_GET["ismobile"];
+	}
 }else{
 	$call = $_POST["call"];
+	
+}
+if(!empty($isMobile)){
+	if(isset($_GET["adminSeq"]) && !empty($_GET["adminSeq"])){
+		$sessionUtil = SessionUtil::getInstance();
+		$admin = new Admin();
+		$adminSeq = $_GET["adminSeq"];
+		$admin->setSeq($adminSeq);
+		$sessionUtil->createAdminSession($admin);
+	}
 }
 if($call == "loginAdmin"){
 	$username = $_GET["username"];
@@ -22,13 +36,13 @@ if($call == "loginAdmin"){
 		$response["admin"] = $adminMgr->toArray($admin);
 	}else{
 		$success = 0;
+		$message = "Incorrect Username or Password";
 	}
 }
 if($call == "changePassword"){
 	$password = $_GET["newPassword"];
 	$earlierPassword = $_GET["earlierPassword"];
 	try{
-
 		$adminMgr = AdminMgr::getInstance();
 		$isPasswordExists = $adminMgr->isPasswordExist($earlierPassword);
 		if($isPasswordExists){

@@ -32,12 +32,12 @@ if($call == "saveInventory"){
 		$inventory = new Inventory();
 		$inventory->createFromRequest($_REQUEST);
 		$isRental = 0;
-		if(isset($_POST["isrental"])){
+		if(isset($_REQUEST["isrental"])){
 			$isRental =  1;
 		}
 		$inventory->setIsRental($isRental);
 		$isAvailable = 0;
-		if(isset($_POST["isavailable"])){
+		if(isset($_REQUEST["isavailable"])){
 			$isAvailable =  1;
 		}
 		$inventory->setIsRental($isRental);
