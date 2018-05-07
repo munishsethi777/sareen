@@ -40,27 +40,27 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 										<div class="col-sm-2">
 											<?php echo DropDownUtils::getFacingTypeDD("facing", "", "",true)?>
 										</div>
+										
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group">
+										<label class="col-sm-1 control-label">For</label>
+										<div class="col-sm-2">
+											<?php echo DropDownUtils::getPropertyOfferTypeDD("propertyoffer", "", "",true)?>
+										</div>
+										
 										<label class="col-sm-1 control-label">Amount</label>
-											<div class="col-sm-2">
-												<input class="form-control" type="text"  id="expectedamount" name="expectedamount">
-											</div>
-											
-											<label class="col-sm-1 control-label">Rental</label>
-											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
-												<input type="checkbox" name="isrental" id="isrental">
-												
-											</label> 
-											<label class="col-sm-1 control-label">Fullfilled</label>
-											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
-												<input type="checkbox" name="isfullfilled" id="isfullfilled">
-											</label> 
+										<div class="col-sm-2">
+											<input class="form-control" type="text"  id="expectedamount" name="expectedamount">
+										</div>
+										
+										<label class="col-sm-1 control-label">Fullfilled</label>
+										<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
+											<input type="checkbox" name="isfullfilled" id="isfullfilled">
+										</label> 
 									</div>
 		                    	</div>
-	                    	
 	                        <div id="enqueryGrid" style="margin-top:8px"></div>
 	                    </div>
 	                </div>
@@ -123,11 +123,14 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
            $("#expectedamount").change(function () {
         	   applyFilter("expectedamount")
            });
-           $('#isrental').on('ifChanged', function(event){
-        	   applyFilter("isrental")
-     		});
+//            $('#isrental').on('ifChanged', function(event){
+//         	   applyFilter("isrental")
+//      		});
            $('#isfullfilled').on('ifChanged', function(event){
         	   applyFilter("isavailable")
+     		});
+           $('#propertyoffer').change(function(event){
+        	   applyFilter("propertyoffer")
      		});
         });
         
@@ -140,17 +143,18 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 			var purpose = $("#purpose").val();
 			var facing = $("#facing").val();
 			var expectedAmount = $("#expectedamount").val();
+			var propertyOffer = $("#propertyoffer").val();
 			var isRentalChecked =$("input[type='checkbox'][name='isrental']:checked").val()
-			var isrental = "";
-			if(isRentalChecked == "on"){
-				isrental = "1"
-			} 
+// 			var isrental = "";
+// 			if(isRentalChecked == "on"){
+// 				isrental = "1"
+// 			} 
 			var isFullfilledChecked =$("input[type='checkbox'][name='isfullfilled']:checked").val()
 			var isFullfilled = "";
 			if(isFullfilledChecked == "on"){
 				isFullfilled = "1"
 			} 
-			var data = {propertytype: propertyType, purpose: purpose,facing: facing,expectedamount:expectedAmount,isrental:isrental,isfullfilled:isFullfilled};
+			var data = {propertytype: propertyType, purpose: purpose,facing: facing,expectedamount:expectedAmount,propertyoffer:propertyOffer,isfullfilled:isFullfilled};
 			return data
 		}
         
@@ -171,7 +175,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
               { text: 'Purpose', datafield: 'purpose', hidden:true,width:"10%"},
               { text: 'Facing', datafield: 'facing', hidden:true,width:"10%"},
               { text: 'Amount', datafield: 'expectedamount', hidden:true,width:"10%"},
-              { text: 'Rental', datafield: 'isrental', hidden:true,width:"10%"},
+              { text: 'Offer', datafield: 'propertyoffer', hidden:true,width:"10%"},
               { text: 'Fullfilled', datafield: 'isfullfilled', hidden:true,width:"10%"},
               { text: 'Area', datafield: 'propertyarea',width:"5%"},
               { text: 'Address', datafield: 'address',width:"28%"},            
@@ -196,7 +200,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'purpose', type: 'string' },
                             { name: 'facing', type: 'string' },
                             { name: 'expectedamount', type: 'integer' },
-                            { name: 'isrental', type: 'integer' },
+                            { name: 'propertyoffer', type: 'string' },
                             { name: 'isfullfilled', type: 'integer' },
                             { name: 'propertytype', type: 'string'},
                             { name: 'address', type: 'string'},

@@ -162,17 +162,7 @@ if(isset($_POST["id"])){
 									<input class="form-control" type="text" value="<?php echo $enquery->getExpectedAmount()?>" id="expectedAmount" name="expectedamount">
 								</div>
 							</div>
-							<div class="form-group i-checks">
-									<label class="col-sm-1 control-label"></label> 
-									<label class="col-sm-2 control-label" style="text-align: left">
-										<input type="checkbox" name="isrental" <?php echo $isRental?> id="isrental">
-										Rental
-									</label> 
-									<label class="col-sm-2 control-label">
-										<input type="checkbox"	name="isfullfilled" <?php echo $isFullfilled?> id="isfullfilled"> 
-										Fulfilled
-									</label>
-							</div>
+							
 							<div class="form-group specifications">
 								<label class="col-sm-1 control-label">Specification</label>
 
@@ -182,10 +172,28 @@ if(isset($_POST["id"])){
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-1 control-label">For</label>
+								<div class="col-sm-2">
+									<?php echo DropDownUtils::getPropertyOfferTypeDD("propertyoffer", "", $enquery->getPropertyOffer())?>
+								</div>
+								
 								<label class="col-sm-1 control-label">Saved By</label>
 								<div class="col-sm-2">
 									<?php echo DropDownUtils::getAdminsDD("adminseq", "", $adminSeq)?>
 								</div>
+								
+								
+									<!--<label class="col-sm-2 control-label" style="text-align: left">
+										<input type="checkbox" name="isrental" <?php //echo $isRental?> id="isrental">
+ 										Rental 
+									</label> -->
+									<label class="col-sm-2 control-label i-checks">
+										<input type="checkbox"	name="isfullfilled" <?php echo $isFullfilled?> id="isfullfilled"> 
+										Fulfilled
+									</label>
+								
+								
+								
 							</div>
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-offset-9">

@@ -24,6 +24,9 @@ class Enquiry {
 	private $isfullfilled;
 	private $expectedamount;
 	private $adminseq;
+	private $propertyoffer;
+	
+	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
 	}
@@ -164,7 +167,12 @@ class Enquiry {
 	public function getAdminSeq(){
 		return $this->adminseq;
 	}
-	
+	public function setPropertyOffer($val){
+		$this->propertyoffer = $val;
+	}
+	public function getPropertyOffer(){
+		return $this->propertyoffer;
+	}
 	function createFromRequest($request){
 		if (is_array($request)){
 			$this->from_array($request);
