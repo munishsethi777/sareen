@@ -59,11 +59,11 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 										<div class="col-sm-2">
 											<input class="form-control" type="text"  id="expectedamount" name="expectedamount">
 										</div>
-											<label class="col-sm-1 control-label">Rental</label>
-											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
-												<input type="checkbox" name="isrental" id="isrental">
-												
-											</label> 
+											<label class="col-sm-1 control-label">For</label>
+											<div class="col-sm-2">
+												<?php echo DropDownUtils::getPropertyOfferTypeDD("propertyoffer", "", "",true)?>
+											</div>
+											
 											<label class="col-sm-1 control-label">Available</label>
 											<label class="col-sm-1 control-label i-checks" style="text-align: left;padding-left:15px">
 												<input type="checkbox" name="isavailable" id="isavailable">
@@ -168,6 +168,9 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
            $('#isavailable').on('ifChanged', function(event){
         	   applyFilter("isavailable")
      		});
+           $('#propertyoffer').change(function(event){
+        	   applyFilter("propertyoffer")
+     		});
         });
         
         function filterCall(dataField){
@@ -180,6 +183,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 			var medium = $("#medium").val();
 			var facing = $("#facing").val();
 			var address = $("#address").val();
+			var propertyOffer = $("#propertyoffer").val();
 			var expectedAmount = $("#expectedamount").val();
 			var isRentalChecked =$("input[type='checkbox'][name='isrental']:checked").val()
 			var isrental = "";
@@ -191,7 +195,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
 			if(isAvailableChecked == "on"){
 				isAvailable = "1"
 			} 
-			var data = {propertytype: propertyType, purpose: purpose,medium: medium,facing: facing,address1: address,expectedamount:expectedAmount,isrental:isrental,isavailable:isAvailable};
+			var data = {propertytype: propertyType, purpose: purpose,medium: medium,facing: facing,address1: address,expectedamount:expectedAmount,propertyoffer:propertyOffer,isavailable:isAvailable};
 			return data
 		}
         
@@ -214,7 +218,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
               { text: 'Facing', datafield: 'facing', hidden:true},
               { text: 'Stories', datafield: 'stories', hidden:true},
               { text: 'Amount', datafield: 'expectedamount', hidden:true},
-              { text: 'Rental', datafield: 'isrental', hidden:true},
+              { text: 'For', datafield: 'propertyoffer', hidden:true},
               { text: 'Available', datafield: 'isavailable', hidden:true},
               { text: 'Area', datafield: 'propertyarea',width:"6%"},
               { text: 'Plot#' , datafield: 'plotnumber',width:"6%" },  
@@ -242,7 +246,7 @@ require_once ($ConstantsArray ['dbServerUrl'] . "Utils/DropdownUtil.php");
                             { name: 'facing', type: 'string' },
                             { name: 'stories', type: 'string' },
                             { name: 'expectedamount', type: 'integer' },
-                            { name: 'isrental', type: 'integer' },
+                            { name: 'propertyoffer', type: 'string' },
                             { name: 'isavailable', type: 'integer' },
                             { name: 'propertytype', type: 'string'},
                             { name: 'address1', type: 'string'},
