@@ -94,16 +94,16 @@ if($call == "saveInventory"){
 		$id = $_GET["id"];
 		$inventoryMgr = $inventoryMgr::getInstance();
 		$inventory = $inventoryMgr->findArrayBySeq($id);
-		if($inventory == false){
+		if($inventory ==  false){
 			$response["inventory"] = null;
 			$success = 0;
 			$message = "Invalid Inventory id";
 		}else{
-			$imageType = $inventory->getImageFormat();
-			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_otp.".$imageType;
+		    $imageType = $inventory['imageformat'];
+			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_thumb.".$imageType;
 			$imagePath=null;
 			if (file_exists($path)){
-				$imagePath = "images/propertyImages/" .$id ."_otp.".$imageType;
+				$imagePath = "images/propertyImages/" .$id ."_thumb.".$imageType;
 			}
 			$inventory["imagepath"] = $imagePath;
 			$response["inventory"] = $inventory;
