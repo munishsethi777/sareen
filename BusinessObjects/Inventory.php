@@ -49,6 +49,7 @@ class Inventory {
 	private $propertyoffer;
 	private $organisation;
 	private $ratefactor;
+	private $imageformat;
 	
 	public function setSeq($seq_) {
 		$this->seq = $seq_;
@@ -342,6 +343,13 @@ class Inventory {
 	}
 	public function getRateFactor(){
 		return $this->ratefactor;
+	}
+	
+	public function setImageFormat($val){
+		$this->imageformat = $val;
+	}
+	public function getImageFormat(){
+		return $this->imageformat;
 	}
 	
 	function createFromRequest($request){

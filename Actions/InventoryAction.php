@@ -52,6 +52,13 @@ if($call == "saveInventory"){
 			$inventory->setMediumPhone("");
 		}
 		$inventory->setLastmodifiedon(new DateTime());
+		$imageType = null;
+		if(isset($_FILES["inventoryImage"])){
+			$file = $_FILES["inventoryImage"];
+			$filename = $file["name"];
+			$imageType = pathinfo($filename, PATHINFO_EXTENSION);
+			$inventory->setImageFormat($imageType);
+		}
 		$id = $inventoryMgr->saveInventory($inventory);
 		if(isset($_FILES["inventoryImage"])){
 			$file = $_FILES["inventoryImage"];
@@ -92,10 +99,11 @@ if($call == "saveInventory"){
 			$success = 0;
 			$message = "Invalid Inventory id";
 		}else{
-			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_otp."."jpg";
+			$imageType = $inventory->getImageFormat();
+			$path = StringConstants::PROPERTY_IMAGE_PATH .$id ."_otp.".$imageType;
 			$imagePath=null;
 			if (file_exists($path)){
-				$imagePath = "images/propertyImages/" .$id ."_otp."."jpg";
+				$imagePath = "images/propertyImages/" .$id ."_otp.".$imageType;
 			}
 			$inventory["imagepath"] = $imagePath;
 			$response["inventory"] = $inventory;

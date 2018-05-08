@@ -77,6 +77,7 @@
     	
     	elseif ($info['mime'] == 'image/png')
     	$image = imagecreatefrompng($sourcePath);
+    	
     	$widthOrg = imagesx($image);
     	$heightOrg = imagesy($image);
     	$newWidth = $widthOrg;
@@ -87,12 +88,10 @@
     	$scalingFactor = $newWidth / $widthOrg;
     	$newImageHeight = $heightOrg * $scalingFactor;
     	$resizeObj = new resize($sourcePath);
-    	 
-    	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
     	$resizeObj -> resizeImage($newWidth, $newImageHeight, 'auto');
-    	 
-    	// *** 3) Save image
     	$resizeObj -> saveImage($sourcePath);
+    	
+    	
     	
     	$thumbNewWidth = $newWidth;
     	$thumbNewHeight = $newImageHeight;
@@ -101,13 +100,8 @@
     	}
     	$scalingFactor = $thumbNewWidth / $newWidth;
     	$thumbNewHeight = $newImageHeight * $scalingFactor;
-    	
     	$resizeObj = new resize($sourcePath);
-    	
-    	// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
     	$resizeObj -> resizeImage($thumbNewWidth, $thumbNewHeight, 'auto');
-    	
-    	// *** 3) Save image
     	$resizeObj -> saveImage($thumbPath);
     	return $fileName;
     }

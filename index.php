@@ -13,7 +13,7 @@ if(isset($_POST["id"])){
 	$inventoryMgr = InventoryMgr::getInstance();
 	$inventory = $inventoryMgr->findBySeq($id);
 	$adminSeq = $inventory->getAdminSeq();
-	$path = "images/propertyImages/".$id ."_thumb."."jpg";
+	$path = "images/propertyImages/".$id ."_thumb.". $inventory->getImageFormat();
 	if (file_exists($path)){
 		$imagePath = $path;
 	}
