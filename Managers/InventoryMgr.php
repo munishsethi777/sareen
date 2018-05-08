@@ -94,10 +94,11 @@ class InventoryMgr{
    			$arr["address1"] = $inventory["address1"];
    			$arr["contactperson"] = $inventory["contactperson"];
    			$arr["contactmobile"] = $inventory["contactmobile"];
-   			$path = StringConstants::PROPERTY_IMAGE_PATH .$arr["seq"] ."_thumb."."jpg";
+   			$imageType = $inventory['imageformat'];
+   			$path = StringConstants::PROPERTY_IMAGE_PATH .$arr["seq"] ."_thumb.".$imageType;
    			$imagePath=null;
    			if (file_exists($path)){
-   				$imagePath = "images/propertyImages/" .$arr["seq"] ."_thumb."."jpg";
+   				$imagePath = "images/propertyImages/" .$arr["seq"] ."_thumb.".$imageType;
    			}
    			$arr["imagepath"] = $imagePath;
    			array_push($InArr, $arr);
