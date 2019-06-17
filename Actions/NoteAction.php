@@ -62,4 +62,33 @@ else if($call == "getNotes"){
 	$response["success"]  = $success;
 	$response["message"]  = $message;
 	echo json_encode($response);
-}
+}else if ($call == "getAllNotes") {
+		$response = new ArrayObject();
+        try{
+            $notesArr = $noteMgr->findAllArr();
+            $success = 1;
+            $message = "Successfully";
+            $response['notes'] = $notesArr;
+        } catch ( Exception $e ) {
+            $successs = 0;
+            $message = $e->getMessage ();
+        }
+        $response["success"]  = $success;
+        $response["message"]  = $message;
+        echo json_encode($response);
+} else if ($call == "getNoteDetails") {
+		$response = new ArrayObject();
+        try{
+            $noteSeq = $_GET ['noteSeq'];
+            $noteArr = $noteMgr->findArrBySeq ( $noteSeq );
+            $response ['notes'] = $noteArr;
+            $success = 1;
+            $message = "success";
+        } catch ( Exception $e ) {
+            $successs = 0;
+            $message = $e->getMessage ();
+        }
+        $response["success"]  = $success;
+        $response["message"]  = $message;
+        echo json_encode($response);
+} 

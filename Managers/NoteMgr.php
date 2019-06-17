@@ -29,6 +29,14 @@ class NoteMgr{
 		return self::$dataStore->findBySeq($seq);
 	}
 	
+	public function findArrBySeq($seq){
+		return self::$dataStore->findArrayBySeq($seq);
+	}
+	
+	public function findAllArr(){
+		return self::$dataStore->findAllArr();
+	}
+	
 	public function getAllForGrid(){
 		$arr = self::$dataStore->findAllArr(true);
 		$count = self::$dataStore->executeCountQuery(null,true);
