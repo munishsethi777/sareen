@@ -53,14 +53,16 @@ else if($call == "getNotes"){
 	echo $json;
 }else if($call == "deleteNotes"){
 	$ids = $_GET["ids"];
+	$response = new ArrayObject();
 	try{
 		$noteMgr->deleteNotes($ids);
 		$message = "Record Deleted successfully";
+		$response["noteSeq"] = $ids;
 	}catch(Exception $e){
 		$success = 0;
 		$message  = $e->getMessage();
 	}
-	$response = new ArrayObject();
+	
 	$response["success"]  = $success;
 	$response["message"]  = $message;
 	echo json_encode($response);
