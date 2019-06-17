@@ -33,7 +33,9 @@ if($call == "saveNote"){
 		$note->setCreatedOn(new DateTime());
 		$sessionUtil = SessionUtil::getInstance();
 		$adminSeq = $sessionUtil->getAdminLoggedInSeq();
-		$note->setAdminSeq($adminSeq);
+		if(empty($isMobile)){
+			$note->setAdminSeq($adminSeq);
+		}
 		$id = $noteMgr->saveNote($note);
 		$message = "Note Saved Successfully";
 	}catch(Exception $e){
